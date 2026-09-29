@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ChoreData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/chore_data.gd" id="1_cd"]
+
+[resource]
+script = ExtResource("1_cd")
+id = &"vacuum"
+display_name = "Run the vacuum"
+flavor = "It smells hot after ten minutes. You do the middle of the room."
+room = &"living_room"
+kind = 0
+gas_cost = 8
+minutes = 40
+relief = 2
+money_reward = 0
+requires_flag = &""
+required_tool = &""
+strain_delta = 0

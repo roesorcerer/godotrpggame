@@ -1,0 +1,14 @@
+[gd_resource type="TileSet" format=3 uid="uid://bbvjimho7i3j8"]
+
+[ext_resource type="Texture2D" uid="uid://cwn2ly2kwlmp4" path="res://assets/tileset/Sea_Water_Tileset_No_Sand_Basic_16x16.png" id="1_8em0m"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t0rc3"]
+texture = ExtResource("1_8em0m")
+1:1/animation_columns = 1
+1:1/animation_frame_0/duration = 0.2
+1:1/animation_frame_1/duration = 0.2
+1:1/0 = 0
+2:1/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_t0rc3")

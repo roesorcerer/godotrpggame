@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/chore_spot.gd" id="1_spot"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spot"]
+size = Vector2(24, 20)
+
+[node name="ChoreSpot" type="Area2D"]
+script = ExtResource("1_spot")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_spot")
+
+[node name="Placeholder" type="Polygon2D" parent="."]
+color = Color(0.360784, 0.396078, 0.33, 1)
+polygon = PackedVector2Array(-12, -10, 12, -10, 12, 10, -12, 10)

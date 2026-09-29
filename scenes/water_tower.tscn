@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://b2ckgixpam5yl"]
+
+[ext_resource type="Texture2D" uid="uid://byvcu6pka38cu" path="res://assets/buildings/water_tower.png" id="1_w2c60"]
+
+[node name="WaterTower" type="StaticBody2D" unique_id=1919211986]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1004114286]
+position = Vector2(0, -48)
+texture = ExtResource("1_w2c60")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=72365938]
+polygon = PackedVector2Array(-24, -16, -24, 0, -16, 0, -16, -16, 16, -16, 16, 0, 24, 0, 24, -24, -24, -24)

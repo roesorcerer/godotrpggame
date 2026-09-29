@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://datmn41nxlcbg"]
+
+[ext_resource type="Texture2D" uid="uid://8wy51cm6tak1" path="res://assets/buildings/Pine Grove/23_MIlitary_Base_16x16_Dormitory_1.png" id="1_lf63a"]
+[ext_resource type="Texture2D" uid="uid://cwirb0oiw4of7" path="res://assets/buildings/Pine Grove/23_MIlitary_Base_16x16_Dormitory_3.png" id="2_iruyj"]
+
+[node name="PineGroveHouse" type="StaticBody2D" unique_id=1790172009]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=222100096]
+position = Vector2(0, -72)
+texture = ExtResource("1_lf63a")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1801022231]
+position = Vector2(-170, -84)
+texture = ExtResource("2_iruyj")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1714089907]
+polygon = PackedVector2Array(-80, -32, 8, -32, 8, -56, 80, -56, 80, -80, 16, -80, -88, -64, -248, -64, -248, -32)

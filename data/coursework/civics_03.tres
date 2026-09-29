@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CourseworkData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/coursework_data.gd" id="1_cw"]
+
+[resource]
+script = ExtResource("1_cw")
+id = &"civics_03"
+subject = &"civics"
+title = "Unit 3: The public meeting"
+flavor = "There is a form in the back for requesting time to speak."
+minutes = 90
+gas_cost = 4
+work_units = 1.0
+sequence = 3

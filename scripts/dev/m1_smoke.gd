@@ -1,0 +1,124 @@
+extends Node
+
+## Dev-only smoke test for the M1 interaction layer: sensor targeting, the
+## door, the scene swap, the spawn marker, and the bed ending the day.
+##   godot --headless --path . res://scenes/dev/m1_smoke.tscn
+
+var _failures: Array[String] = []
+var _prompts: Array[String] = []
+
+
+func _ready() -> void:
+	# change_scene_to_file() frees the current scene - which would take this
+	# node and its running coroutine with it. Move under the root first.
+	call_deferred("_boot")
+
+
+func _boot() -> void:
+	var root := get_tree().root      # grab this BEFORE detaching, or get_tree() is null
+	get_parent().remove_child(self)
+	root.add_child(self)
+
+	EventBus.interaction_prompt.connect(func(t): _prompts.append(t))
+	get_tree().change_scene_to_file("res://scenes/level.tscn")
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await _run()
+	if _failures.is_empty():
+		print("M1 SMOKE: PASS")
+		get_tree().quit(0)
+	else:
+		for f in _failures:
+			printerr("M1 SMOKE FAIL: ", f)
+		get_tree().quit(1)
+
+
+func _check(cond: bool, label: String) -> void:
+	if not cond:
+		_failures.append(label)
+
+
+func _settle(frames := 4) -> void:
+	for i in frames:
+		await get_tree().process_frame
+
+
+func _await_travel() -> void:
+	var guard := 0
+	while SceneRouter.is_travelling() and guard < 2000:
+		guard += 1
+		await get_tree().process_frame
+	_check(guard < 2000, "travel finished within time")
+
+
+func _run() -> void:
+	var player := SceneRouter.get_player()
+	_check(player != null, "player is findable via the 'player' group")
+	if player == null:
+		return
+
+	var sensor := player.get_node_or_null("InteractionSensor")
+	_check(sensor != null, "player has an InteractionSensor")
+
+	var door := get_tree().current_scene.find_child("FrontDoor", true, false) as Door
+	_check(door != null, "level.tscn has a FrontDoor")
+	if door == null or sensor == null:
+		return
+	_check(door.target_scene == "res://scenes/world/ranch_interior.tscn", "door points at the interior")
+
+	# The morning fade holds a clock pause; prompts are suppressed until it ends.
+	var guard := 0
+	while GameClock.is_paused() and guard < 3000:
+		guard += 1
+		await get_tree().process_frame
+	_check(not GameClock.is_paused(), "morning fade released the clock")
+
+	# --- standing away from the door: no prompt ---
+	player.global_position = door.global_position + Vector2(300, 300)
+	await _settle(4)
+	_check(sensor.get("_current") == null, "nothing targeted when far away")
+
+	# --- standing at the door: it gets targeted and prompts ---
+	_prompts.clear()
+	player.global_position = door.global_position + Vector2(0, 18)
+	player.set("facing", "up")
+	await _settle(8)
+	_check(sensor.get("_current") == door, "door is targeted when stood on")
+	_check(_prompts.has("Go inside"), "prompt fired, got %s" % [_prompts])
+
+	# --- through the door ---
+	var before_day := GameClock.day
+	door.interact(player)
+	await _await_travel()
+	await _settle(2)
+
+	var scene := get_tree().current_scene
+	_check(scene != null and scene.name == "RanchInterior", "we are inside, got %s" % [scene.name if scene else "<null>"])
+
+	var inside_player := SceneRouter.get_player()
+	_check(inside_player != null, "interior has its own player")
+	var spawn := scene.find_child("Spawn_Interior", true, false) as Node2D
+	_check(spawn != null, "interior has Spawn_Interior")
+	if inside_player != null and spawn != null:
+		_check(inside_player.global_position.distance_to(spawn.global_position) < 1.0,
+			"player landed on the spawn marker, at %s vs %s" % [inside_player.global_position, spawn.global_position])
+
+	# --- camera picked up the interior bounds (no tilemap in here) ---
+	var cam := inside_player.get_node_or_null("Camera2D") as Camera2D
+	_check(cam != null and cam.limit_right > 0 and cam.limit_right < 100000,
+		"camera clamped to the room, limit_right=%d" % [cam.limit_right if cam else -1])
+
+	# --- the bed ends the day ---
+	var bed := scene.find_child("Bed", true, false) as Bed
+	_check(bed != null, "interior has a Bed")
+	if bed == null:
+		return
+	GameClock.minutes = 60 * 8          # 2 PM, well past "too early"
+	_check(bed.get_prompt(inside_player) == "Go to sleep", "bed prompts at 2 PM")
+	bed.interact(inside_player)
+	await _settle(2)
+	_check(GameClock.day == before_day + 1, "bed advanced the day")
+
+	# --- and it is too early to sleep at 6 AM ---
+	GameClock.minutes = 0
+	_check(bed.get_prompt(inside_player) == "Too early to sleep", "bed refuses at 6 AM")

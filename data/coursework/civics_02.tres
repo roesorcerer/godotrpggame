@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CourseworkData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/coursework_data.gd" id="1_cw"]
+
+[resource]
+script = ExtResource("1_cw")
+id = &"civics_02"
+subject = &"civics"
+title = "Unit 2: Zoning and land use"
+flavor = "A whole chapter on what a property may and may not become."
+minutes = 120
+gas_cost = 5
+work_units = 1.0
+sequence = 2
