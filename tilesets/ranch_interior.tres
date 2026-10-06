@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dt0pj6g6rejnt" path="res://assets/tileset/Interior/Room_Builder_Arched_Entryways_16x16.png" id="5_ymqay"]
 [ext_resource type="Texture2D" uid="uid://w4ef6x0x8e0s" path="res://assets/tileset/Interior/Room_Builder_Baseboards_16x16.png" id="6_8sq7p"]
 [ext_resource type="Texture2D" uid="uid://c7joumq033ptr" path="res://assets/tileset/Interior/Room_Builder_borders_16x16.png" id="7_co3m4"]
-[ext_resource type="Texture2D" path="res://assets/tileset/collision_brush.png" id="8_collbrush"]
+[ext_resource type="Texture2D" uid="uid://bhvio4x4e7o5u" path="res://assets/tileset/collision_brush.png" id="8_collbrush"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wjoo1"]
 texture = ExtResource("1_h24ue")
@@ -14925,6 +14925,7 @@ texture = ExtResource("1_h24ue")
 5:1063/0 = 0
 6:1063/0 = 0
 7:1063/0 = 0
+6:322/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hpii2"]
 texture = ExtResource("2_dynby")
@@ -17911,7 +17912,6 @@ texture = ExtResource("7_co3m4")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_collbrush"]
 texture = ExtResource("8_collbrush")
-texture_region_size = Vector2i(16, 16)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0

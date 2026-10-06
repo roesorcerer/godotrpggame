@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ChoreData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ChoreData" format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/chore_data.gd" id="1_cd"]
 
@@ -8,11 +8,7 @@ id = &"laundry"
 display_name = "Put a wash on"
 flavor = "Somebody has to, and it is going to be you."
 room = &"bathroom"
-kind = 0
+weekdays = Array[int]([0, 3])
 gas_cost = 7
 minutes = 45
-relief = 2
-money_reward = 0
-requires_flag = &""
-required_tool = &""
-strain_delta = 0
+mood = 3

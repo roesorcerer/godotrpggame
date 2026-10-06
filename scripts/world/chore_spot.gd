@@ -1,28 +1,29 @@
 class_name ChoreSpot
 extends Interactable
 
-## A place in a room where work is waiting: the sink, the ashtrays, the stack of
-## boxes. Bound to one room; it offers whichever chore in that room still needs
-## doing, so one node covers the whole life of the spot.
+## A place where a chore gets done: the sink, the ashtrays, the hamper. Usually
+## pinned to one chore; it offers it only while that chore is on today's list
+## and not yet done, then goes quiet until it comes round again.
 
-@export var room: StringName = &"living_room"
+## Leave blank to take the room from the RoomZone this spot is under.
+@export var room: StringName = &""
 
-## Leave empty to offer whatever this room needs. Set it to pin one chore.
+## The chore this spot does. Leave empty to offer whatever this room still
+## needs today.
 @export var only_chore: StringName = &""
 
 var _offer: ChoreData = null
+var _room_id: StringName = &""
 
 
 func _ready() -> void:
 	super()
-	EventBus.room_state_changed.connect(_on_room_changed)
+	_room_id = RoomZone.resolve(self, room)
+	if only_chore != &"" and ChoreSystem.get_chore(only_chore) == null:
+		push_warning("%s pins '%s', which is not a chore in data/chores/." % [get_path(), only_chore])
+	EventBus.chores_changed.connect(_refresh)
 	EventBus.gas_changed.connect(func(_c, _m): _refresh())
 	_refresh()
-
-
-func _on_room_changed(room_id: StringName) -> void:
-	if room_id == room:
-		_refresh()
 
 
 func _refresh() -> void:
@@ -33,12 +34,8 @@ func _pick() -> ChoreData:
 	if only_chore != &"":
 		var pinned := ChoreSystem.get_chore(only_chore)
 		return pinned if pinned != null and ChoreSystem.is_needed(pinned) else null
-	var options := ChoreSystem.available_in_room(room)
-	if options.is_empty():
-		return null
-	# Grime first - the daily rhythm should feel like the default.
-	options.sort_custom(func(a, b): return a.kind < b.kind)
-	return options[0]
+	var options := ChoreSystem.available_in_room(_room_id)
+	return options[0] if not options.is_empty() else null
 
 
 func can_interact(by: Node2D) -> bool:

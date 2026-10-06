@@ -5,6 +5,7 @@ extends Node
 ##   godot --headless --path . res://scenes/dev/m2_smoke.tscn
 
 var _failures: Array[String] = []
+var _finished := false            ## set by the last line of _run(); a script error skips it
 var _chores_completed: Array = []
 
 
@@ -12,7 +13,9 @@ func _ready() -> void:
 	EventBus.chore_completed.connect(func(id): _chores_completed.append(id))
 	await get_tree().process_frame
 	await get_tree().process_frame
-	_run()
+	await _run()
+	if not _finished:
+		_failures.append("_run() did not finish - see the script error above")
 	if _failures.is_empty():
 		print("M2 SMOKE: PASS")
 		get_tree().quit(0)
@@ -33,7 +36,7 @@ func _about(a: float, b: float, eps := 0.001) -> bool:
 
 func _run() -> void:
 	# --- content loaded from data/, not code ---
-	_check(ChoreSystem.count() == 6, "6 chores loaded, got %d" % ChoreSystem.count())
+	_check(ChoreSystem.count() == 21, "21 chores loaded, got %d" % ChoreSystem.count())
 	_check(CourseworkSystem.count() == 3, "3 assignments loaded, got %d" % CourseworkSystem.count())
 	var dishes := ChoreSystem.get_chore(&"dishes")
 	_check(dishes != null, "dishes chore exists")
@@ -41,6 +44,31 @@ func _run() -> void:
 		return
 	_check(dishes.room == &"kitchen", "dishes belongs to the kitchen")
 	_check(dishes.kind == ChoreData.Kind.GRIME, "dishes is a grime chore")
+
+	# --- every chore points at a real room ---
+	for chore in ChoreSystem.all():
+		_check(MessSystem.ROOMS.has(chore.room), "%s is in unknown room '%s'" % [chore.id, chore.room])
+
+	# --- nothing can pile up that the player has no way to clear ---
+	for id in MessSystem.room_ids():
+		var spec: Dictionary = MessSystem.ROOMS[id]
+		var start: Dictionary = MessSystem.STARTING_STATE.get(id, {})
+		var gets_grime := int(spec["daily_grime"]) > 0 or int(start.get("grime", 0)) > 0
+		var gets_clutter := int(spec["weekly_clutter"]) > 0 or int(start.get("clutter", 0)) > 0
+		var has_grime := false
+		var has_clutter := false
+		for chore in ChoreSystem.all():
+			if chore.room != id:
+				continue
+			has_grime = has_grime or chore.kind == ChoreData.Kind.GRIME
+			has_clutter = has_clutter or chore.kind == ChoreData.Kind.CLUTTER
+		_check(not gets_grime or has_grime, "%s gets grimy but no chore cleans it" % id)
+		_check(not gets_clutter or has_clutter, "%s gets cluttered but no chore clears it" % id)
+
+	# --- a shut room sits outside the loop until the story opens it ---
+	_check(not MessSystem.is_open(&"music_room"), "the music room starts shut")
+	_check(ChoreSystem.available_in_room(&"music_room").is_empty(), "a shut room offers no chores")
+	_check(not MessSystem.open_room_ids().has(&"music_room"), "a shut room isn't counted")
 
 	# --- you moved into a mess: there is work waiting on day 1 ---
 	_check(MessSystem.total_clutter() > 0, "the house starts cluttered")
@@ -60,6 +88,7 @@ func _run() -> void:
 	_check(MessSystem.grime(&"living_room") == 2,
 		"living room picks up 2 (Bruce smokes), got %d" % MessSystem.grime(&"living_room"))
 	_check(MessSystem.grime(&"porch") == 0, "the porch doesn't get grimy")
+	_check(MessSystem.grime(&"music_room") == 0, "a shut room doesn't decay")
 
 	# --- the hosting gate, which is the lever that matters ---
 	_check(MessSystem.can_host(), "grime 2 still lets you have people over")
@@ -163,3 +192,75 @@ func _run() -> void:
 	GameState.coursework = {}
 	GameState.from_dict(blob)
 	_check(CourseworkSystem.is_done(first), "finished units survive a save round-trip")
+
+	await _check_interior()
+	_finished = true
+
+
+## The real first floor: every spot and prop knows its room from the zone it
+## sits in, and the mess on screen follows the room's state.
+func _check_interior() -> void:
+	var entered: Array = []
+	EventBus.room_entered.connect(func(r): entered.append(r))
+	var interior: Node = load("res://scenes/world/ranch_interior.tscn").instantiate()
+	add_child(interior)
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
+	var spots := interior.find_children("*", "ChoreSpot", true, false)
+	_check(spots.size() >= 10, "interior has chore spots, got %d" % spots.size())
+	for spot in spots:
+		var room_id: StringName = spot.get("_room_id")
+		_check(MessSystem.ROOMS.has(room_id), "%s resolved to a real room, got '%s'" % [spot.name, room_id])
+		var pinned: StringName = spot.get("only_chore")
+		if pinned != &"":
+			var chore := ChoreSystem.get_chore(pinned)
+			_check(chore != null, "%s pins a real chore '%s'" % [spot.name, pinned])
+			if chore != null:
+				_check(chore.room == room_id, "%s sits in %s but pins %s (%s)" % [spot.name, room_id, pinned, chore.room])
+
+	# every open first-floor room has somewhere to clean it
+	var spot_rooms := spots.map(func(sp): return sp.get("_room_id"))
+	for id in MessSystem.room_ids():
+		if MessSystem.ROOMS[id]["floor"] == &"first" and MessSystem.is_open(id):
+			_check(spot_rooms.has(id), "no chore spot in the %s" % id)
+
+	var desk := interior.find_children("*", "Desk", true, false)
+	_check(desk.size() == 1 and desk[0].call("_room") == &"kitchen", "the desk is in the kitchen")
+
+	# mess shows at its threshold and clears when the room is cleaned
+	var props := interior.find_children("*", "MessProp", true, false)
+	_check(not props.is_empty(), "interior has mess props")
+	for prop in props:
+		_check(MessSystem.ROOMS.has(prop.get("_room_id")), "%s resolved to a real room" % prop.name)
+	var boxes5 := interior.find_child("Boxes5", true, false)
+	if boxes5 != null:
+		MessSystem.get_room(&"living_room")["clutter"] = 0
+		MessSystem.add_clutter(&"living_room", 5)
+		_check(boxes5.visible, "the wall of boxes shows at clutter 5")
+		MessSystem.add_clutter(&"living_room", -1)
+		_check(not boxes5.visible, "and goes when one load is hauled")
+
+	# walking into a zone announces the room
+	var player := interior.find_child("CharacterBody2D", true, false) as Node2D
+	if player != null:
+		entered.clear()
+		player.global_position = Vector2(200, 120)      # kitchen
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		_check(entered.has(&"kitchen"), "entering the kitchen zone announced it, got %s" % [entered])
+
+	interior.queue_free()
+	await get_tree().process_frame
+
+	# a spot parented under a room belongs to that room, wherever it's dragged
+	var zone := RoomZone.new()
+	zone.room_id = &"bathroom"
+	var nested := ChoreSpot.new()
+	nested.position = Vector2(-5000, -5000)       # outside every rectangle
+	zone.add_child(nested)
+	add_child(zone)
+	_check(nested.get("_room_id") == &"bathroom", "a spot under a RoomZone takes its room from the parent")
+	_check(zone.y_sort_enabled, "a RoomZone y-sorts its contents")
+	zone.queue_free()
+	await get_tree().process_frame

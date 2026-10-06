@@ -7,22 +7,21 @@ extends Node
 const GAS_BASE_MAX := 100
 const GAS_CAP_PASSED_OUT := 70         ## up past midnight
 const GAS_PENALTY_NO_DINNER := 20
-const GAS_PENALTY_FILTHY_HOUSE := 10   ## any room at grime 4+
-const GAS_BONUS_BREAKFAST := 10        ## Doris on a Steady morning
+const GAS_BONUS_BREAKFAST := 10        ## Mom made breakfast (she's in a good mood)
 
 var money := 0
 var gas := GAS_BASE_MAX
 var gas_max := GAS_BASE_MAX
 
 var flags := {}          ## StringName -> bool
-var rooms := {}          ## room_id   -> {grime:int, clutter:int, repairs:Array}
 var npcs := {}           ## npc_id    -> {level:int, met:bool, quests:Dictionary}
 var inventory: Array = []
 
+## Mom. `mood` is 0-100 (see the Mom autoload); `mood_at_dawn` is where it
+## stood this morning, for the day-end summary.
 var doris := {
-	"strain": 20,
-	"today": &"steady",
-	"history": [],
+	"mood": 60,
+	"mood_at_dawn": 60,
 }
 
 var campaign := {
@@ -31,8 +30,8 @@ var campaign := {
 	"events_run": [],
 }
 
-## subject -> {progress: float, done: Array[String]}
-var coursework := {}
+## Ids of the chores done today. Cleared each morning.
+var chores_done: Array = []
 
 ## What happened today. Cleared each morning, read by the day-end summary.
 var day_log: Array = []
@@ -80,13 +79,10 @@ func begin_new_day(slept_at_minutes: int, passed_out: bool) -> void:
 		cap = GAS_CAP_PASSED_OUT
 	if skipped_dinner:
 		cap -= GAS_PENALTY_NO_DINNER
-	if _worst_grime() >= 4:
-		cap -= GAS_PENALTY_FILTHY_HOUSE
 
-	# Doris made breakfast - only possible on a Steady morning. It lifts the
-	# ceiling rather than topping you up, so it is worth something on a good day
-	# too. (M5 rolls `today`; until then it stays &"steady".)
-	if doris["today"] == &"steady":
+	# Mom makes breakfast when she's happy with you. It lifts the ceiling
+	# rather than topping you up, so it's worth something on a good day too.
+	if Mom.makes_breakfast():
 		cap += GAS_BONUS_BREAKFAST
 
 	gas_max = maxi(cap, 30)
@@ -94,34 +90,28 @@ func begin_new_day(slept_at_minutes: int, passed_out: bool) -> void:
 
 	skipped_dinner = false
 	day_log = []
+	chores_done = []
+	doris["mood_at_dawn"] = Mom.mood()
 	EventBus.gas_changed.emit(gas, gas_max)
 	EventBus.money_changed.emit(money)
-
-
-func _worst_grime() -> int:
-	var worst := 0
-	for r in rooms.values():
-		worst = maxi(worst, int(r.get("grime", 0)))
-	return worst
 
 
 ## --- save blob (M3 consumes these) -----------------------------------------
 
 func to_dict() -> Dictionary:
 	return {
-		"version": 1,
+		"version": 2,
 		"day": GameClock.day,
 		"minutes": GameClock.minutes,
 		"money": money,
 		"gas": gas,
 		"gas_max": gas_max,
 		"flags": flags,
-		"rooms": rooms,
 		"npcs": npcs,
 		"inventory": inventory,
 		"doris": doris,
 		"campaign": campaign,
-		"coursework": coursework,
+		"chores_done": chores_done,
 	}
 
 func from_dict(data: Dictionary) -> void:
@@ -131,12 +121,13 @@ func from_dict(data: Dictionary) -> void:
 	gas = int(data.get("gas", GAS_BASE_MAX))
 	gas_max = int(data.get("gas_max", GAS_BASE_MAX))
 	flags = data.get("flags", {})
-	rooms = data.get("rooms", {})
 	npcs = data.get("npcs", {})
 	inventory = data.get("inventory", [])
 	doris = data.get("doris", doris)
 	campaign = data.get("campaign", campaign)
-	coursework = data.get("coursework", {})
+	chores_done = data.get("chores_done", [])
 
 	EventBus.gas_changed.emit(gas, gas_max)
 	EventBus.money_changed.emit(money)
+	EventBus.mom_mood_changed.emit(int(doris.get("mood", 60)))
+	EventBus.chores_changed.emit()

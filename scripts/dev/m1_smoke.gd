@@ -5,6 +5,7 @@ extends Node
 ##   godot --headless --path . res://scenes/dev/m1_smoke.tscn
 
 var _failures: Array[String] = []
+var _finished := false            ## set by the last line of _run(); a script error skips it
 var _prompts: Array[String] = []
 
 
@@ -24,6 +25,8 @@ func _boot() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await _run()
+	if not _finished:
+		_failures.append("_run() did not finish - see the script error above")
 	if _failures.is_empty():
 		print("M1 SMOKE: PASS")
 		get_tree().quit(0)
@@ -122,3 +125,4 @@ func _run() -> void:
 	# --- and it is too early to sleep at 6 AM ---
 	GameClock.minutes = 0
 	_check(bed.get_prompt(inside_player) == "Too early to sleep", "bed refuses at 6 AM")
+	_finished = true

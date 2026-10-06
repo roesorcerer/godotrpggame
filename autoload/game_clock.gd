@@ -83,11 +83,11 @@ func is_weekend() -> bool:
 func days_remaining() -> int:
 	return maxi(0, SUMMER_LENGTH - day)
 
-## True during the 7-9 AM window - best concentration for coursework (see §05).
+## True during the 7-9 AM window - the quiet start of the day.
 func is_quiet_hours() -> bool:
 	return clock_hour() >= 7 and clock_hour() < 9
 
-## Advance the clock directly. Chores and coursework call this.
+## Advance the clock directly. Chores call this.
 func advance(mins: int) -> void:
 	if mins <= 0:
 		return
@@ -111,6 +111,8 @@ func end_day(passed_out := false) -> void:
 		"passed_out": passed_out,
 		"money": GameState.money,
 	}
+	# Settle today's chore list (and Mom's mood) before anyone reads the summary.
+	ChoreSystem.close_day(summary)
 	EventBus.day_ended.emit(day, summary)
 
 	day += 1

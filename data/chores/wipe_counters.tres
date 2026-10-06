@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ChoreData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/chore_data.gd" id="1_cd"]
+
+[resource]
+script = ExtResource("1_cd")
+id = &"wipe_counters"
+display_name = "Wipe the counters"
+flavor = "Crumbs, a ring from the coffee pot, something sticky that was probably syrup."
+room = &"kitchen"
+weekdays = Array[int]([2, 6])
+gas_cost = 5
+minutes = 20
+mood = 2

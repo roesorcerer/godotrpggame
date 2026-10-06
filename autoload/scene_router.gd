@@ -39,6 +39,8 @@ func travel(scene_path: String, spawn_name: StringName) -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 
+	# Forget the old room; a RoomZone at the spawn point will re-announce.
+	EventBus.room_entered.emit(&"")
 	_place_player(spawn_name)
 
 	await HUD.fade_from_black()

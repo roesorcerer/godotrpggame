@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ChoreData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ChoreData" format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/chore_data.gd" id="1_cd"]
 
@@ -6,13 +6,9 @@
 script = ExtResource("1_cd")
 id = &"ashtrays"
 display_name = "Empty the ashtrays"
-flavor = "Three of them in one room. The smell gets into the curtains."
+flavor = "Bruce's Marlboros, three trays deep."
 room = &"living_room"
-kind = 0
-gas_cost = 4
-minutes = 20
-relief = 1
-money_reward = 0
-requires_flag = &""
-required_tool = &""
-strain_delta = 0
+weekdays = Array[int]([])
+gas_cost = 3
+minutes = 15
+mood = 2

@@ -1,34 +1,51 @@
 extends CharacterBody2D
 
-@export var speed := 80.0
+var speed := 50
+var direction : Vector2
+var can_move: bool = true
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var move_state_machine = $Animation/AnimationTree.get("parameters/MoveStateMachine/playback")
 
-var facing := "down"
+var current_tool : Enum.Tool
+var current_seed: Enum.Seed 
 
 
-func _ready() -> void:
-	add_to_group("player")
 
 func _physics_process(_delta: float) -> void:
-	# No walking during a fade, a cutscene or a menu.
-	if GameClock.is_paused():
-		velocity = Vector2.ZERO
-		move_and_slide()
-		sprite.play("idle_" + facing)
-		return
+	if can_move:
+		get_basic_input()
+		move()
+		animate()
+	
 
-	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+func get_basic_input():
+	if Input.is_action_just_pressed("tool_forward") or Input.is_action_just_pressed("tool_backward"):
+		var dir = Input.get_axis("tool_backward", "tool_forward")
+		current_tool = posmod(current_tool + int(dir), Enum.Tool.size()) as Enum.Tool
+	
+	if Input.is_action_just_pressed("seed_forward"):
+		current_seed =  posmod(current_seed + 1, Enum.Tool.size()) as Enum.Seed
+	
+	if Input.is_action_just_pressed("action"):
+		$Animation/AnimationTree.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+
+
+func move():
+	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = direction * speed
 	move_and_slide()
-	_update_animation(direction)
 
-func _update_animation(direction: Vector2) -> void:
-	if direction != Vector2.ZERO:
-		if abs(direction.x) > abs(direction.y):
-			facing = "right" if direction.x > 0 else "left"
-		else:
-			facing = "down" if direction.y > 0 else "up"
-		sprite.play("walk_" + facing)
+	
+func animate():
+	if direction:
+		move_state_machine.travel("Walk")
+		var direction_animation = Vector2(round(direction.x),round(direction.y))
+		$Animation/AnimationTree.set("parameters/MoveStateMachine/Walk/blend_position", direction_animation)
+		$Animation/AnimationTree.set("parameters/MoveStateMachine/Walk/blend_position", direction_animation)
+		for animation in Data.TOOL_STATE_ANIMATIONS.values():
+			var animation_name: String = 'parameters/ToolStateMachine/'+ animation + "/blend_position"
+			$Animation/AnimationTree.set(animation_name, direction_animation)
 	else:
-		sprite.play("idle_" + facing)
+		move_state_machine.travel("Idle")

@@ -15,11 +15,10 @@ signal gas_changed(current: int, max_value: int)
 signal money_changed(amount: int)
 
 # --- house / chores (M2) ---------------------------------------------------
-signal room_state_changed(room_id: StringName)
+signal room_entered(room_id: StringName)      # player walked into a RoomZone
 signal chore_completed(chore_id: StringName)
-
-# --- coursework (M2) -------------------------------------------------------
-signal coursework_progressed(subject: StringName, amount: float)
+signal chores_changed()                       # today's list moved: done, new day, load
+signal mom_mood_changed(mood: int)
 
 # --- family / condition (M5) -----------------------------------------------
 signal condition_rolled(state: StringName)   # &"steady" / &"slow" / &"under"

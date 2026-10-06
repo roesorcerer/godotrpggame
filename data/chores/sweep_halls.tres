@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ChoreData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/chore_data.gd" id="1_cd"]
+
+[resource]
+script = ExtResource("1_cd")
+id = &"sweep_halls"
+display_name = "Sweep the halls"
+flavor = "Mud from the yard, all the way from the door to the stairs."
+room = &"halls"
+weekdays = Array[int]([1, 4])
+gas_cost = 6
+minutes = 30
+mood = 3

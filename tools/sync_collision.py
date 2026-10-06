@@ -9,10 +9,17 @@ invisible "Collision" layer is painted with it.
 That keeps "what it looks like" and "what blocks you" independent - redecorate
 freely, then re-run this to bring collision back in step.
 
+    Collision = (Walls + Furniture) - Openings
+
+Walls and Furniture block wherever they have a tile. Decor never does. The
+"Openings" layer (invisible, tinted green, painted with any tile) marks cells
+you can walk through anyway: doorways drawn as wall tiles, thin wall ends, the
+top half of a tall lamp. Paint those once and they survive every re-sync.
+
 Usage:
     python tools/sync_collision.py                       # ranch_interior.tscn
     python tools/sync_collision.py scenes/world/foo.tscn
-    python tools/sync_collision.py --from Walls,Furniture scenes/world/foo.tscn
+    python tools/sync_collision.py --from Walls scenes/world/foo.tscn
 
 Close the scene in Godot first, or the editor may write over the result.
 """
@@ -26,6 +33,7 @@ import sys
 
 DEFAULT_SCENE = "scenes/world/ranch_interior.tscn"
 COLLISION_LAYER = "Collision"
+OPENINGS_LAYER = "Openings"
 BRUSH_SOURCE_ID = 7
 BRUSH_ATLAS = (0, 0)          # the full-block tile
 
@@ -71,7 +79,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("scene", nargs="?", default=DEFAULT_SCENE)
-    ap.add_argument("--from", dest="sources", default="Walls",
+    ap.add_argument("--from", dest="sources", default="Walls,Furniture",
                     help="comma-separated layer names to derive collision from")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
@@ -87,13 +95,21 @@ def main():
     for name in [s.strip() for s in args.sources.split(",") if s.strip()]:
         cells = read_cells(src, name)
         if cells is None:
-            sys.exit("scene has no TileMapLayer called %r" % name)
+            print("  %-12s (no such layer, skipped)" % name)
+            continue
         for c in cells:
             if c[2] in OPEN_SOURCE_IDS:
                 skipped += 1
                 continue
             solid[(c[0], c[1])] = True
         print("  %-12s %d cells" % (name, len(cells)))
+
+    openings = read_cells(src, OPENINGS_LAYER) or []
+    opened = 0
+    for c in openings:
+        if solid.pop((c[0], c[1]), None):
+            opened += 1
+    print("  %-12s %d cells (%d opened)" % (OPENINGS_LAYER, len(openings), opened))
 
     out_cells = [(x, y, BRUSH_SOURCE_ID, BRUSH_ATLAS[0], BRUSH_ATLAS[1], 0)
                  for (x, y) in sorted(solid)]

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ChoreData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/chore_data.gd" id="1_cd"]
+
+[resource]
+script = ExtResource("1_cd")
+id = &"dust_dining"
+display_name = "Dust the dining room"
+flavor = "Nobody eats in here, but Mom likes it to look like somebody could."
+room = &"dining_room"
+weekdays = Array[int]([4])
+gas_cost = 5
+minutes = 30
+mood = 2

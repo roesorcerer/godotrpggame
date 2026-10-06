@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ChoreData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/chore_data.gd" id="1_cd"]
+
+[resource]
+script = ExtResource("1_cd")
+id = &"sort_mail"
+display_name = "Sort the mail"
+flavor = "Bills on the left for Mom. Catalogs on the right for Bruce, who won't read them."
+room = &"dining_room"
+weekdays = Array[int]([0])
+gas_cost = 4
+minutes = 20
+mood = 2

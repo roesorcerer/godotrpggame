@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-## Heads-up display: the day, the clock, Gas, the state of the house, money,
+## Heads-up display: the day, the clock, Gas, Mom and today's chores, money,
 ## the interaction prompt, the day-end summary, and the fade between days.
 
 const FADE_IN_TIME := 0.9
@@ -20,6 +20,7 @@ const FADE_OUT_TIME := 0.45
 var _fade_tween: Tween
 var _holding_pause := false
 var _summary_open := false
+var _current_room: StringName = &""       ## last RoomZone the player entered
 
 
 func _ready() -> void:
@@ -29,7 +30,9 @@ func _ready() -> void:
 	EventBus.gas_changed.connect(_on_gas_changed)
 	EventBus.money_changed.connect(_on_money_changed)
 	EventBus.interaction_prompt.connect(_on_interaction_prompt)
-	EventBus.room_state_changed.connect(func(_r): _refresh_house())
+	EventBus.chores_changed.connect(_refresh_house)
+	EventBus.mom_mood_changed.connect(func(_m): _refresh_house())
+	EventBus.room_entered.connect(_on_room_entered)
 
 	_fade.color.a = 1.0
 	_summary.visible = false
@@ -124,34 +127,24 @@ func _compose_summary(summary: Dictionary) -> String:
 	if summary.get("passed_out", false):
 		lines.append("You were still up at midnight.")
 
-	var chores := 0
-	var study_sessions := 0
-	var finished: Array[String] = []
-	for entry in GameState.day_log:
-		match entry.get("kind", ""):
-			"chore":
-				chores += 1
-			"coursework":
-				study_sessions += 1
-				if entry.get("finished", false):
-					finished.append(String(entry.get("name", "")))
-
-	if chores == 0 and study_sessions == 0:
-		lines.append("You didn't get anything done.")
+	var done := int(summary.get("chores_done", 0))
+	var missed: Array = summary.get("chores_missed", [])
+	if done == 0 and missed.is_empty():
+		lines.append("Nothing on the list today.")
+	elif done == 0:
+		lines.append("You didn't do any of your chores.")
 	else:
-		if chores > 0:
-			lines.append("%d %s done." % [chores, "job" if chores == 1 else "jobs"])
-		if study_sessions > 0:
-			lines.append("%d hour%s at the table." % [study_sessions, "" if study_sessions == 1 else "s"])
-	for title in finished:
-		lines.append("Finished: %s" % title)
+		lines.append("%d %s done." % [done, "chore" if done == 1 else "chores"])
+	if not missed.is_empty():
+		lines.append("Skipped: %s" % ", ".join(missed))
 
-	var backlog := CourseworkSystem.backlog()
-	if backlog > 0:
-		lines.append("%d assignment%s still in the packet." % [backlog, "" if backlog == 1 else "s"])
-
-	if not MessSystem.can_host():
-		lines.append("You couldn't have anyone over like this.")
+	var change := int(summary.get("mood_change", 0))
+	var mood_line := "Mom: %s" % Mom.tier_label()
+	if change > 0:
+		mood_line += "  (warmer)"
+	elif change < 0:
+		mood_line += "  (cooler)"
+	lines.append(mood_line)
 
 	lines.append("$%d" % GameState.money)
 	return "\n".join(lines)
@@ -172,21 +165,22 @@ func _refresh_clock() -> void:
 
 
 func _refresh_house() -> void:
-	var worst := MessSystem.worst_grime()
-	var clutter := MessSystem.total_clutter()
-	var text := ""
-	if worst >= 4:
-		text = "House bad"
-	elif worst >= 3:
-		text = "House messy"
-	elif not MessSystem.can_host():
-		text = "Can't have anyone over"
-	else:
-		text = "House OK"
-	if clutter > 0:
-		text += "  ·  %d clutter" % clutter
+	var left := ChoreSystem.remaining().size()
+	var total := ChoreSystem.todays_list().size()
+	var text := "Mom: %s  ·  chores %d/%d" % [Mom.tier_label(), total - left, total]
+	if _current_room != &"":
+		var here := ChoreSystem.available_in_room(_current_room).map(func(c): return c.display_name)
+		text = "%s%s\n%s" % [
+			RoomZone.name_of(get_tree(), _current_room),
+			(": " + ", ".join(here)) if not here.is_empty() else "",
+			text]
 	_house_label.text = text
-	_house_label.modulate = Color(0.85, 0.55, 0.4) if worst >= 3 else Color.WHITE
+	_house_label.modulate = Color(0.85, 0.55, 0.4) if Mom.mood() < 45 else Color.WHITE
+
+
+func _on_room_entered(room_id: StringName) -> void:
+	_current_room = room_id
+	_refresh_house()
 
 
 func _on_gas_changed(current: int, max_value: int) -> void:

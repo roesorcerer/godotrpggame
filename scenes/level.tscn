@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b2ckgixpam5yl" path="res://scenes/water_tower.tscn" id="5_b121j"]
 [ext_resource type="PackedScene" uid="uid://de52edtoi0imp" path="res://scenes/trampoline.tscn" id="9_8c41q"]
 [ext_resource type="PackedScene" path="res://scenes/props/door.tscn" id="10_door"]
+[ext_resource type="PackedScene" path="res://scenes/props/chore_spot.tscn" id="11_spot"]
 
 [node name="Ranch" type="Node2D" unique_id=2092633846]
 
@@ -159,3 +160,9 @@ target_spawn = &"Spawn_Interior"
 
 [node name="Spawn_RanchDoor" type="Marker2D" parent="World" unique_id=2054285280]
 position = Vector2(592, -128)
+
+[node name="Returnables" parent="World" instance=ExtResource("11_spot")]
+position = Vector2(632, -120)
+room = &"porch"
+only_chore = &"sort_bottles"
+prompt = "Bottles and cans"

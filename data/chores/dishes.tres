@@ -1,18 +1,14 @@
-[gd_resource type="Resource" script_class="ChoreData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ChoreData" format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/chore_data.gd" id="1_cd"]
 
 [resource]
 script = ExtResource("1_cd")
 id = &"dishes"
-display_name = "Wash the dishes"
-flavor = "Two days of them. The water goes cold before you're halfway."
+display_name = "Do the dishes"
+flavor = "The sink doesn't care whose turn it was."
 room = &"kitchen"
-kind = 0
+weekdays = Array[int]([])
 gas_cost = 5
 minutes = 30
-relief = 1
-money_reward = 0
-requires_flag = &""
-required_tool = &""
-strain_delta = 0
+mood = 3

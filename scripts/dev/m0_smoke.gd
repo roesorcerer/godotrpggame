@@ -6,6 +6,7 @@ extends Node
 ## Exits with code 0 if the clock, the day boundary and the Gas rules behave.
 
 var _failures: Array[String] = []
+var _finished := false            ## set by the last line of _run(); a script error skips it
 var _seen_day_started := 0
 var _seen_day_ended := 0
 var _seen_hours := 0
@@ -20,6 +21,8 @@ func _ready() -> void:
 	await get_tree().process_frame
 
 	_run()
+	if not _finished:
+		_failures.append("_run() did not finish - see the script error above")
 
 	if _failures.is_empty():
 		print("M0 SMOKE: PASS")
@@ -125,3 +128,4 @@ func _run() -> void:
 	GameState.from_dict(blob)
 	_check(GameState.money == 137, "money survives a save round-trip")
 	_check(GameState.has_flag(&"met_hal"), "flags survive a save round-trip")
+	_finished = true

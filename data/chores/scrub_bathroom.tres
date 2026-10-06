@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ChoreData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/chore_data.gd" id="1_cd"]
+
+[resource]
+script = ExtResource("1_cd")
+id = &"scrub_bathroom"
+display_name = "Scrub the bathroom"
+flavor = "The tub ring has layers, like a canyon wall."
+room = &"bathroom"
+weekdays = Array[int]([5])
+gas_cost = 9
+minutes = 45
+mood = 4
