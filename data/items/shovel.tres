@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://baqa38gxihenl"]
+
+[ext_resource type="Script" uid="uid://b7w30hf0uiyth" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" uid="uid://du40doqoaorvl" path="res://assets/tileset/17_Garden_16x16.png" id="2_icons"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icon"]
+atlas = ExtResource("2_icons")
+region = Rect2(448, 304, 16, 16)
+
+[resource]
+script = ExtResource("1_item")
+id = &"shovel"
+display_name = "Shovel"
+description = "Digs up grass so you can plant. Placeholder icon."
+icon = SubResource("AtlasTexture_icon")
+category = 4
+tool = 1
+max_stack = 1

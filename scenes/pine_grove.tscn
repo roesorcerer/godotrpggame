@@ -2,6 +2,11 @@
 
 [ext_resource type="TileSet" uid="uid://tcd7s8jy2jbh" path="res://tilesets/ranch_tile_set.tres" id="1_losta"]
 [ext_resource type="PackedScene" uid="uid://datmn41nxlcbg" path="res://scenes/pine_grove_house.tscn" id="2_wg058"]
+[ext_resource type="Script" uid="uid://cri62ehg6ea2s" path="res://scripts/world/door.gd" id="21_doorgd"]
+[ext_resource type="PackedScene" uid="uid://dvqt4otdhmfp" path="res://scenes/player.tscn" id="22_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(24, 48)
 
 [node name="Pine Grove" type="Node2D" unique_id=192008702]
 y_sort_enabled = true
@@ -25,3 +30,19 @@ position = Vector2(56, 112)
 [node name="Steps" type="TileMapLayer" parent="World/Buildings" unique_id=109918650]
 tile_map_data = PackedByteArray("AAD+/wUABgAFAC8AAFD9/wUABgABAC0AAAD8/wUABgABAC0AAAD7/wUABgABAC0AAAD6/wUABgABAC0AAAD5/wUABgABAC0AAAD4/wUABgABAC0AAAD3/wUABgABAC0AAAD2/wUABgABAC0AAAD1/wUABgABAC0AAAD0/wUABgABAC0AAADz/wUABgABAC0AAADy/wUABgABAC0AAAAHAAQABgAFAC8AAAAIAAQABgAFAC8AAAAHAAYABgACAC0AAGAIAAYABgACAC0AAGA=")
 tile_set = ExtResource("1_losta")
+
+[node name="ToRanch" type="Area2D" parent="World"]
+position = Vector2(-672, 176)
+script = ExtResource("21_doorgd")
+prompt = "Go home"
+target_scene = "res://scenes/level.tscn"
+target_spawn = &"Spawn_FromTown"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/ToRanch"]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="Spawn_FromRanch" type="Marker2D" parent="World"]
+position = Vector2(-640, 176)
+
+[node name="player" parent="World" instance=ExtResource("22_player")]
+position = Vector2(-640, 176)

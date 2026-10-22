@@ -25,6 +25,17 @@ signal condition_rolled(state: StringName)   # &"steady" / &"slow" / &"under"
 
 # --- people & story (M4+) --------------------------------------------------
 signal relationship_changed(npc_id: StringName, level: int)
+signal npc_talked(npc_id: StringName)          # player talked to someone
+signal place_visited(place_id: StringName)     # player arrived in a scene
+signal npc_said(speaker: String, text: String, portrait: Texture2D) # show a line in the speech box; portrait may be null
+signal quest_started(quest_id: StringName)
+signal quest_completed(quest_id: StringName)
+signal quests_changed()                         # offered/active/done moved
+
+# --- inventory -------------------------------------------------------------
+signal inventory_changed()                      # any slot changed
+signal hotbar_selected(index: int)
+signal item_added(item_id: StringName, count: int)
 signal flag_set(flag: StringName)
 signal campaign_changed()
 

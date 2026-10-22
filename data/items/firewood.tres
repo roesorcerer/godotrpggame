@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" uid="uid://b7w30hf0uiyth" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" uid="uid://djhb8it05mr0x" path="res://assets/objects/ranch_interior/kitchen/Living_Room_Singles_114.png" id="2_icon"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icon"]
+atlas = ExtResource("2_icon")
+region = Rect2(8, 32, 16, 16)
+
+[resource]
+script = ExtResource("1_item")
+id = &"firewood"
+display_name = "Firewood"
+description = "Split logs for the fireplace. Placeholder icon."
+icon = SubResource("AtlasTexture_icon")
+category = 3
+max_stack = 99

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_qd"]
+
+[resource]
+script = ExtResource("1_qd")
+id = &"bruce_message"
+display_name = "Bruce's message"
+description = "Bruce wants you to tell Mom he'll be late tonight."
+giver = &"bruce"
+offer_line = "Tell your mom I'm working late. And don't let her start on me."
+done_line = "Late again. Of course he is. Thanks for telling me, hon."
+first_day = 3
+goal = 0
+goal_target = &"mom"
+reward_mood = 2

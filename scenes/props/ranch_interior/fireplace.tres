@@ -1,0 +1,58 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bq5df0deh76u2"]
+
+[ext_resource type="Texture2D" uid="uid://djg8s3vmuwj60" path="res://assets/objects/ranch_interior/kitchen/animated_chimney_red.png" id="1_3ty1i"]
+[ext_resource type="Texture2D" uid="uid://c2y88erw4iwwq" path="res://assets/objects/ranch_interior/kitchen/Living_Room_Singles_113.png" id="2_snmgn"]
+[ext_resource type="Texture2D" uid="uid://djhb8it05mr0x" path="res://assets/objects/ranch_interior/kitchen/Living_Room_Singles_114.png" id="3_ywtvk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yeigv"]
+atlas = ExtResource("1_3ty1i")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8dwhf"]
+atlas = ExtResource("1_3ty1i")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3h1am"]
+atlas = ExtResource("1_3ty1i")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wo53e"]
+atlas = ExtResource("2_snmgn")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_af0ni"]
+atlas = ExtResource("3_ywtvk")
+region = Rect2(0, 0, 32, 48)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yeigv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8dwhf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3h1am")
+}],
+"loop": 1,
+"name": &"fireplace_lit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wo53e")
+}],
+"loop": 1,
+"name": &"fireplace_off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_af0ni")
+}],
+"loop": 1,
+"name": &"fireplace_wood",
+"speed": 5.0
+}]

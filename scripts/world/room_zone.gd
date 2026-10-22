@@ -35,7 +35,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	collision_layer = 0
-	collision_mask = 1          ## the player's body (default layer 1)
+	collision_mask = Data.PHYSICS_PLAYER
 	monitorable = false
 	body_entered.connect(_on_body_entered)
 	if room_id == &"":

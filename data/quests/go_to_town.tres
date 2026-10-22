@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://chjiw1gaddclk"]
+
+[ext_resource type="Script" uid="uid://csexihjuwvy3k" path="res://scripts/resources/quest_data.gd" id="1_qd"]
+
+[resource]
+script = ExtResource("1_qd")
+id = &"go_to_town"
+display_name = "Into town"
+description = "Mom needs a few things from Pine Grove."
+giver = &"mom"
+offer_line = "You've been cooped up all morning. Go into Pine Grove for me - here, take five dollars for gas."
+reminder_line = "Why are you still here? Pine Grove. Go."
+goal = 1
+goal_target = &"pine_grove"
+reward_money = 5
+reward_mood = 3
+reward_flag = &"been_to_town"

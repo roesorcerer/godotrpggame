@@ -14,8 +14,13 @@ var gas := GAS_BASE_MAX
 var gas_max := GAS_BASE_MAX
 
 var flags := {}          ## StringName -> bool
-var npcs := {}           ## npc_id    -> {level:int, met:bool, quests:Dictionary}
+## Per-object world state that isn't a yes/no flag, e.g. a fireplace's
+## OFF/WOOD/LIT. Key is the object's state_key; value is any plain Variant.
+var props := {}
+var npcs := {}           ## npc_id    -> {level:int, met:bool}  (quest progress is in `quests`)
+## Backpack slots: each is {} (empty) or {"id": String, "count": int}. See Inventory.
 var inventory: Array = []
+var backpack_size := 18                ## Data.BACKPACK_START_SIZE; upgrades raise it
 
 ## Mom. `mood` is 0-100 (see the Mom autoload); `mood_at_dawn` is where it
 ## stood this morning, for the day-end summary.
@@ -32,6 +37,12 @@ var campaign := {
 
 ## Ids of the chores done today. Cleared each morning.
 var chores_done: Array = []
+
+## Ids of the once-a-day seat activities (meals) done today. Cleared each morning.
+var meals_today: Array = []
+
+## Quest progress: quest id -> "active" / "done". Kept across days (see QuestSystem).
+var quests := {}
 
 ## What happened today. Cleared each morning, read by the day-end summary.
 var day_log: Array = []
@@ -91,6 +102,7 @@ func begin_new_day(slept_at_minutes: int, passed_out: bool) -> void:
 	skipped_dinner = false
 	day_log = []
 	chores_done = []
+	meals_today = []
 	doris["mood_at_dawn"] = Mom.mood()
 	EventBus.gas_changed.emit(gas, gas_max)
 	EventBus.money_changed.emit(money)
@@ -100,18 +112,24 @@ func begin_new_day(slept_at_minutes: int, passed_out: bool) -> void:
 
 func to_dict() -> Dictionary:
 	return {
-		"version": 2,
+		"version": 3,
 		"day": GameClock.day,
 		"minutes": GameClock.minutes,
 		"money": money,
 		"gas": gas,
 		"gas_max": gas_max,
 		"flags": flags,
+		"props": props,
 		"npcs": npcs,
 		"inventory": inventory,
+		"backpack_size": backpack_size,
 		"doris": doris,
 		"campaign": campaign,
 		"chores_done": chores_done,
+		"meals_today": meals_today,
+		"quests": quests,
+		"day_log": day_log,
+		"skipped_dinner": skipped_dinner,
 	}
 
 func from_dict(data: Dictionary) -> void:
@@ -121,13 +139,22 @@ func from_dict(data: Dictionary) -> void:
 	gas = int(data.get("gas", GAS_BASE_MAX))
 	gas_max = int(data.get("gas_max", GAS_BASE_MAX))
 	flags = data.get("flags", {})
+	props = data.get("props", {})
 	npcs = data.get("npcs", {})
 	inventory = data.get("inventory", [])
+	backpack_size = int(data.get("backpack_size", backpack_size))
 	doris = data.get("doris", doris)
 	campaign = data.get("campaign", campaign)
 	chores_done = data.get("chores_done", [])
+	meals_today = data.get("meals_today", [])
+	quests = data.get("quests", {})
+	day_log = data.get("day_log", [])
+	skipped_dinner = bool(data.get("skipped_dinner", false))
 
+	EventBus.minute_ticked.emit(GameClock.minutes)
 	EventBus.gas_changed.emit(gas, gas_max)
 	EventBus.money_changed.emit(money)
 	EventBus.mom_mood_changed.emit(int(doris.get("mood", 60)))
 	EventBus.chores_changed.emit()
+	EventBus.quests_changed.emit()
+	EventBus.inventory_changed.emit()

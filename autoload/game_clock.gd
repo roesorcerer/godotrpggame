@@ -113,6 +113,7 @@ func end_day(passed_out := false) -> void:
 	}
 	# Settle today's chore list (and Mom's mood) before anyone reads the summary.
 	ChoreSystem.close_day(summary)
+	QuestSystem.close_day(summary)
 	EventBus.day_ended.emit(day, summary)
 
 	day += 1

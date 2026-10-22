@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bbpmkuksu825p"]
+
+[ext_resource type="Script" uid="uid://b7w30hf0uiyth" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" uid="uid://5orpeo8l37pq" path="res://assets/UI/Modern_UI_Style_2.png" id="2_icons"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icon"]
+atlas = ExtResource("2_icons")
+region = Rect2(160, 185, 15, 15)
+
+[resource]
+script = ExtResource("1_item")
+id = &"gear"
+display_name = "Rusty gear"
+description = "Off one of Bruce's projects. He'll want it back. Placeholder icon."
+icon = SubResource("AtlasTexture_icon")
+sell_price = 1

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://djx4ck54uxsrn"]
+
+[ext_resource type="Script" uid="uid://b7w30hf0uiyth" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" uid="uid://5orpeo8l37pq" path="res://assets/UI/Modern_UI_Style_2.png" id="2_icons"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icon"]
+atlas = ExtResource("2_icons")
+region = Rect2(179, 164, 11, 10)
+
+[resource]
+script = ExtResource("1_item")
+id = &"chicken_leg"
+display_name = "Leftover chicken"
+description = "From the back of the fridge. Probably fine. Placeholder icon."
+icon = SubResource("AtlasTexture_icon")
+max_stack = 20

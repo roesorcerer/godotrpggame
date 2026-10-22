@@ -42,6 +42,8 @@ func travel(scene_path: String, spawn_name: StringName) -> void:
 	# Forget the old room; a RoomZone at the spawn point will re-announce.
 	EventBus.room_entered.emit(&"")
 	_place_player(spawn_name)
+	# Place id = the scene's file name (pine_grove.tscn -> &"pine_grove").
+	EventBus.place_visited.emit(StringName(scene_path.get_file().get_basename()))
 
 	await HUD.fade_from_black()
 	GameClock.release_pause()
@@ -77,6 +79,8 @@ func _clear_player_prompt() -> void:
 	var player := get_player()
 	if player == null:
 		return
-	var sensor := player.get_node_or_null("InteractionSensor")
-	if sensor != null and sensor.has_method("clear"):
-		sensor.call("clear")
+	# Found by capability, not name: the sensor node has been renamed before.
+	for child in player.get_children():
+		if child is Area2D and child.has_method("clear"):
+			child.call("clear")
+			return

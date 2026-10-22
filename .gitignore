@@ -1,3 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Local editor tooling (large / per-machine)
+addons/ziva_agent/
+.script_splitter/

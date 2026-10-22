@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://pujamme34as2"]
+
+[ext_resource type="Script" uid="uid://b7w30hf0uiyth" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" uid="uid://b8ys30sh6pqpo" path="res://assets/tileset/outdoor_terrain/terrain/seeds.png" id="2_icons"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icon"]
+atlas = ExtResource("2_icons")
+region = Rect2(0, 0, 48, 16)
+
+[resource]
+script = ExtResource("1_item")
+id = &"seed_bag"
+display_name = "Seed bag"
+description = "Plants seeds in dug soil. [3] picks which seed. Placeholder icon."
+icon = SubResource("AtlasTexture_icon")
+category = 4
+tool = 3
+max_stack = 1

@@ -33,13 +33,12 @@ func _ready() -> void:
 		get_tree().quit(1)
 
 
-## M2 added daily grime, and a filthy house docks the Gas cap. These cap tests
-## are about bedtime and dinner, so scrub the house first to isolate them.
-func _clean_house() -> void:
-	for id in MessSystem.room_ids():
-		var room := MessSystem.get_room(id)
-		room["grime"] = 0
-		room["clutter"] = 0
+## Missed chores cost Mom's mood at bedtime, and her mood decides breakfast,
+## which lifts the Gas cap. These cap tests are about bedtime and dinner, so
+## tick off every chore and pin her mood first to isolate them.
+func _settle_house(mom_mood: int) -> void:
+	GameState.chores_done = ChoreSystem.all().map(func(c): return String(c.id))
+	GameState.doris["mood"] = mom_mood
 
 
 func _check(condition: bool, label: String) -> void:
@@ -73,9 +72,8 @@ func _run() -> void:
 	_check(not GameState.spend_gas(999), "cannot overspend Gas")
 	_check(GameState.gas == 30, "failed spend leaves Gas alone")
 
-	# --- sleeping on time: full rest (isolate from the Steady breakfast bonus) ---
-	GameState.doris["today"] = &"slow"
-	_clean_house()
+	# --- sleeping on time: full rest (isolated from the breakfast bonus) ---
+	_settle_house(Mom.BREAKFAST_MOOD - 1)
 	var day_before := GameClock.day
 	GameClock.end_day(false)                        # slept at 3:40 PM, before 11 PM
 	_check(GameClock.day == day_before + 1, "day advanced")
@@ -85,25 +83,23 @@ func _run() -> void:
 	_check(GameState.gas_max == GameState.GAS_BASE_MAX,
 		"full rest keeps the 100 cap, got %d" % GameState.gas_max)
 
-	# --- a Steady morning lifts the ceiling ---
-	GameState.doris["today"] = &"steady"
-	_clean_house()
+	# --- Mom in a good mood makes breakfast, which lifts the ceiling ---
+	_settle_house(Mom.BREAKFAST_MOOD)
 	GameClock.end_day(false)
 	_check(GameState.gas_max == GameState.GAS_BASE_MAX + GameState.GAS_BONUS_BREAKFAST,
 		"breakfast lifts the cap to 110, got %d" % GameState.gas_max)
 	_check(GameState.gas == GameState.gas_max, "you wake up full")
 
 	# --- skipping dinner ---
-	GameState.doris["today"] = &"slow"
+	_settle_house(Mom.BREAKFAST_MOOD - 1)
 	GameState.skipped_dinner = true
-	_clean_house()
 	GameClock.end_day(false)
 	_check(GameState.gas_max == GameState.GAS_BASE_MAX - GameState.GAS_PENALTY_NO_DINNER,
 		"no dinner costs 20 off the cap, got %d" % GameState.gas_max)
 	_check(not GameState.skipped_dinner, "dinner flag resets each morning")
 
 	# --- staying up past midnight: reduced cap ---
-	_clean_house()
+	_settle_house(Mom.BREAKFAST_MOOD - 1)
 	GameClock.advance(GameClock.MINUTES_PER_DAY)    # runs the clock out -> passed out
 	_check(GameState.gas_max == GameState.GAS_CAP_PASSED_OUT,
 		"passing out caps Gas at 70, got %d" % GameState.gas_max)

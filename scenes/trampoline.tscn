@@ -1,12 +1,159 @@
 [gd_scene format=3 uid="uid://de52edtoi0imp"]
 
-[ext_resource type="Texture2D" uid="uid://cwoyud2hg54rt" path="res://assets/objects/trampoline.png" id="1_2yctu"]
+[ext_resource type="Texture2D" uid="uid://bfo8465xerdep" path="res://assets/objects/Trampoline_1.png" id="1_2yctu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2yctu"]
+atlas = ExtResource("1_2yctu")
+region = Rect2(0, 0, 48, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nytqh"]
+atlas = ExtResource("1_2yctu")
+region = Rect2(48, 0, 48, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ne3y"]
+atlas = ExtResource("1_2yctu")
+region = Rect2(96, 0, 48, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gay0"]
+atlas = ExtResource("1_2yctu")
+region = Rect2(144, 0, 48, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64cc3"]
+atlas = ExtResource("1_2yctu")
+region = Rect2(0, 0, 48, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7y3yr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2yctu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nytqh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ne3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gay0")
+}],
+"loop": 1,
+"name": &"trampoline_bounce",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64cc3")
+}],
+"loop": 1,
+"name": &"trampoline_default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_oqe70"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"trampoline_default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_62mwn"]
+_data = {
+&"RESET": SubResource("Animation_oqe70")
+}
+
+[sub_resource type="Animation" id="Animation_so26s"]
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"trampoline_bounce"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.33333334, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_ys5mn"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"trampoline_default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uxfbg"]
+_data = {
+&"trampoline_bounce": SubResource("Animation_so26s"),
+&"trampoline_static": SubResource("Animation_ys5mn")
+}
 
 [node name="Trampoline" type="StaticBody2D" unique_id=1095410914]
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1285754524]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=503444306]
 position = Vector2(0, -40)
-texture = ExtResource("1_2yctu")
+sprite_frames = SubResource("SpriteFrames_7y3yr")
+animation = &"trampoline_default"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=223691041]
 polygon = PackedVector2Array(-24, -16, -8, 0, 8, 0, 24, -8, 24, -24, -24, -24)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1143757294]
+libraries/ = SubResource("AnimationLibrary_62mwn")
+libraries/trampoline = SubResource("AnimationLibrary_uxfbg")
+autoplay = &"trampoline/trampoline_static"
