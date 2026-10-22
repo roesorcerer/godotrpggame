@@ -22,7 +22,7 @@ import struct
 
 from PIL import Image, ImageDraw, ImageFont
 
-DEFAULT_SCENE = "scenes/world/ranch_interior.tscn"
+DEFAULT_SCENE = "world/ranch_interior/ranch_interior.tscn"
 TILE = 16
 REC = "<hhHHHH"                 # cell_x, cell_y, source_id, atlas_x, atlas_y, alternative
 REC_SIZE = struct.calcsize(REC)

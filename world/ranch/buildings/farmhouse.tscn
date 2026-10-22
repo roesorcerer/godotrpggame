@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cj5tdfatail6u"]
+
+[ext_resource type="Texture2D" uid="uid://d30j4s18xt3ou" path="res://world/ranch/buildings/farmhouse.png" id="1_r3m12"]
+
+[node name="Ranch" type="StaticBody2D" unique_id=793429187]
+y_sort_enabled = true
+
+[node name="Mainhouse" type="Sprite2D" parent="." unique_id=64917708]
+position = Vector2(-160, 0)
+texture = ExtResource("1_r3m12")
+centered = false
+offset = Vector2(0, -224)
+region_enabled = true
+region_rect = Rect2(93, 0, 182, 253)
+
+[node name="LeftWing" type="Sprite2D" parent="." unique_id=1672012024]
+position = Vector2(-195, -55)
+texture = ExtResource("1_r3m12")
+centered = false
+offset = Vector2(-57, -111)
+region_enabled = true
+region_rect = Rect2(0, 60, 93, 196)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="." unique_id=1507493915]
+polygon = PackedVector2Array(-232, -96, -232, -48, -160, -48, -160, 0, 16, 0, 16, -96)

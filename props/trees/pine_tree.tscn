@@ -1,0 +1,169 @@
+[gd_scene format=3 uid="uid://b2j6h01pj0na"]
+
+[ext_resource type="SpriteFrames" uid="uid://4vk14ytvx53r" path="res://props/trees/tree_frames.tres" id="1_uj23i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7y3yr"]
+size = Vector2(18, 16)
+
+[sub_resource type="Animation" id="Animation_cf4nm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"tree"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:speed_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_txd40"]
+_data = {
+&"RESET": SubResource("Animation_cf4nm")
+}
+
+[sub_resource type="Animation" id="Animation_xi6r1"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"tree_sway"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16685589, 0.31797066, 0.52103114, 0.71622103),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_omlhq"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"tree"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_q48jb"]
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"tree_sway"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.23333333, 0.33333334, 0.46666667, 0.56666666, 0.7, 0.8333333, 0.96666664, 1.1, 1.3333334, 1.4666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:speed_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.033333335, 1.6666666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5, 0.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yphj7"]
+_data = {
+&"tree_small_shake": SubResource("Animation_xi6r1"),
+&"tree_small_static": SubResource("Animation_omlhq"),
+&"tree_small_sway": SubResource("Animation_q48jb")
+}
+
+[node name="PineTree" type="StaticBody2D" unique_id=1828715606]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1715077291]
+position = Vector2(0, -32)
+sprite_frames = ExtResource("1_uj23i")
+animation = &"tree"
+autoplay = "tree_sway"
+speed_scale = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1664668089]
+position = Vector2(1, -8)
+shape = SubResource("RectangleShape2D_7y3yr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1799961749]
+libraries/ = SubResource("AnimationLibrary_txd40")
+libraries/tree = SubResource("AnimationLibrary_yphj7")
+autoplay = &"tree/tree_small_sway"

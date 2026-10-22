@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://begm3unv1cgxe"]
+
+[ext_resource type="Texture2D" uid="uid://dgpw3pj71f3nb" path="res://props/kitchen_table/kitchen_table.png" id="1_e2k6h"]
+
+[node name="KitchenTable" type="StaticBody2D" unique_id=1358227924]
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1242192562]
+position = Vector2(8, -18)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_e2k6h")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1349302210]
+polygon = PackedVector2Array(-13, -28, 29, -28, 29, 0, -13, 0)

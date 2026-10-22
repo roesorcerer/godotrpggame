@@ -26,7 +26,7 @@ ChoreSystem="*res://autoload/chore_system.gd"
 QuestSystem="*res://autoload/quest_system.gd"
 Inventory="*res://autoload/inventory.gd"
 SaveSystem="*res://autoload/save_system.gd"
-HUD="*res://scenes/ui/hud.tscn"
+HUD="*res://ui/hud/hud.tscn"
 Data="*uid://bccw0chb2ebmh"
 Enum="*uid://bqrnnyc50l2mx"
 DialogueManager="*uid://c3rodes2l3gxb"
@@ -44,7 +44,16 @@ enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://add
 [file_customization]
 
 folder_colors={
-"res://assets/": "pink"
+"res://actors/": "orange",
+"res://art_library/": "gray",
+"res://autoload/": "red",
+"res://core/": "red",
+"res://data/": "yellow",
+"res://dev/": "gray",
+"res://props/": "green",
+"res://tilesets/": "teal",
+"res://ui/": "purple",
+"res://world/": "blue"
 }
 
 [input]

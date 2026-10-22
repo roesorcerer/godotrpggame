@@ -3,7 +3,7 @@
 The tileset deliberately carries no per-tile collision: with ~15,000 tiles in the
 Interiors atlas alone, painting collision tile-by-tile is unmaintainable. Instead
 a single collision brush (source 7 of ranch_interior.tres, from
-assets/tileset/collision_brush.png) holds the collision polygons, and an
+tilesets/atlases/collision_brush.png) holds the collision polygons, and an
 invisible "Collision" layer is painted with it.
 
 That keeps "what it looks like" and "what blocks you" independent - redecorate
@@ -18,8 +18,8 @@ top half of a tall lamp. Paint those once and they survive every re-sync.
 
 Usage:
     python tools/sync_collision.py                       # ranch_interior.tscn
-    python tools/sync_collision.py scenes/world/foo.tscn
-    python tools/sync_collision.py --from Walls scenes/world/foo.tscn
+    python tools/sync_collision.py world/foo/foo.tscn
+    python tools/sync_collision.py --from Walls world/foo/foo.tscn
 
 Close the scene in Godot first, or the editor may write over the result.
 """
@@ -31,7 +31,7 @@ import re
 import struct
 import sys
 
-DEFAULT_SCENE = "scenes/world/ranch_interior.tscn"
+DEFAULT_SCENE = "world/ranch_interior/ranch_interior.tscn"
 COLLISION_LAYER = "Collision"
 OPENINGS_LAYER = "Openings"
 BRUSH_SOURCE_ID = 7

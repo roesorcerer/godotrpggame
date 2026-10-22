@@ -1,13 +1,13 @@
 [gd_resource type="TileSet" format=3 uid="uid://cdt2pb1xqdq3c"]
 
-[ext_resource type="Texture2D" uid="uid://j1yn5x0xephh" path="res://assets/tileset/Interior/Interiors_16x16.png" id="1_h24ue"]
-[ext_resource type="Texture2D" uid="uid://br65yvc1vjg8l" path="res://assets/tileset/Interior/Room_Builder_Floors_16x16.png" id="2_dynby"]
-[ext_resource type="Texture2D" uid="uid://bhnb7m0r0dqjn" path="res://assets/tileset/Interior/Room_Builder_Walls_16x16.png" id="3_wepnl"]
-[ext_resource type="Texture2D" uid="uid://7tq04pdp8s7d" path="res://assets/tileset/Interior/Room_Builder_3d_walls_16x16.png" id="4_hpii2"]
-[ext_resource type="Texture2D" uid="uid://dt0pj6g6rejnt" path="res://assets/tileset/Interior/Room_Builder_Arched_Entryways_16x16.png" id="5_ymqay"]
-[ext_resource type="Texture2D" uid="uid://w4ef6x0x8e0s" path="res://assets/tileset/Interior/Room_Builder_Baseboards_16x16.png" id="6_8sq7p"]
-[ext_resource type="Texture2D" uid="uid://c7joumq033ptr" path="res://assets/tileset/Interior/Room_Builder_borders_16x16.png" id="7_co3m4"]
-[ext_resource type="Texture2D" uid="uid://bhvio4x4e7o5u" path="res://assets/tileset/collision_brush.png" id="8_collbrush"]
+[ext_resource type="Texture2D" uid="uid://j1yn5x0xephh" path="res://tilesets/atlases/interior/interiors_16x16.png" id="1_h24ue"]
+[ext_resource type="Texture2D" uid="uid://br65yvc1vjg8l" path="res://tilesets/atlases/interior/room_builder_floors_16x16.png" id="2_dynby"]
+[ext_resource type="Texture2D" uid="uid://bhnb7m0r0dqjn" path="res://tilesets/atlases/interior/room_builder_walls_16x16.png" id="3_wepnl"]
+[ext_resource type="Texture2D" uid="uid://7tq04pdp8s7d" path="res://tilesets/atlases/interior/room_builder_3d_walls_16x16.png" id="4_hpii2"]
+[ext_resource type="Texture2D" uid="uid://dt0pj6g6rejnt" path="res://tilesets/atlases/interior/room_builder_arched_entryways_16x16.png" id="5_ymqay"]
+[ext_resource type="Texture2D" uid="uid://w4ef6x0x8e0s" path="res://tilesets/atlases/interior/room_builder_baseboards_16x16.png" id="6_8sq7p"]
+[ext_resource type="Texture2D" uid="uid://c7joumq033ptr" path="res://tilesets/atlases/interior/room_builder_borders_16x16.png" id="7_co3m4"]
+[ext_resource type="Texture2D" uid="uid://bhvio4x4e7o5u" path="res://tilesets/atlases/collision_brush.png" id="8_collbrush"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wjoo1"]
 texture = ExtResource("1_h24ue")

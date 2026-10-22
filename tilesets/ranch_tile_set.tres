@@ -1,8 +1,8 @@
 [gd_resource type="TileSet" format=3 uid="uid://tcd7s8jy2jbh"]
 
-[ext_resource type="Texture2D" uid="uid://dv0ls3nr8ch07" path="res://assets/tileset/Godot_Autotiles_16x16.png" id="1_llfbl"]
-[ext_resource type="Texture2D" uid="uid://bkcloibqlxbgo" path="res://assets/tileset/1_Terrains_and_Fences_16x16.png" id="2_0gu45"]
-[ext_resource type="Texture2D" uid="uid://leh7dy6xn80e" path="res://assets/tileset/outdoor_terrain/trees/Tree_Pine_Blue_Small_16x16.png" id="3_0gu45"]
+[ext_resource type="Texture2D" uid="uid://dv0ls3nr8ch07" path="res://tilesets/atlases/godot_autotiles_16x16.png" id="1_llfbl"]
+[ext_resource type="Texture2D" uid="uid://bkcloibqlxbgo" path="res://tilesets/atlases/1_terrains_and_fences_16x16.png" id="2_0gu45"]
+[ext_resource type="Texture2D" uid="uid://leh7dy6xn80e" path="res://props/trees/sprites/tree_pine_blue_small_16x16.png" id="3_0gu45"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_qe2ey"]
 tile_data = PackedInt32Array(65536, 1638401, 13, 1, 1703937, 12, 65537, 1703937, 13, 2, 1769473, 12, 65538, 1769473, 13, 3, 1835009, 12, 65539, 1835009, 13, 65540, 1900545, 13)
