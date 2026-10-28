@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SubjectData" format=3]
+
+[ext_resource type="Script" path="res://data/subject_data.gd" id="1_subject"]
+
+[resource]
+script = ExtResource("1_subject")
+id = &"english"
+display_name = "English"
+skill = &"expression"
+study_line = "A chapter of the assigned book, then a page about it. Your handwriting gets worse as you go."

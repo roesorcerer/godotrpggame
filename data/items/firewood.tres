@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="ItemData" format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://qc43b87m3c40"]
 
 [ext_resource type="Script" uid="uid://b7w30hf0uiyth" path="res://data/item_data.gd" id="1_item"]
-[ext_resource type="Texture2D" uid="uid://djhb8it05mr0x" path="res://props/fireplace/fireplace_wood.png" id="2_icon"]
+[ext_resource type="Texture2D" uid="uid://djhb8it05mr0x" path="res://props/ranchinside/fireplace/fireplace_wood.png" id="2_icon"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_icon"]
 atlas = ExtResource("2_icon")
@@ -14,4 +14,3 @@ display_name = "Firewood"
 description = "Split logs for the fireplace. Placeholder icon."
 icon = SubResource("AtlasTexture_icon")
 category = 3
-max_stack = 99

@@ -27,7 +27,8 @@ signal condition_rolled(state: StringName)   # &"steady" / &"slow" / &"under"
 signal relationship_changed(npc_id: StringName, level: int)
 signal npc_talked(npc_id: StringName)          # player talked to someone
 signal place_visited(place_id: StringName)     # player arrived in a scene
-signal npc_said(speaker: String, text: String, portrait: Texture2D) # show a line in the speech box; portrait may be null
+signal npc_said(speaker: String, text: String, portrait: Texture2D) # an NPC talking: the dialogue box with their portrait
+signal notice(text: String)                       # anything else to tell the player (your thoughts, results): the notice panel
 signal quest_started(quest_id: StringName)
 signal quest_completed(quest_id: StringName)
 signal quests_changed()                         # offered/active/done moved
@@ -36,6 +37,8 @@ signal quests_changed()                         # offered/active/done moved
 signal inventory_changed()                      # any slot changed
 signal hotbar_selected(index: int)
 signal item_added(item_id: StringName, count: int)
+signal stats_changed()                          # a skill, grade, honesty or nerve moved
+signal fridge_changed()                         # something went in or out of the fridge
 signal flag_set(flag: StringName)
 signal campaign_changed()
 

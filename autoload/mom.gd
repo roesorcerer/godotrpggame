@@ -19,6 +19,10 @@ const TIERS := [
 ## At or above this she makes breakfast, which lifts tomorrow's Gas.
 const BREAKFAST_MOOD := 65
 
+## She's asleep from this hour on. Until her daily condition roll exists,
+## this is the only time she's out cold.
+const SLEEP_HOUR := 22
+
 
 func mood() -> int:
 	return int(GameState.doris.get("mood", START_MOOD))
@@ -46,3 +50,9 @@ func tier_label() -> String:
 
 func makes_breakfast() -> bool:
 	return mood() >= BREAKFAST_MOOD
+
+
+## Asleep (or, once the condition roll exists, passed out): she won't notice
+## what goes on in the house.
+func is_asleep() -> bool:
+	return GameClock.clock_hour() >= SLEEP_HOUR

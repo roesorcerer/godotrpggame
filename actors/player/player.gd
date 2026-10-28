@@ -101,6 +101,12 @@ func sit(new_seat: Seat, animation: StringName) -> void:
 	sprite.play(animation)
 
 
+## Switch pose without getting up (reading a book on the couch).
+func play_seated(animation: StringName) -> void:
+	if seat:
+		sprite.play(animation)
+
+
 func stand_up() -> void:
 	seat.release()
 	seat = null

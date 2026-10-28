@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3]
+
+[ext_resource type="Script" path="res://data/recipe_data.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+id = &"mac_and_cheese"
+display_name = "Mac and cheese"
+instructions = "Boil the noodles, drain them, stir in the orange powder. Milk if there is any."
+ingredients = Dictionary[StringName, int]({&"boxed_mac": 1})
+method = 0
+cook_minutes = 20
+result = &"mac_and_cheese"

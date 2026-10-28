@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3]
+
+[ext_resource type="Script" path="res://data/recipe_data.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+id = &"leftover_chicken"
+display_name = "Reheated chicken"
+instructions = "Into the pan until it sizzles. Don't think about how old it is."
+ingredients = Dictionary[StringName, int]({&"chicken_leg": 1})
+method = 0
+cook_minutes = 10
+result = &"reheated_chicken"

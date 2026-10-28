@@ -21,6 +21,8 @@ var npcs := {}           ## npc_id    -> {level:int, met:bool}  (quest progress 
 ## Backpack slots: each is {} (empty) or {"id": String, "count": int}. See Inventory.
 var inventory: Array = []
 var backpack_size := 18                ## Data.BACKPACK_START_SIZE; upgrades raise it
+## The kitchen fridge: item id -> count. Only Cooking changes it.
+var fridge: Dictionary = Data.STARTING_FRIDGE.duplicate()
 
 ## Mom. `mood` is 0-100 (see the Mom autoload); `mood_at_dawn` is where it
 ## stood this morning, for the day-end summary.
@@ -33,6 +35,17 @@ var campaign := {
 	"fund": 0,
 	"commitments": [],
 	"events_run": [],
+}
+
+## Homeschool. Skills only grow by studying for real; grades are what the
+## workbook shows Mom; honesty and nerve move with how you get there.
+## See the School autoload for the rules.
+var school := {
+	"skills": {},            ## skill id -> xp
+	"grades": {},            ## subject id -> 0-100
+	"honesty": 60,
+	"nerve": 0,
+	"copied_today": [],      ## subject ids copied from the answer key today
 }
 
 ## Ids of the chores done today. Cleared each morning.
@@ -103,6 +116,7 @@ func begin_new_day(slept_at_minutes: int, passed_out: bool) -> void:
 	day_log = []
 	chores_done = []
 	meals_today = []
+	school["copied_today"] = []
 	doris["mood_at_dawn"] = Mom.mood()
 	EventBus.gas_changed.emit(gas, gas_max)
 	EventBus.money_changed.emit(money)
@@ -112,7 +126,7 @@ func begin_new_day(slept_at_minutes: int, passed_out: bool) -> void:
 
 func to_dict() -> Dictionary:
 	return {
-		"version": 3,
+		"version": 5,
 		"day": GameClock.day,
 		"minutes": GameClock.minutes,
 		"money": money,
@@ -123,10 +137,12 @@ func to_dict() -> Dictionary:
 		"npcs": npcs,
 		"inventory": inventory,
 		"backpack_size": backpack_size,
+		"fridge": fridge,
 		"doris": doris,
 		"campaign": campaign,
 		"chores_done": chores_done,
 		"meals_today": meals_today,
+		"school": school,
 		"quests": quests,
 		"day_log": day_log,
 		"skipped_dinner": skipped_dinner,
@@ -143,10 +159,12 @@ func from_dict(data: Dictionary) -> void:
 	npcs = data.get("npcs", {})
 	inventory = data.get("inventory", [])
 	backpack_size = int(data.get("backpack_size", backpack_size))
+	fridge = data.get("fridge", Data.STARTING_FRIDGE.duplicate())
 	doris = data.get("doris", doris)
 	campaign = data.get("campaign", campaign)
 	chores_done = data.get("chores_done", [])
 	meals_today = data.get("meals_today", [])
+	school = data.get("school", {"skills": {}, "grades": {}, "honesty": 60, "nerve": 0, "copied_today": []})
 	quests = data.get("quests", {})
 	day_log = data.get("day_log", [])
 	skipped_dinner = bool(data.get("skipped_dinner", false))
@@ -158,3 +176,5 @@ func from_dict(data: Dictionary) -> void:
 	EventBus.chores_changed.emit()
 	EventBus.quests_changed.emit()
 	EventBus.inventory_changed.emit()
+	EventBus.fridge_changed.emit()
+	EventBus.stats_changed.emit()

@@ -5,12 +5,24 @@
 [ext_resource type="Texture2D" uid="uid://csrp8a8dt4ubl" path="res://ui/sprites/progress_empty.png" id="3_ipwhi"]
 [ext_resource type="Texture2D" uid="uid://ddxcyok6lb8r8" path="res://ui/sprites/progress_notch_green.png" id="4_gkhbr"]
 [ext_resource type="Texture2D" uid="uid://bnxv8rj1ndluu" path="res://ui/sprites/npc_dialogue.png" id="6_n16i7"]
+[ext_resource type="Texture2D" uid="uid://cbhh208igncnr" path="res://ui/sprites/panel_container_dark_2x.png" id="7_darkpanel"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_backpack_slot"]
 content_margin_left = 3.0
 content_margin_top = 3.0
 content_margin_right = 3.0
 content_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_darkpanel"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+texture = ExtResource("7_darkpanel")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hudbox"]
 content_margin_left = 4.0
@@ -77,6 +89,8 @@ expand_margin_bottom = 11.0
 [resource]
 BackpackSlot/base_type = &"SpeechBox"
 BackpackSlot/styles/panel = SubResource("StyleBoxEmpty_backpack_slot")
+DarkPanel/base_type = &"PanelContainer"
+DarkPanel/styles/panel = SubResource("StyleBoxTexture_darkpanel")
 HudBox/base_type = &"SpeechBox"
 HudBox/styles/panel = SubResource("StyleBoxTexture_hudbox")
 InventorySlot/base_type = &"SpeechBox"

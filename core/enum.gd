@@ -8,7 +8,7 @@ enum Seed {TOMATO, CARROT, DAFFODIL}
 ## How a quest is finished. QuestData.goal_target says who/where/which flag.
 enum QuestGoal {TALK_TO, VISIT, FLAG}
 ## What kind of thing an item is (ItemData.category); sorting, selling, gifting.
-enum ItemCategory {MISC, SEED, CROP, FORAGE, TOOL}
+enum ItemCategory {MISC, SEED, CROP, FORAGE, TOOL, FOOD}
 
 #Instead of seed maybe schoolwork?
 

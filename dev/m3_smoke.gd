@@ -55,6 +55,10 @@ func _run() -> void:
 	GameState.chores_done = ["dishes"]
 	GameState.skipped_dinner = true
 	Inventory.add(&"firewood", 5)
+	GameState.fridge = {&"eggs": 3}
+	GameState.school["skills"][&"curiosity"] = 140
+	GameState.school["grades"][&"math"] = 91
+	GameState.school["honesty"] = 22
 
 	_check(SaveSystem.save_game(), "save_game wrote the file")
 	_check(SaveSystem.has_save(), "the save exists on disk")
@@ -78,6 +82,9 @@ func _run() -> void:
 	_check(GameState.chores_done.has("dishes"), "today's chores survive")
 	_check(GameState.skipped_dinner, "the dinner flag survives")
 	_check(Inventory.count_of(&"firewood") == 5, "inventory survives, got %d" % Inventory.count_of(&"firewood"))
+	_check(School.skill_level(&"curiosity") == 1 and School.grade_letter(&"math") == "A", "skills and grades survive")
+	_check(School.honesty() == 22, "honesty survives")
+	_check(GameState.fridge == {&"eggs": 3}, "the fridge survives, got %s" % GameState.fridge)
 	_check(typeof(GameClock.day) == TYPE_INT, "ints stay ints (no JSON floats)")
 
 	# --- a corrupt file is refused, not crashed on ---
@@ -99,13 +106,13 @@ func _run() -> void:
 ## Off -> wood (uses one firewood) -> lit, kept in GameState, out by morning.
 func _check_fireplace() -> void:
 	GameState.props.erase(&"fireplace_living_room")
-	var fireplace: Fireplace = load("res://props/fireplace/fireplace.tscn").instantiate()
+	var fireplace: Fireplace = load("res://props/ranchinside/fireplace/fireplace.tscn").instantiate()
 	add_child(fireplace)
 	await get_tree().process_frame
 	var anim := fireplace.get_node("AnimationPlayer") as AnimationPlayer
 
 	_check(fireplace.state == Fireplace.State.OFF, "fireplace starts off")
-	_check(anim.current_animation.ends_with("fireplace_off"), "shows the empty grate")
+	_check(anim.current_animation == "off", "shows the empty grate")
 
 	Inventory.remove(&"firewood", Inventory.count_of(&"firewood"))
 	_check(fireplace.get_prompt(null) == "Needs firewood", "asks for wood when you have none")
@@ -117,18 +124,18 @@ func _check_fireplace() -> void:
 	fireplace.interact(null)
 	_check(fireplace.state == Fireplace.State.WOOD, "wood added")
 	_check(Inventory.count_of(&"firewood") == 1, "used one firewood")
-	_check(anim.current_animation.ends_with("fireplace_wood"), "shows the logs")
+	_check(anim.current_animation == "wood", "shows the logs")
 
 	_check(fireplace.get_prompt(null) == "Light fire", "offers to light it")
 	fireplace.interact(null)
 	_check(fireplace.state == Fireplace.State.LIT, "fire lit")
-	_check(anim.current_animation.ends_with("fireplace_lit"), "shows the flames")
+	_check(anim.current_animation == "lit", "shows the flames")
 	_check(not fireplace.can_interact(null), "a lit fire has nothing to offer")
 
 	# A fresh instance (re-entering the room) reads the saved state.
 	fireplace.queue_free()
 	await get_tree().process_frame
-	fireplace = load("res://props/fireplace/fireplace.tscn").instantiate()
+	fireplace = load("res://props/ranchinside/fireplace/fireplace.tscn").instantiate()
 	add_child(fireplace)
 	await get_tree().process_frame
 	_check(fireplace.state == Fireplace.State.LIT, "the fire is still lit when you come back")

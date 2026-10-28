@@ -18,3 +18,14 @@ extends Resource
 
 ## What a shop would pay for one. 0 = can't be sold.
 @export var sell_price := 0
+
+@export_group("Food")
+## Gas restored by eating one. 0 = not something you eat (raw eggs, a box
+## of dry noodles). Eaten from a Seat: the kitchen table, the couch.
+@export_range(0, 100) var gas := 0
+## What the player says when they eat one. Empty = no line.
+@export_multiline var eat_line := ""
+
+
+func is_edible() -> bool:
+	return gas > 0

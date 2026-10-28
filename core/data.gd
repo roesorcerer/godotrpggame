@@ -62,6 +62,9 @@ const BACKPACK_MAX_SIZE = 27
 ## tools are ItemData with category TOOL; holding one sets the player's tool.
 const STARTING_ITEMS = [&"axe", &"shovel", &"watering_can", &"seed_bag"]
 
+## What's in the kitchen fridge on day one (item id -> count). See Cooking.
+const STARTING_FRIDGE = {&"bread": 4, &"cheese": 2, &"eggs": 6, &"boxed_mac": 1, &"chicken_leg": 1}
+
 ## Physics layer bits, matching the names in Project Settings > Layer Names > 2D Physics.
 const PHYSICS_TERRAIN = 1        ## layer 1: tiles, buildings, furniture
 const PHYSICS_PLAYER = 2         ## layer 2: the player's body

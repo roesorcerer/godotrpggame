@@ -13,4 +13,7 @@ id = &"chicken_leg"
 display_name = "Leftover chicken"
 description = "From the back of the fridge. Probably fine. Placeholder icon."
 icon = SubResource("AtlasTexture_icon")
+category = 5
 max_stack = 20
+gas = 8
+eat_line = "Cold. Still counts."

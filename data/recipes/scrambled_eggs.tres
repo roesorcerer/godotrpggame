@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3]
+
+[ext_resource type="Script" path="res://data/recipe_data.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+id = &"scrambled_eggs"
+display_name = "Scrambled eggs"
+instructions = "Crack them in the pan and keep stirring. Salt at the end."
+ingredients = Dictionary[StringName, int]({&"eggs": 2})
+method = 0
+cook_minutes = 10
+result = &"scrambled_eggs"

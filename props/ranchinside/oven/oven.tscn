@@ -1,0 +1,632 @@
+[gd_scene format=3 uid="uid://bb5whyud7skh7"]
+
+[ext_resource type="Script" uid="uid://dixu65771i0iq" path="res://props/ranchinside/oven/oven.gd" id="0_oven"]
+[ext_resource type="Texture2D" uid="uid://dkumwd7yxhthr" path="res://props/ranchinside/oven/oven.png" id="1_uk107"]
+[ext_resource type="Texture2D" uid="uid://ben2j88ejjr1j" path="res://props/ranchinside/oven/oven_pan_food.png" id="2_tf3e8"]
+[ext_resource type="Texture2D" uid="uid://cslg1fteinal4" path="res://props/ranchinside/oven/oven_pan_off.png" id="3_7n22c"]
+[ext_resource type="Texture2D" uid="uid://b2s2wqtkul6h" path="res://props/ranchinside/oven/oven_pan_open.png" id="4_w5r6e"]
+[ext_resource type="Texture2D" uid="uid://do5qrqspiduhy" path="res://props/ranchinside/oven/oven_open.png" id="5_wk0nv"]
+[ext_resource type="Texture2D" uid="uid://8pryvsa6urgf" path="res://props/ranchinside/oven/oven_pan_food_open.png" id="6_vwtc3"]
+[ext_resource type="Texture2D" uid="uid://cv7mam76a8p0" path="res://props/ranchinside/oven/oven_on.png" id="7_af34y"]
+[ext_resource type="Texture2D" uid="uid://egogqj0b3ila" path="res://props/ranchinside/oven/oven_pan_food_on.png" id="8_aooh8"]
+[ext_resource type="Texture2D" uid="uid://dj5pemc0mpaco" path="res://props/ranchinside/oven/oven_burners_on_open.png" id="9_2fiou"]
+[ext_resource type="Texture2D" uid="uid://cnquuk3ngcph2" path="res://props/ranchinside/oven/kitchen_oven_open.png" id="10_ck8rj"]
+[ext_resource type="Texture2D" uid="uid://dv0eyoa2guaqn" path="res://props/ranchinside/oven/kitchen_oven_cookers.png" id="11_uoxci"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apnwh"]
+atlas = ExtResource("1_uk107")
+region = Rect2(0, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3asn2"]
+atlas = ExtResource("2_tf3e8")
+region = Rect2(0, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blvms"]
+atlas = ExtResource("3_7n22c")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3yw2"]
+atlas = ExtResource("4_w5r6e")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hd7by"]
+atlas = ExtResource("5_wk0nv")
+region = Rect2(0, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayb0k"]
+atlas = ExtResource("6_vwtc3")
+region = Rect2(0, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rv5y7"]
+atlas = ExtResource("7_af34y")
+region = Rect2(0, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yrwms"]
+atlas = ExtResource("8_aooh8")
+region = Rect2(0, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5vwv"]
+atlas = ExtResource("9_2fiou")
+region = Rect2(0, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5nobb"]
+atlas = ExtResource("10_ck8rj")
+region = Rect2(0, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grdj8"]
+atlas = ExtResource("10_ck8rj")
+region = Rect2(16, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnrai"]
+atlas = ExtResource("10_ck8rj")
+region = Rect2(32, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fn6cu"]
+atlas = ExtResource("10_ck8rj")
+region = Rect2(48, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1w7e1"]
+atlas = ExtResource("10_ck8rj")
+region = Rect2(64, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g83hg"]
+atlas = ExtResource("10_ck8rj")
+region = Rect2(80, 0, 16, 32)
+margin = Rect2(0, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4254"]
+atlas = ExtResource("11_uoxci")
+region = Rect2(0, 0, 16, 16)
+margin = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jeg2d"]
+atlas = ExtResource("11_uoxci")
+region = Rect2(16, 0, 16, 16)
+margin = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvdvq"]
+atlas = ExtResource("11_uoxci")
+region = Rect2(32, 0, 16, 16)
+margin = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtgib"]
+atlas = ExtResource("11_uoxci")
+region = Rect2(48, 0, 16, 16)
+margin = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7y3yr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apnwh")
+}],
+"loop": 1,
+"name": &"oven",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3asn2")
+}],
+"loop": 1,
+"name": &"oven_burneroff_food",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blvms")
+}],
+"loop": 1,
+"name": &"oven_burneroff_pan",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3yw2")
+}],
+"loop": 1,
+"name": &"oven_burneroff_pan_open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd7by")
+}],
+"loop": 1,
+"name": &"oven_burners_off_open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayb0k")
+}],
+"loop": 1,
+"name": &"oven_burnersoff_food_open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rv5y7")
+}],
+"loop": 1,
+"name": &"oven_fourburners_on",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yrwms")
+}],
+"loop": 1,
+"name": &"oven_fourburners_on_food",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d5vwv")
+}],
+"loop": 1,
+"name": &"oven_fourburners_on_open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5nobb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grdj8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnrai")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fn6cu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1w7e1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g83hg")
+}],
+"loop": 1,
+"name": &"oven_open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4254")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jeg2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvdvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gtgib")
+}],
+"loop": 1,
+"name": &"oven_top_burnerone_on",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_uk107"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_tf3e8"]
+resource_name = "oven"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_w5r6e"]
+resource_name = "oven_burneroff_pan"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_burneroff_pan"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_wk0nv"]
+resource_name = "oven_burneroff_pan_open"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_burneroff_pan_open"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_vwtc3"]
+resource_name = "oven_burners_off_open"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_burners_off_open"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_af34y"]
+resource_name = "oven_burnersoff_food_open"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_burnersoff_food_open"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_uoxci"]
+resource_name = "oven_closed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_open"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.26337767, 0.5294157, 0.8300387),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_aooh8"]
+resource_name = "oven_fourburners_on"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_fourburners_on"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_2fiou"]
+resource_name = "oven_fourburners_on_food"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_fourburners_on_food"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ck8rj"]
+resource_name = "oven_fourburners_on_open"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_fourburners_on_open"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_apnwh"]
+resource_name = "oven_open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_open"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.26337767, 0.5294157, 0.8300387),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_3asn2"]
+resource_name = "oven_top_burnerone_on"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_top_burnerone_on"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2314531, 0.49749115, 0.8167368),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_7n22c"]
+resource_name = "oven_burneroff_food"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"oven_burneroff_food"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w5r6e"]
+_data = {
+&"RESET": SubResource("Animation_uk107"),
+&"oven": SubResource("Animation_tf3e8"),
+&"oven_burneroff_pan": SubResource("Animation_w5r6e"),
+&"oven_burneroff_pan_open": SubResource("Animation_wk0nv"),
+&"oven_burners_off_open": SubResource("Animation_vwtc3"),
+&"oven_burnersoff_food_open": SubResource("Animation_af34y"),
+&"oven_closed": SubResource("Animation_uoxci"),
+&"oven_fourburners_on": SubResource("Animation_aooh8"),
+&"oven_fourburners_on_food": SubResource("Animation_2fiou"),
+&"oven_fourburners_on_open": SubResource("Animation_ck8rj"),
+&"oven_open": SubResource("Animation_apnwh"),
+&"oven_top_burnerone_on": SubResource("Animation_3asn2"),
+&"oven_burneroff_food": SubResource("Animation_7n22c")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3asn2"]
+size = Vector2(16, 25)
+
+[node name="oven" type="Area2D" unique_id=537251460]
+script = ExtResource("0_oven")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1125807969]
+position = Vector2(8, 0)
+sprite_frames = SubResource("SpriteFrames_7y3yr")
+animation = &"oven"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=129082197]
+polygon = PackedVector2Array(-7, 9, -7, -10, 7, -10, 7, 9)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1495387455]
+libraries/ = SubResource("AnimationLibrary_w5r6e")
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=1305443215]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1646936737]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_3asn2")

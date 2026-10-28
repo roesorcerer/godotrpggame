@@ -1,0 +1,67 @@
+{
+	"categories": [
+		{
+			"uuid": "1ad4b67e-869e-4f34-a7af-c0d0d2406e28",
+			"title": "Task",
+			"color": "569eff"
+		}
+	],
+	"stages": [
+		{
+			"uuid": "9ef62bd6-cfe4-449d-83b6-3cbbe7e6f340",
+			"title": "Todo",
+			"tasks": [
+				"8c6d00c8-03b8-43fd-b6b7-bd1419aa4118"
+			]
+		},
+		{
+			"uuid": "03220359-b5d9-4f5c-a09d-60504c3600a3",
+			"title": "Doing",
+			"tasks": []
+		},
+		{
+			"uuid": "f1d18848-098b-4410-8833-3f666e40fcff",
+			"title": "Done",
+			"tasks": []
+		}
+	],
+	"tasks": [
+		{
+			"uuid": "8c6d00c8-03b8-43fd-b6b7-bd1419aa4118",
+			"title": "Ranch Kitchen Sink ",
+			"description": "Animate the kitchen sink - have a base with no water. Then one with dirty dishes. Then water. ",
+			"category": "1ad4b67e-869e-4f34-a7af-c0d0d2406e28",
+			"steps": [
+				{
+					"details": "Sink Base",
+					"done": false
+				},
+				{
+					"details": "Dishes",
+					"done": false
+				},
+				{
+					"details": "Sink Running",
+					"done": false
+				},
+				{
+					"details": "Sink Turn on",
+					"done": false
+				}
+			]
+		}
+	],
+	"layout": {
+		"columns": [
+			[
+				"9ef62bd6-cfe4-449d-83b6-3cbbe7e6f340"
+			],
+			[
+				"03220359-b5d9-4f5c-a09d-60504c3600a3"
+			],
+			[
+				"f1d18848-098b-4410-8833-3f666e40fcff"
+			]
+		]
+	}
+}

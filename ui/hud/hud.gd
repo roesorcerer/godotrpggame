@@ -8,6 +8,7 @@ const FADE_OUT_TIME := 0.45
 const GAS_NOTCHES := 4          ## notches drawn in progress_notches_full_vertical.png
 const GAS_FILL_SECONDS := 0.5
 const SPEECH_SECONDS := 5.0
+const NOTICE_SECONDS := 4.0
 
 @onready var _fade: ColorRect = $Fade
 @onready var _day_label: Label = $ClockPanel/DayLabel
@@ -25,6 +26,8 @@ const SPEECH_SECONDS := 5.0
 @onready var _speech_name: Label = $Speech/Name
 @onready var _speech_portrait: TextureRect = $Speech/Portrait
 @onready var _prompt: Label = $Prompt
+@onready var _notice: PanelContainer = $Notice
+@onready var _notice_label: Label = $Notice/Text
 @onready var _summary: PanelContainer = $Summary
 @onready var _summary_title: Label = $Summary/Margin/Rows/Title
 @onready var _summary_body: Label = $Summary/Margin/Rows/Body
@@ -32,6 +35,7 @@ const SPEECH_SECONDS := 5.0
 var _fade_tween: Tween
 var _gas_tween: Tween
 var _speech_id := 0                  ## so an old timer can't hide a newer line
+var _notice_id := 0
 var _holding_pause := false
 var _summary_open := false
 var _backpack_open := false
@@ -52,6 +56,7 @@ func _ready() -> void:
 	EventBus.chores_changed.connect(_refresh_house)
 	EventBus.quests_changed.connect(_refresh_house)
 	EventBus.npc_said.connect(_on_npc_said)
+	EventBus.notice.connect(_on_notice)
 	EventBus.mom_mood_changed.connect(func(_m): _refresh_house())
 	EventBus.room_entered.connect(_on_room_entered)
 
@@ -60,6 +65,7 @@ func _ready() -> void:
 	_prompt.text = ""
 	_prompt.visible = false
 	_speech.visible = false
+	_notice.visible = false
 	_on_gas_changed(GameState.gas, GameState.gas_max)
 	_on_money_changed(GameState.money)
 	_refresh_clock()
@@ -254,6 +260,18 @@ func _on_npc_said(speaker: String, text: String, portrait: Texture2D) -> void:
 	if id == _speech_id:
 		_speech.visible = false
 		_refresh_hotbar()
+
+
+## Everything that isn't an NPC talking - your own thoughts, what just
+## happened - in the dark panel above the prompt (ui/sprites/panel_container_dark.png).
+func _on_notice(text: String) -> void:
+	_notice_label.text = text
+	_notice.visible = true
+	_notice_id += 1
+	var id := _notice_id
+	await get_tree().create_timer(NOTICE_SECONDS).timeout
+	if id == _notice_id:
+		_notice.visible = false
 
 
 ## Like Stardew, the hotbar steps aside while the full backpack is open, and

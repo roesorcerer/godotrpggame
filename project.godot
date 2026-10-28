@@ -25,6 +25,8 @@ Mom="*res://autoload/mom.gd"
 ChoreSystem="*res://autoload/chore_system.gd"
 QuestSystem="*res://autoload/quest_system.gd"
 Inventory="*res://autoload/inventory.gd"
+Cooking="*res://autoload/cooking.gd"
+School="*res://autoload/school.gd"
 SaveSystem="*res://autoload/save_system.gd"
 HUD="*res://ui/hud/hud.tscn"
 Data="*uid://bccw0chb2ebmh"
@@ -39,7 +41,7 @@ window/stretch/scale_mode="integer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/script_splitter/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/script_splitter/plugin.cfg")
 
 [file_customization]
 

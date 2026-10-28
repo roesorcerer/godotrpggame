@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bsx1ds4oqlhft" path="res://actors/player/body_2_16x16.png" id="1_5kuxo"]
 [ext_resource type="Texture2D" uid="uid://dljss4jgaif2k" path="res://actors/player/body_02.png" id="2_b53p8"]
+[ext_resource type="Texture2D" uid="uid://bdcencb7wqtxl" path="res://actors/player/character_sitting_forward.png" id="3_qfgvi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b53p8"]
 atlas = ExtResource("2_b53p8")
@@ -918,6 +919,30 @@ region = Rect2(160, 224, 16, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_j00q3"]
 atlas = ExtResource("2_b53p8")
 region = Rect2(176, 224, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snqxf"]
+atlas = ExtResource("3_qfgvi")
+region = Rect2(0, 0, 16, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djoti"]
+atlas = ExtResource("3_qfgvi")
+region = Rect2(16, 0, 16, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfr2i"]
+atlas = ExtResource("3_qfgvi")
+region = Rect2(32, 0, 16, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_deknh"]
+atlas = ExtResource("3_qfgvi")
+region = Rect2(48, 0, 16, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kl4w"]
+atlas = ExtResource("3_qfgvi")
+region = Rect2(64, 0, 16, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jv8ho"]
+atlas = ExtResource("3_qfgvi")
+region = Rect2(80, 0, 16, 27)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sit_left_0"]
 atlas = ExtResource("2_b53p8")
@@ -2167,6 +2192,29 @@ animations = [{
 "loop": 1,
 "name": &"reading",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snqxf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djoti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfr2i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_deknh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kl4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jv8ho")
+}],
+"loop": 1,
+"name": &"sit_forward",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

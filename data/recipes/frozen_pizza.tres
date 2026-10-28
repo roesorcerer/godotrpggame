@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3]
+
+[ext_resource type="Script" path="res://data/recipe_data.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+id = &"frozen_pizza"
+display_name = "Frozen pizza"
+instructions = "Oven to 425. Straight on the rack, no pan. Twenty minutes, or until the edges go brown."
+ingredients = Dictionary[StringName, int]({&"frozen_pizza": 1})
+method = 1
+cook_minutes = 25
+result = &"pizza"

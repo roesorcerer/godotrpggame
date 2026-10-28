@@ -87,13 +87,23 @@ func perform(chore: ChoreData) -> bool:
 	if not GameState.spend_gas(chore.gas_cost):
 		return false
 
+	credit(chore)
+	# Last: running the clock out ends the day, which settles the list.
+	GameClock.advance(chore.minutes)
+	return true
+
+
+## Tick a chore off without its own Gas and time cost - for when another
+## system did the work (studying at the table counts as schoolwork).
+## Returns false if it wasn't on today's list or was already done.
+func credit(chore: ChoreData) -> bool:
+	if chore == null or not is_needed(chore):
+		return false
 	GameState.chores_done.append(String(chore.id))
 	Mom.change(chore.mood)
 	GameState.day_log.append({"kind": "chore", "id": chore.id, "name": chore.display_name})
 	EventBus.chore_completed.emit(chore.id)
 	EventBus.chores_changed.emit()
-	# Last: running the clock out ends the day, which settles the list.
-	GameClock.advance(chore.minutes)
 	return true
 
 

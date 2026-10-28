@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://dcf5t6ry03b1c"]
+
+[ext_resource type="Texture2D" uid="uid://f14s0xlqvmx1" path="res://props/ranchinside/couch/couch.png" id="1_0shbd"]
+[ext_resource type="Script" uid="uid://eablh0rix1qc" path="res://props/ranchinside/seat/seat.gd" id="2_28fhd"]
+[ext_resource type="Script" uid="uid://0vsbpkdjhgsq" path="res://props/ranchinside/seat/seat_activity.gd" id="3_activity"]
+
+[sub_resource type="Resource" id="SeatActivity_tv"]
+script = ExtResource("3_activity")
+prompt = "Watch TV"
+restore_gas = 8
+minutes = 60
+line = "Reruns. The laugh track is louder than the rest of the house."
+
+[sub_resource type="Resource" id="SeatActivity_read"]
+script = ExtResource("3_activity")
+prompt = "Read a book"
+id = &"read"
+minutes = 45
+line = "A library paperback. You read the same page three times, then fifty more."
+skill = &"expression"
+skill_xp = 10
+
+[sub_resource type="Resource" id="SeatActivity_sit"]
+script = ExtResource("3_activity")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
+size = Vector2(48, 20)
+
+[node name="couch" type="StaticBody2D" unique_id=1561380039]
+
+[node name="Couch" type="Sprite2D" parent="." unique_id=190906979]
+texture = ExtResource("1_0shbd")
+centered = false
+offset = Vector2(-24, -30)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1465380693]
+position = Vector2(0, 4)
+polygon = PackedVector2Array(-24, -16, 24, -16, 24, 0, -24, 0)
+
+[node name="Seat" type="Area2D" parent="." unique_id=881266954]
+script = ExtResource("2_28fhd")
+facing = "forward"
+sit_offset = Vector2(0, 1)
+sprite_offset = Vector2(0, -16.5)
+activities = Array[ExtResource("3_activity")]([SubResource("SeatActivity_tv"), SubResource("SeatActivity_read"), SubResource("SeatActivity_sit")])
+mom_sleeps_here = true
+menu_title = "On the couch"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Seat" unique_id=1707380893]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_interact")

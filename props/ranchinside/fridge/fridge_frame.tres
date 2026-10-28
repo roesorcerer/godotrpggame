@@ -1,0 +1,94 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dvgnunty5ge1e"]
+
+[ext_resource type="Texture2D" uid="uid://do66soms5djhk" path="res://props/ranchinside/fridge/fridge_opened_empty.png" id="2_4au26"]
+[ext_resource type="Texture2D" uid="uid://d30bp8m4pygt8" path="res://props/ranchinside/fridge/fridge_open.png" id="2_fkr34"]
+[ext_resource type="Texture2D" uid="uid://dxl7y5seknoub" path="res://props/ranchinside/fridge/fridge_opened_stocked.png" id="4_tk82f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tk82f"]
+atlas = ExtResource("2_fkr34")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40td0"]
+atlas = ExtResource("2_4au26")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d21tb"]
+atlas = ExtResource("2_fkr34")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5sbc"]
+atlas = ExtResource("2_fkr34")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgksw"]
+atlas = ExtResource("2_fkr34")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pkxj"]
+atlas = ExtResource("2_fkr34")
+region = Rect2(128, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kr2hv"]
+atlas = ExtResource("2_fkr34")
+region = Rect2(160, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro7ck"]
+atlas = ExtResource("2_fkr34")
+region = Rect2(192, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rf3t"]
+atlas = ExtResource("4_tk82f")
+region = Rect2(0, 0, 32, 48)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk82f")
+}],
+"loop": 1,
+"name": &"fridge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40td0")
+}],
+"loop": 1,
+"name": &"fridge_empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk82f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d21tb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5sbc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgksw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pkxj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kr2hv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ro7ck")
+}],
+"loop": 1,
+"name": &"fridge_open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rf3t")
+}],
+"loop": 1,
+"name": &"fridge_stocked",
+"speed": 5.0
+}]

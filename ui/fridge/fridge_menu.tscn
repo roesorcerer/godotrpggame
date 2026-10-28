@@ -1,0 +1,107 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/fridge/fridge_menu.gd" id="1_menu"]
+[ext_resource type="Theme" uid="uid://stn8yib4st57" path="res://ui/theme/ui_theme.tres" id="2_theme"]
+
+[node name="FridgeMenu" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_menu")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -105.0
+offset_right = 170.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+theme_type_variation = &"DarkPanel"
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Rows" type="VBoxContainer" parent="Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Body" type="HBoxContainer" parent="Panel/Margin/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="FridgeColumn" type="VBoxContainer" parent="Panel/Margin/Rows/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Panel/Margin/Rows/Body/FridgeColumn"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.937255, 0.945098, 0.921569, 1)
+theme_override_font_sizes/font_size = 13
+text = "In the fridge"
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/Margin/Rows/Body/FridgeColumn"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="FridgeList" type="VBoxContainer" parent="Panel/Margin/Rows/Body/FridgeColumn/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="EmptyLabel" type="Label" parent="Panel/Margin/Rows/Body/FridgeColumn"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.752941, 0.776471, 0.729412, 1)
+theme_override_font_sizes/font_size = 8
+text = "Ketchup, a box of baking soda, and nothing else."
+autowrap_mode = 3
+
+[node name="BackpackColumn" type="VBoxContainer" parent="Panel/Margin/Rows/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Panel/Margin/Rows/Body/BackpackColumn"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.937255, 0.945098, 0.921569, 1)
+theme_override_font_sizes/font_size = 13
+text = "Your food"
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/Margin/Rows/Body/BackpackColumn"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="BackpackList" type="VBoxContainer" parent="Panel/Margin/Rows/Body/BackpackColumn/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="Info" type="Label" parent="Panel/Margin/Rows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.752941, 0.776471, 0.729412, 1)
+theme_override_font_sizes/font_size = 8
+autowrap_mode = 3
+
+[node name="Hint" type="Label" parent="Panel/Margin/Rows"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.501961, 0.529412, 0.470588, 1)
+theme_override_font_sizes/font_size = 8
+text = "[E] / [Esc] Close"
+horizontal_alignment = 2

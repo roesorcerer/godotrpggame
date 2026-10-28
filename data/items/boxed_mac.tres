@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" uid="uid://b7w30hf0uiyth" path="res://data/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://data/items/icons/boxed_mac.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"boxed_mac"
+display_name = "Boxed mac and cheese"
+description = "The blue box. Needs a pot and some patience. Placeholder icon."
+icon = ExtResource("2_icon")
+category = 5
+max_stack = 10

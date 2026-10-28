@@ -1112,6 +1112,33 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
+[sub_resource type="Animation" id="Animation_6p1w3"]
+resource_name = "sitting_forward"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"sit_forward"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.56666666, 0.76666665, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [sub_resource type="Animation" id="Animation_a8ls1"]
 resource_name = "sitting_legsout_left"
 loop_mode = 1
@@ -1644,6 +1671,7 @@ _data = {
 &"reading": SubResource("Animation_4r5pv"),
 &"sitting_crossed_left": SubResource("Animation_60mlk"),
 &"sitting_crossed_right": SubResource("Animation_i4ail"),
+&"sitting_forward": SubResource("Animation_6p1w3"),
 &"sitting_legsout_left": SubResource("Animation_a8ls1"),
 &"sitting_legsout_right": SubResource("Animation_a38lo"),
 &"sleep": SubResource("Animation_oprun"),
@@ -2096,7 +2124,8 @@ script = ExtResource("1_g2els")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=111097563]
 position = Vector2(0, -32)
 sprite_frames = ExtResource("2_dqkch")
-animation = &"idle_down"
+animation = &"sit_forward"
+frame = 5
 speed_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1901492498]
