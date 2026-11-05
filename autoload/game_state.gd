@@ -37,16 +37,6 @@ var campaign := {
 	"events_run": [],
 }
 
-## Homeschool. Skills only grow by studying for real; grades are what the
-## workbook shows Mom; honesty and nerve move with how you get there.
-## See the School autoload for the rules.
-var school := {
-	"skills": {},            ## skill id -> xp
-	"grades": {},            ## subject id -> 0-100
-	"honesty": 60,
-	"nerve": 0,
-	"copied_today": [],      ## subject ids copied from the answer key today
-}
 
 ## Ids of the chores done today. Cleared each morning.
 var chores_done: Array = []
@@ -116,7 +106,6 @@ func begin_new_day(slept_at_minutes: int, passed_out: bool) -> void:
 	day_log = []
 	chores_done = []
 	meals_today = []
-	school["copied_today"] = []
 	doris["mood_at_dawn"] = Mom.mood()
 	EventBus.gas_changed.emit(gas, gas_max)
 	EventBus.money_changed.emit(money)
@@ -142,7 +131,6 @@ func to_dict() -> Dictionary:
 		"campaign": campaign,
 		"chores_done": chores_done,
 		"meals_today": meals_today,
-		"school": school,
 		"quests": quests,
 		"day_log": day_log,
 		"skipped_dinner": skipped_dinner,
@@ -164,7 +152,6 @@ func from_dict(data: Dictionary) -> void:
 	campaign = data.get("campaign", campaign)
 	chores_done = data.get("chores_done", [])
 	meals_today = data.get("meals_today", [])
-	school = data.get("school", {"skills": {}, "grades": {}, "honesty": 60, "nerve": 0, "copied_today": []})
 	quests = data.get("quests", {})
 	day_log = data.get("day_log", [])
 	skipped_dinner = bool(data.get("skipped_dinner", false))

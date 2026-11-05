@@ -47,7 +47,6 @@ polygon = PackedVector2Array(-5, -8, 6, -8, 6, 0, -5, 0)
 script = ExtResource("2_seat")
 sprite_offset = Vector2(-1, -23)
 activities = Array[ExtResource("3_activity")]([SubResource("SeatActivity_breakfast"), SubResource("SeatActivity_dinner"), SubResource("SeatActivity_sit")])
-allows_study = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Seat" unique_id=1368979011]
 position = Vector2(0, -6)

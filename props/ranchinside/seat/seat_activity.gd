@@ -31,21 +31,15 @@ extends Resource
 @export_range(0, 240, 5) var minutes := 0
 ## Narration shown when it's done. Empty = no line.
 @export_multiline var line := ""
-## Skill it practises (a School.SKILL_NAMES id, e.g. &"expression" for
-## reading). Empty = none.
-@export var skill: StringName = &""
-@export_range(0, 100) var skill_xp := 0
 
 
-## What it costs and gives, for the menu hint: "45 min, +10 Expression XP".
+## What it costs and gives, for the menu hint: "45 min, once a day".
 func summary() -> String:
 	var parts: Array[String] = []
 	if minutes > 0:
 		parts.append("%d min" % minutes)
 	if restore_gas > 0:
 		parts.append("+%d Gas" % restore_gas)
-	if skill != &"" and skill_xp > 0:
-		parts.append("+%d %s XP" % [skill_xp, School.SKILL_NAMES.get(skill, String(skill))])
 	if id != &"":
 		parts.append("once a day")
 	return ", ".join(parts)

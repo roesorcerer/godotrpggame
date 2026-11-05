@@ -131,7 +131,7 @@ func _run() -> void:
 	_finished = true
 
 
-## The couch: TV, a book, food - but not schoolwork, and not while Mom's on it.
+## The couch: TV, a book, food - but not while Mom's on it.
 func _check_couch(player: Node2D) -> void:
 	if player.seat != null:
 		player.stand_up()
@@ -141,7 +141,7 @@ func _check_couch(player: Node2D) -> void:
 	add_child(couch)
 	await get_tree().physics_frame
 	var seat: Seat = couch.get_node("Seat")
-	_check(seat.allows_eating and not seat.allows_study, "the couch is for eating, not studying")
+	_check(seat.allows_eating, "the couch is for eating")
 
 	GameClock.minutes = (Mom.SLEEP_HOUR - GameClock.START_HOUR) * 60 + 30    # 10:30 PM
 	_check(seat.is_taken_by_mom(), "Mom's asleep on the couch at night")
@@ -162,13 +162,12 @@ func _check_couch(player: Node2D) -> void:
 	var texts := menu.option_texts() if menu != null else []
 	_check(texts.has("Watch TV") and texts.has("Read a book"), "TV and a book on offer (%s)" % [texts])
 	_check(texts.has("Eat pizza"), "you can eat on the couch")
-	_check(not texts.has("Study math"), "but not study")
+	
 
-	var xp := School.skill_xp(&"expression")
+
 	if menu != null:
 		menu.choose("Read a book")
 	await get_tree().process_frame
-	_check(School.skill_xp(&"expression") == xp + 10, "reading practises Expression")
 	_check(sprite.animation == &"sit_forward", "and you stay seated facing forward, got %s" % sprite.animation)
 
 	seat.interact(player)

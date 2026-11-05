@@ -11,7 +11,7 @@ extends CanvasLayer
 ##
 ##   var menu: ChoiceMenu = preload("res://ui/choice_menu/choice_menu.tscn").instantiate()
 ##   get_tree().root.add_child(menu)
-##   menu.open("At the table", [{"text": "Study", "action": study}])
+##   menu.open("At the table", [{"text": "Read", "action": read}])
 
 signal closed()
 

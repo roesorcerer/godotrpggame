@@ -3,8 +3,8 @@ extends Interactable
 
 ## Something the player can sit on: chairs, the couch, a stool. E sits down
 ## and opens a menu of what you can do here: a scheduled SeatActivity (Mom's
-## breakfast), eat food from your backpack, study, copy the answer key - or
-## just sit. E again reopens the menu; any movement key stands you up.
+## breakfast), eat food from your backpack, or just sit. E again reopens the
+## menu; any movement key stands you up.
 ## Eating happens sitting down, so the couch and the kitchen table are where
 ## meals are. A seat Mom sleeps on (the couch) is hers while she's out.
 
@@ -30,9 +30,6 @@ extends Interactable
 
 ## Food from the backpack can be eaten here.
 @export var allows_eating := true
-
-## Schoolwork can be done here (a table or desk, not the couch).
-@export var allows_study := false
 
 ## Mom sleeps here (the couch): while she's asleep it's hers, and the player
 ## can't sit down.
@@ -98,30 +95,6 @@ func options(by: Node2D) -> Array:
 				"action": _eat.bind(item),
 			})
 
-	if allows_study:
-		var study_why := School.study_blocked_reason()
-		for subject in School.subjects():
-			list.append({
-				"text": "Study %s" % subject.display_name.to_lower(),
-				"hint": study_why if study_why != "" else "%d min, -%d Gas. %s %s, grade %s." % [
-						School.STUDY_MINUTES, School.STUDY_GAS,
-						School.SKILL_NAMES.get(subject.skill, ""),
-						"Lv %d" % School.skill_level(subject.skill),
-						School.grade_letter(subject.id)],
-				"disabled": study_why != "",
-				"action": School.study.bind(subject),
-			})
-		if School.has_answer_key():
-			for subject in School.subjects():
-				var copy_why := School.copy_blocked_reason(subject)
-				list.append({
-					"text": "Copy the %s answers" % subject.display_name.to_lower(),
-					"hint": copy_why if copy_why != "" else "%d min, -%d Gas. Grade up fast; you learn nothing." % [
-							School.COPY_MINUTES, School.COPY_GAS],
-					"disabled": copy_why != "",
-					"action": School.copy_answers.bind(subject),
-				})
-
 	list.append({"text": "Stand up", "action": func() -> void:
 		if occupant == by:
 			by.stand_up()})
@@ -136,7 +109,7 @@ func open_menu(by: Node2D) -> void:
 
 ## Plain "Sit" is what "Just sit" already does; only list activities with an effect.
 func _does_something(activity: SeatActivity) -> bool:
-	return activity.id != &"" or activity.restore_gas > 0 or activity.minutes > 0 			or activity.skill_xp > 0
+	return activity.id != &"" or activity.restore_gas > 0 or activity.minutes > 0
 
 
 ## Edible things in the backpack, one entry each, alphabetical.
@@ -155,20 +128,17 @@ func _eat(item: ItemData) -> void:
 		GameClock.advance(EAT_MINUTES)
 
 
-## Do what the activity does: take its pose, restore Gas, practise a skill,
-## mark it done for the day, say its line, and pass the time.
+## Do what the activity does: take its pose, restore Gas, mark it done for
+## the day, say its line, and pass the time.
 func _apply(activity: SeatActivity, by: Node2D = null) -> void:
 	if by != null and by.has_method("play_seated"):
 		by.play_seated(seated_animation(by, activity.animation))
 	if activity.restore_gas > 0:
 		GameState.restore_gas(activity.restore_gas)
-	var level_up := ""
-	if activity.skill != &"":
-		level_up = School.add_xp(activity.skill, activity.skill_xp)
 	if activity.id != &"":
 		GameState.meals_today.append(String(activity.id))
-	if activity.line != "" or level_up != "":
-		EventBus.notice.emit((activity.line + level_up).strip_edges())
+	if activity.line != "":
+		EventBus.notice.emit(activity.line)
 	# Last: running the clock out ends the day.
 	if activity.minutes > 0:
 		GameClock.advance(activity.minutes)
@@ -182,9 +152,9 @@ func seated_animation(by: Node2D, base: StringName) -> StringName:
 	var sprite := by.get("sprite") as AnimatedSprite2D if by != null else null
 	if sprite == null or sprite.sprite_frames == null:
 		return with_facing
-	for name in [with_facing, base, StringName("%s_right" % base)]:
-		if sprite.sprite_frames.has_animation(name):
-			return name
+	for p_name in [with_facing, base, StringName("%s_right" % base)]:
+		if sprite.sprite_frames.has_animation(p_name):
+			return p_name
 	return with_facing
 
 

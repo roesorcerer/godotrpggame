@@ -1,11 +1,8 @@
 class_name Desk
 extends ChoreSpot
 
-## The kitchen table, which is also the classroom. Schoolwork is just one more
-## thing on Mom's list - she checks the workbook every night.
+## The kitchen table, as a chore spot.
 
 
 func _ready() -> void:
-	if only_chore == &"":
-		only_chore = &"schoolwork"
 	super()

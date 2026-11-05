@@ -37,7 +37,7 @@ signal quests_changed()                         # offered/active/done moved
 signal inventory_changed()                      # any slot changed
 signal hotbar_selected(index: int)
 signal item_added(item_id: StringName, count: int)
-signal stats_changed()                          # a skill, grade, honesty or nerve moved
+signal stats_changed()                          # a player stat moved (unused until A-11)
 signal fridge_changed()                         # something went in or out of the fridge
 signal flag_set(flag: StringName)
 signal campaign_changed()

@@ -17,8 +17,6 @@ prompt = "Read a book"
 id = &"read"
 minutes = 45
 line = "A library paperback. You read the same page three times, then fifty more."
-skill = &"expression"
-skill_xp = 10
 
 [sub_resource type="Resource" id="SeatActivity_sit"]
 script = ExtResource("3_activity")

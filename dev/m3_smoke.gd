@@ -56,9 +56,7 @@ func _run() -> void:
 	GameState.skipped_dinner = true
 	Inventory.add(&"firewood", 5)
 	GameState.fridge = {&"eggs": 3}
-	GameState.school["skills"][&"curiosity"] = 140
-	GameState.school["grades"][&"math"] = 91
-	GameState.school["honesty"] = 22
+
 
 	_check(SaveSystem.save_game(), "save_game wrote the file")
 	_check(SaveSystem.has_save(), "the save exists on disk")
@@ -82,8 +80,7 @@ func _run() -> void:
 	_check(GameState.chores_done.has("dishes"), "today's chores survive")
 	_check(GameState.skipped_dinner, "the dinner flag survives")
 	_check(Inventory.count_of(&"firewood") == 5, "inventory survives, got %d" % Inventory.count_of(&"firewood"))
-	_check(School.skill_level(&"curiosity") == 1 and School.grade_letter(&"math") == "A", "skills and grades survive")
-	_check(School.honesty() == 22, "honesty survives")
+
 	_check(GameState.fridge == {&"eggs": 3}, "the fridge survives, got %s" % GameState.fridge)
 	_check(typeof(GameClock.day) == TYPE_INT, "ints stay ints (no JSON floats)")
 
