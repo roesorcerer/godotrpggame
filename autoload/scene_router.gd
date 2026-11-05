@@ -42,7 +42,7 @@ func travel(scene_path: String, spawn_name: StringName) -> void:
 	# Forget the old room; a RoomZone at the spawn point will re-announce.
 	EventBus.room_entered.emit(&"")
 	_place_player(spawn_name)
-	# Place id = the scene's file name (pine_grove.tscn -> &"pine_grove").
+	# Place id = the scene's file name (alder_grove.tscn -> &"alder_grove").
 	EventBus.place_visited.emit(StringName(scene_path.get_file().get_basename()))
 
 	await HUD.fade_from_black()

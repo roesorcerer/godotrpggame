@@ -55,17 +55,17 @@ func _run() -> void:
 	_check(crate.get_prompt(player) == "Open crate", "prompt is 'Open crate', got '%s'" % crate.get_prompt(player))
 	_check(prompts.has("Open crate"), "the sensor pushed the crate prompt, got %s" % [prompts])
 
-	var before := Inventory.count_of(&"tomato_seeds")
+	var before := Inventory.count_of(crate.loot.id)
 	crate.interact(player)
 	await get_tree().physics_frame
 	_check(crate.opened, "opening set the opened flag")
-	_check(Inventory.count_of(&"tomato_seeds") == before + crate.loot_count,
-			"opening paid out %d tomato seeds, got %d" % [crate.loot_count, Inventory.count_of(&"tomato_seeds") - before])
+	_check(Inventory.count_of(crate.loot.id) == before + crate.loot_count,
+			"opening paid out %d loot, got %d" % [crate.loot_count, Inventory.count_of(crate.loot.id) - before])
 	_check(not crate.can_interact(player), "an open crate no longer offers interaction")
 
 	# Interacting again must not pay out a second time.
-	var after := Inventory.count_of(&"tomato_seeds")
+	var after := Inventory.count_of(crate.loot.id)
 	crate.interact(player)
-	_check(Inventory.count_of(&"tomato_seeds") == after, "a second interact pays out nothing")
+	_check(Inventory.count_of(crate.loot.id) == after, "a second interact pays out nothing")
 
 	_finished = true

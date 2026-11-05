@@ -24,15 +24,15 @@ func _load_catalog() -> void:
 		return
 	for file in dir.get_files():
 		# Exported builds rename .tres to .remap; strip either.
-		var name := file.trim_suffix(".remap")
-		if not name.ends_with(".tres"):
+		var p_name := file.trim_suffix(".remap")
+		if not p_name.ends_with(".tres"):
 			continue
-		var chore := load("%s/%s" % [CHORE_DIR, name]) as ChoreData
+		var chore := load("%s/%s" % [CHORE_DIR, p_name]) as ChoreData
 		if chore == null:
-			push_warning("ChoreSystem: %s is not a ChoreData." % name)
+			push_warning("ChoreSystem: %s is not a ChoreData." % p_name)
 			continue
 		if chore.id == &"":
-			push_warning("ChoreSystem: %s has no id." % name)
+			push_warning("ChoreSystem: %s has no id." % p_name)
 			continue
 		_catalog[chore.id] = chore
 
@@ -94,7 +94,6 @@ func perform(chore: ChoreData) -> bool:
 
 
 ## Tick a chore off without its own Gas and time cost - for when another
-## system did the work (studying at the table counts as schoolwork).
 ## Returns false if it wasn't on today's list or was already done.
 func credit(chore: ChoreData) -> bool:
 	if chore == null or not is_needed(chore):

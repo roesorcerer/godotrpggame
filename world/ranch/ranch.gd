@@ -2,43 +2,38 @@ extends Node2D
 
 @onready var grass: TileMapLayer = $Grass
 @onready var soil_layer: TileMapLayer = $SoilLayer
-@onready var watered_layer: TileMapLayer = $SoilLayer/WateredLayer
-@onready var seed_layer: TileMapLayer = $SeedLayer
 @onready var decor: TileMapLayer = $World/Decor
 @onready var paths: TileMapLayer = $Paths
 @onready var fences: TileMapLayer = $World/Fences
 @onready var player: CharacterBody2D = $World/CharacterBody2D
 
-var dug_cells: Dictionary[Vector2i, bool] = {}
-var watered_cells: Dictionary[Vector2i, bool] = {}
+## Farm cells are a 16px grid anchored at the ranch origin (SoilLayer is
+## drawn half a tile offset on top of it; see paint_soil).
+const CELL_SIZE := 16
 
-func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, seed_type: Enum.Seed) -> void:
-	var cell := seed_layer.local_to_map(seed_layer.to_local(pos))
+var dug_cells: Dictionary[Vector2i, bool] = {}
+
+
+## SHOVEL stays until A-41 removes the tool swing.
+func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
+	var cell := Vector2i((to_local(pos) / CELL_SIZE).floor())
 	match tool:
 		Enum.Tool.SHOVEL:
 			if can_farm(cell) and not dug_cells.has(cell):
 				dug_cells[cell] = true
 				paint_soil(soil_layer, dug_cells, cell)
-				clear_decor(decor.local_to_map(decor.to_local(pos)))
-		Enum.Tool.WATER:
-			if dug_cells.has(cell) and not watered_cells.has(cell):
-				watered_cells[cell] = true
-				paint_soil(watered_layer, watered_cells, cell)
-		Enum.Tool.SEED:
-			if dug_cells.has(cell) and seed_layer.get_cell_source_id(cell) == -1:
-				seed_layer.set_cell(cell, 0, Vector2i(seed_type, 0))
-		#book/reading animation
-		#requires sitting/being on a chair
-		
+			clear_decor(decor.local_to_map(decor.to_local(pos)))
+
 
 # Checked at the cell centre: farmable grass, not under a path or fence tile,
 # and not inside anything with collision (buildings, trees, objects, cliffs).
 func can_farm(cell: Vector2i) -> bool:
-	var centre := seed_layer.to_global(seed_layer.map_to_local(cell))
+	var centre := to_global(Vector2(cell * CELL_SIZE) + Vector2.ONE * CELL_SIZE / 2.0)
 	return (is_farmable(grass, grass.local_to_map(grass.to_local(centre)))
 			and not has_tile(paths, centre)
 			and not has_tile(fences, centre)
 			and not is_obstructed(centre))
+
 
 func has_tile(layer: TileMapLayer, pos: Vector2) -> bool:
 	return layer.get_cell_source_id(layer.local_to_map(layer.to_local(pos))) != -1

@@ -6,12 +6,12 @@
 script = ExtResource("1_qd")
 id = &"go_to_town"
 display_name = "Into town"
-description = "Mom needs a few things from Pine Grove."
+description = "Mom needs a few things from Alder Grove."
 giver = &"mom"
-offer_line = "You've been cooped up all morning. Go into Pine Grove for me - here, take five dollars for gas."
-reminder_line = "Why are you still here? Pine Grove. Go."
+offer_line = "You've been cooped up all morning. Go into Alder Grove for me - here, take five dollars for gas."
+reminder_line = "Why are you still here? Alder Grove. Go."
 goal = 1
-goal_target = &"pine_grove"
+goal_target = &"alder_grove"
 reward_money = 5
 reward_mood = 3
 reward_flag = &"been_to_town"

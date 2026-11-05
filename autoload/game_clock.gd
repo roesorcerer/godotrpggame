@@ -7,7 +7,7 @@ const MINUTES_PER_DAY := 1080          ## 6:00 AM -> midnight (18 hours)
 const START_HOUR := 6
 const REAL_SECONDS_PER_GAME_MINUTE := 0.7   ## ~12.6 real minutes per day
 const BEDTIME_HOUR := 23               ## in bed before this = full rest
-const SUMMER_LENGTH := 84              ## the Pine Grove deadline
+const SUMMER_LENGTH := 28              ## the end-of-summer deadline
 
 const DAY_NAMES := ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
@@ -59,7 +59,8 @@ func _process(delta: float) -> void:
 ## --- reading the clock -----------------------------------------------------
 
 func clock_hour() -> int:
-	return START_HOUR + minutes / 60
+	return START_HOUR + int(floor(minutes / 60.0))
+
 
 func clock_minute() -> int:
 	return minutes % 60
@@ -93,7 +94,7 @@ func advance(mins: int) -> void:
 		return
 	var before := minutes
 	minutes = mini(minutes + mins, MINUTES_PER_DAY)
-	for h in range(START_HOUR + before / 60 + 1, clock_hour() + 1):
+	for h in range(START_HOUR + int(floor(before / 60.0 + 1)), clock_hour() + 1):
 		EventBus.hour_ticked.emit(h)
 	EventBus.minute_ticked.emit(minutes)
 	if minutes >= MINUTES_PER_DAY:

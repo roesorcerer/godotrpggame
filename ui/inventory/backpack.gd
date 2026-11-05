@@ -36,7 +36,7 @@ func _ready() -> void:
 		var slot: InventorySlot = SLOT_SCENE.instantiate()
 		slot.index = i
 		slot.base_style = &"BackpackSlot"
-		slot.position = Vector2(SLOT_X[i % SLOT_X.size()], SLOT_Y[i / SLOT_X.size()])
+		slot.position = Vector2(SLOT_X[i % SLOT_X.size()], SLOT_Y[floori(i / float(SLOT_X.size()))])
 		slot.custom_minimum_size = SLOT_SIZE
 		slot.size = SLOT_SIZE
 		slot.hovered.connect(_show_info)

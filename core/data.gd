@@ -16,8 +16,6 @@ const STYLE_UPGRADES = {}
 const TOOL_STATE_ANIMATIONS = {
 	Enum.Tool.SHOVEL: 'Shovel',
 	Enum.Tool.AXE: 'Axe',
-	Enum.Tool.WATER: 'Water',
-	Enum.Tool.SEED: 'Seed',
 }
 
 # Atlas source id of dirt.png inside dirt_set.tres.
@@ -42,12 +40,13 @@ const NPC_NAMES = {
 	&"oscar": "Oscar",
 }
 
-## Display names for place ids (a scene's file name, e.g. pine_grove.tscn ->
-## &"pine_grove") used by VISIT quests.
+## Display names for place ids (a scene's file name, e.g. alder_grove.tscn ->
+## &"alder_grove") used by VISIT quests.
 const PLACE_NAMES = {
-	&"ranch": "the ranch",
-	&"ranch_interior": "the house",
-	&"pine_grove": "Pine Grove",
+	&"ranch": "The Ranch",
+	&"ranch_interior": "The House",
+	&"alder_grove": "Alder Grove",
+	&"cobble_mountain": "Cobble Mountain",
 }
 
 ## Backpack: the first HOTBAR_SIZE slots are the hotbar along the bottom of the
@@ -60,7 +59,7 @@ const BACKPACK_MAX_SIZE = 27
 
 ## Items a new game starts with, filled into the hotbar left to right. The
 ## tools are ItemData with category TOOL; holding one sets the player's tool.
-const STARTING_ITEMS = [&"axe", &"shovel", &"watering_can", &"seed_bag"]
+const STARTING_ITEMS = [&"axe", &"shovel"]
 
 ## What's in the kitchen fridge on day one (item id -> count). See Cooking.
 const STARTING_FRIDGE = {&"bread": 4, &"cheese": 2, &"eggs": 6, &"boxed_mac": 1, &"chicken_leg": 1}

@@ -2513,7 +2513,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dygpo")
 }],
-"loop": 2,
+"loop": 1,
 "name": &"watering_left",
 "speed": 5.0
 }, {

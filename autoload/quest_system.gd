@@ -30,15 +30,15 @@ func _load_catalog() -> void:
 		return
 	for file in dir.get_files():
 		# Exported builds rename .tres to .remap; strip either.
-		var name := file.trim_suffix(".remap")
-		if not name.ends_with(".tres"):
+		var p_name := file.trim_suffix(".remap")
+		if not p_name.ends_with(".tres"):
 			continue
-		var quest := load("%s/%s" % [QUEST_DIR, name]) as QuestData
+		var quest := load("%s/%s" % [QUEST_DIR, p_name]) as QuestData
 		if quest == null:
-			push_warning("QuestSystem: %s is not a QuestData." % name)
+			push_warning("QuestSystem: %s is not a QuestData." % p_name)
 			continue
 		if quest.id == &"":
-			push_warning("QuestSystem: %s has no id." % name)
+			push_warning("QuestSystem: %s has no id." % p_name)
 			continue
 		_catalog[quest.id] = quest
 

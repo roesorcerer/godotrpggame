@@ -29,15 +29,15 @@ func _load_catalog() -> void:
 		return
 	for file in dir.get_files():
 		# Exported builds rename .tres to .remap; strip either.
-		var name := file.trim_suffix(".remap")
-		if not name.ends_with(".tres"):
+		var p_name := file.trim_suffix(".remap")
+		if not p_name.ends_with(".tres"):
 			continue
-		var item := load("%s/%s" % [ITEM_DIR, name]) as ItemData
+		var item := load("%s/%s" % [ITEM_DIR, p_name]) as ItemData
 		if item == null:
-			push_warning("Inventory: %s is not an ItemData." % name)
+			push_warning("Inventory: %s is not an ItemData." % p_name)
 			continue
 		if item.id == &"":
-			push_warning("Inventory: %s has no id." % name)
+			push_warning("Inventory: %s has no id." % p_name)
 			continue
 		_catalog[item.id] = item
 

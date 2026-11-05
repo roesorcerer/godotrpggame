@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://et6aji76tvc" path="res://props/crate/crate.gd" id="1_yyq4m"]
 [ext_resource type="Texture2D" uid="uid://bwpf8r2wugw8t" path="res://props/crate/crate.png" id="2_ou5ok"]
-[ext_resource type="Resource" uid="uid://bg0sk3hma1hsy" path="res://data/items/tomato_seeds.tres" id="3_loot"]
+[ext_resource type="Resource" uid="uid://qc43b87m3c40" path="res://data/items/firewood.tres" id="3_loot"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3yldg"]
 atlas = ExtResource("2_ou5ok")

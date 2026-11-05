@@ -9,12 +9,12 @@ var last_direction :Vector2
 @onready var move_state_machine = $Animation/AnimationTree.get("parameters/MoveStateMachine/playback")
 @onready var tool_state_machine = $Animation/AnimationTree.get("parameters/ToolStateMachine/playback")
 
-signal tool_use(tool: Enum.Tool, pos: Vector2, seed_type: Enum.Seed)
+signal tool_use(tool: Enum.Tool, pos: Vector2)
 
 ## Follows the held hotbar item (see _sync_tool); false = not holding a tool.
 var current_tool : Enum.Tool = Enum.Tool.SHOVEL
 var holding_tool := false
-var current_seed: Enum.Seed
+
 var _swing_tool: Enum.Tool              ## the tool the running swing started with
 
 var seat: Seat = null
@@ -58,8 +58,7 @@ func get_basic_input():
 		var dir = Input.get_axis("tool_backward", "tool_forward")
 		_cycle_tool(int(dir))
 
-	if Input.is_action_just_pressed("seed_forward"):
-		current_seed = posmod(current_seed + 1, Enum.Seed.size()) as Enum.Seed
+
 
 	if Input.is_action_just_pressed("action") and holding_tool:
 		_swing_tool = current_tool
@@ -138,7 +137,7 @@ func _cycle_tool(dir: int) -> void:
 
 # Uses the tool the swing started with, in case the hotbar changes mid-swing.
 func tool_use_emit():
-	tool_use.emit(_swing_tool, global_position + last_direction * 16 + Vector2(0,4), current_seed)
+	tool_use.emit(_swing_tool, global_position + last_direction * 16 + Vector2(0,4))
 
 
 func _on_animation_tree_animation_started(_anim_name: StringName) -> void:

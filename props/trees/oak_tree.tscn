@@ -1,14 +1,16 @@
 [gd_scene format=3 uid="uid://cvi7x0jvkg14n"]
 
-[ext_resource type="PackedScene" uid="uid://b2j6h01pj0na" path="res://props/trees/pine_tree.tscn" id="1_f2lq6"]
 [ext_resource type="Texture2D" uid="uid://col2cgbf6024d" path="res://props/trees/oak_tree.png" id="2_xx5h5"]
 
-[node name="OakTree" unique_id=1828715606 instance=ExtResource("1_f2lq6")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oak"]
+size = Vector2(27, 30.5)
 
-[node name="Sprite2D" parent="." index="0" unique_id=1289805683]
+[node name="OakTree" type="StaticBody2D" unique_id=1828715606]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1289805683]
 position = Vector2(1, -64)
 texture = ExtResource("2_xx5h5")
 
-[node name="CollisionShape2D" parent="." index="1" unique_id=1664668089]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1664668089]
 position = Vector2(0, -16)
-scale = Vector2(-1.4996929, 1.9054749)
+shape = SubResource("RectangleShape2D_oak")

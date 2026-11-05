@@ -28,18 +28,18 @@ func _load_recipes() -> void:
 		return
 	for file in dir.get_files():
 		# Exported builds rename .tres to .remap; strip either.
-		var name := file.trim_suffix(".remap")
-		if not name.ends_with(".tres"):
+		var p_name := file.trim_suffix(".remap")
+		if not p_name.ends_with(".tres"):
 			continue
-		var recipe := load("%s/%s" % [RECIPE_DIR, name]) as RecipeData
+		var recipe := load("%s/%s" % [RECIPE_DIR, p_name]) as RecipeData
 		if recipe == null or recipe.id == &"":
-			push_warning("Cooking: %s is not a RecipeData with an id." % name)
+			push_warning("Cooking: %s is not a RecipeData with an id." % p_name)
 			continue
 		for item_id in recipe.ingredients:
 			if Inventory.get_item(item_id) == null:
-				push_warning("Cooking: %s needs '%s', which isn't in data/items/." % [name, item_id])
+				push_warning("Cooking: %s needs '%s', which isn't in data/items/." % [p_name, item_id])
 		if result_of(recipe) == null:
-			push_warning("Cooking: %s makes '%s', which isn't in data/items/." % [name, recipe.result])
+			push_warning("Cooking: %s makes '%s', which isn't in data/items/." % [p_name, recipe.result])
 		_recipes.append(recipe)
 		_by_id[recipe.id] = recipe
 	_recipes.sort_custom(func(a: RecipeData, b: RecipeData) -> bool:

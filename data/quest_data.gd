@@ -40,7 +40,7 @@ extends Resource
 
 @export_group("Goal")
 @export var goal: Enum.QuestGoal = Enum.QuestGoal.TALK_TO
-## TALK_TO: an npc id.  VISIT: a place id (scene file name, e.g. pine_grove).
+## TALK_TO: an npc id.  VISIT: a place id (scene file name, e.g. alder_grove).
 ## FLAG: a GameState flag.
 @export var goal_target: StringName = &""
 
