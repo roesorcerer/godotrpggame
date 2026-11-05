@@ -122,8 +122,10 @@ func _run() -> void:
 		print("M1 SMOKE SKIP: no Bed in the interior yet - bed checks skipped")
 		_finished = true
 		return
-	GameClock.minutes = 60 * 8          # 3 PM, well past "too early"
-	_check(bed.get_prompt(inside_player) == "Go to sleep", "bed prompts at 3 PM")
+	GameClock.minutes = (bed.too_early_hour - GameClock.START_HOUR) * 60 - 1    # 7:59 PM
+	_check(bed.get_prompt(inside_player) == "Too early to sleep", "bed refuses at 7:59 PM")
+	GameClock.minutes += 1                                                        # 8:00 PM
+	_check(bed.get_prompt(inside_player) == "Go to sleep", "bed prompts at 8 PM")
 	bed.interact(inside_player)
 	await _settle(2)
 	_check(GameClock.day == before_day + 1, "bed advanced the day")

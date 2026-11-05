@@ -11,6 +11,13 @@ const SUMMER_LENGTH := 28              ## the end-of-summer deadline
 
 const DAY_NAMES := ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
+## Fixed beats of the day (GDD 5.1): hour (24h) -> anchor id. advance()
+## emits EventBus.anchor_reached once when it crosses each one.
+const ANCHORS := {
+	18: &"dinner",
+	21: &"night",
+}
+
 var day := 1
 var minutes := 0                       ## minutes elapsed since START_HOUR
 
@@ -80,6 +87,8 @@ func advance(mins: int) -> void:
 	minutes = mini(minutes + mins, MINUTES_PER_DAY)
 	for h in range(START_HOUR + int(floor(before / 60.0 + 1)), clock_hour() + 1):
 		EventBus.hour_ticked.emit(h)
+		if ANCHORS.has(h):
+			EventBus.anchor_reached.emit(ANCHORS[h])
 	EventBus.minute_ticked.emit(minutes)
 	EventBus.time_advanced.emit(minutes - before)
 	if minutes >= MINUTES_PER_DAY:

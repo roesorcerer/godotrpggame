@@ -6,7 +6,7 @@ extends Node
 
 const GAS_BASE_MAX := 100
 const GAS_CAP_PASSED_OUT := 70         ## up past midnight
-const GAS_PENALTY_NO_DINNER := 20
+const GAS_PENALTY_NO_FAMILY_DINNER := 20
 const GAS_BONUS_BREAKFAST := 10        ## Mom made breakfast (she's in a good mood)
 
 var money := 0
@@ -50,9 +50,11 @@ var quests := {}
 ## What happened today. Cleared each morning, read by the day-end summary.
 var day_log: Array = []
 
-## Set true by the dinner beat only when the player actually skips it.
-## Reset every morning, so "nobody implemented dinner yet" costs nothing.
-var skipped_dinner := false
+## True once you missed Mom's 6 PM dinner call (Mom._serve_dinner). It stays
+## true for the rest of the day even if you cook for yourself: missing the
+## family meal is what counts (Oscar's trust, Mom's mood, needles). Reset
+## every morning.
+var skipped_family_dinner := false
 
 
 ## --- resources -------------------------------------------------------------
@@ -91,8 +93,8 @@ func begin_new_day(slept_at_minutes: int, passed_out: bool) -> void:
 
 	if passed_out or slept_at_minutes >= (GameClock.BEDTIME_HOUR - GameClock.START_HOUR) * 60:
 		cap = GAS_CAP_PASSED_OUT
-	if skipped_dinner:
-		cap -= GAS_PENALTY_NO_DINNER
+	if skipped_family_dinner:
+		cap -= GAS_PENALTY_NO_FAMILY_DINNER
 
 	# Mom makes breakfast when she's happy with you. It lifts the ceiling
 	# rather than topping you up, so it's worth something on a good day too.
@@ -102,7 +104,7 @@ func begin_new_day(slept_at_minutes: int, passed_out: bool) -> void:
 	gas_max = maxi(cap, 30)
 	gas = gas_max
 
-	skipped_dinner = false
+	skipped_family_dinner = false
 	day_log = []
 	chores_done = []
 	meals_today = []
@@ -133,7 +135,7 @@ func to_dict() -> Dictionary:
 		"meals_today": meals_today,
 		"quests": quests,
 		"day_log": day_log,
-		"skipped_dinner": skipped_dinner,
+		"skipped_family_dinner": skipped_family_dinner,
 	}
 
 func from_dict(data: Dictionary) -> void:
@@ -154,7 +156,7 @@ func from_dict(data: Dictionary) -> void:
 	meals_today = data.get("meals_today", [])
 	quests = data.get("quests", {})
 	day_log = data.get("day_log", [])
-	skipped_dinner = bool(data.get("skipped_dinner", false))
+	skipped_family_dinner = bool(data.get("skipped_family_dinner", data.get("skipped_dinner", false)))   # old saves: "skipped_dinner"
 
 	EventBus.minute_ticked.emit(GameClock.minutes)
 	EventBus.gas_changed.emit(gas, gas_max)

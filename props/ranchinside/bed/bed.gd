@@ -4,7 +4,7 @@ extends Interactable
 ## Ends the day. The clock's own midnight rollover is the involuntary version
 ## of this; here the player chooses, which is why it rests them properly.
 
-@export var too_early_hour := 8   ## no going back to bed at 6:30 AM
+@export var too_early_hour := 20   ## to allow sleeping from 20:00
 
 
 func _ready() -> void:

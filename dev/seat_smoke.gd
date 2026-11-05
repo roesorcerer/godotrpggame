@@ -85,6 +85,13 @@ func _run() -> void:
 	_check(evening != null and evening.prompt == "Eat dinner",
 			"7 PM offers dinner, got '%s'" % (evening.prompt if evening != null else "<none>"))
 
+	# Missed Mom's 6 PM call: her plate is gone, you cook for yourself.
+	GameState.skipped_family_dinner = true
+	var missed := seat.current_activity()
+	_check(missed == null or missed.prompt != "Eat dinner",
+			"no family dinner after missing the call, got '%s'" % (missed.prompt if missed != null else "<none>"))
+	GameState.skipped_family_dinner = false
+
 	# --- food from the backpack, eaten sitting down ---
 	Inventory.add(&"mac_and_cheese", 1)
 	GameState.gas = 10

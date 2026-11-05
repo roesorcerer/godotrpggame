@@ -10,6 +10,7 @@ signal hour_ticked(hour: int)
 signal day_started(day: int)
 signal day_ended(day: int, summary: Dictionary)
 signal time_advanced(minutes: int)                 # minutes just spent by GameClock.advance()
+signal anchor_reached(anchor: StringName)         # a fixed beat of the day: &"dinner" 18:00, &"night" 21:00
 
 # --- player resources ------------------------------------------------------
 signal gas_changed(current: int, max_value: int)

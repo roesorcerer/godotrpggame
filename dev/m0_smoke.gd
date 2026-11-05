@@ -11,6 +11,7 @@ var _seen_day_started := 0
 var _seen_day_ended := 0
 var _seen_hours := 0
 var _advanced: Array[int] = []    ## time_advanced payloads
+var _anchors: Array[StringName] = []   ## anchor_reached payloads
 
 
 func _ready() -> void:
@@ -18,6 +19,7 @@ func _ready() -> void:
 	EventBus.day_ended.connect(func(_d, _s): _seen_day_ended += 1)
 	EventBus.hour_ticked.connect(func(_h): _seen_hours += 1)
 	EventBus.time_advanced.connect(func(m): _advanced.append(m))
+	EventBus.anchor_reached.connect(func(a): _anchors.append(a))
 
 	await get_tree().process_frame
 	await get_tree().process_frame
@@ -100,14 +102,16 @@ func _run() -> void:
 
 	# --- skipping dinner ---
 	_settle_house(Mom.BREAKFAST_MOOD - 1)
-	GameState.skipped_dinner = true
+	GameState.skipped_family_dinner = true
 	GameClock.end_day(false)
-	_check(GameState.gas_max == GameState.GAS_BASE_MAX - GameState.GAS_PENALTY_NO_DINNER,
+	_check(GameState.gas_max == GameState.GAS_BASE_MAX - GameState.GAS_PENALTY_NO_FAMILY_DINNER,
 		"no dinner costs 20 off the cap, got %d" % GameState.gas_max)
-	_check(not GameState.skipped_dinner, "dinner flag resets each morning")
+	_check(not GameState.skipped_family_dinner, "dinner flag resets each morning")
 
 	# --- staying up past midnight: reduced cap ---
 	_settle_house(Mom.BREAKFAST_MOOD - 1)
+	# Start after dinner so a missed dinner doesn't stack its own penalty here.
+	GameClock.minutes = (19 - GameClock.START_HOUR) * 60
 	GameClock.advance(GameClock.MINUTES_PER_DAY)    # runs the clock out -> passed out
 	_check(GameState.gas_max == GameState.GAS_CAP_PASSED_OUT,
 		"passing out caps Gas at 70, got %d" % GameState.gas_max)
@@ -132,4 +136,30 @@ func _run() -> void:
 	GameState.from_dict(blob)
 	_check(GameState.money == 137, "money survives a save round-trip")
 	_check(GameState.has_flag(&"met_hal"), "flags survive a save round-trip")
+
+	_check_anchors()
 	_finished = true
+
+
+## Day anchors (A-06): crossing 18:00 is dinner, 21:00 is night, each once a day.
+func _check_anchors() -> void:
+	GameClock.end_day(false)                       # a fresh 7 AM
+	_anchors.clear()
+	GameState.skipped_family_dinner = false
+
+	GameClock.advance((17 - GameClock.START_HOUR) * 60 + 30)     # 7 AM -> 5:30 PM
+	_check(_anchors.is_empty(), "no anchor before 6 PM, got %s" % [_anchors])
+	GameClock.advance(60)                                        # -> 6:30 PM
+	_check(_anchors == [&"dinner"], "crossing 6 PM fires dinner, got %s" % [_anchors])
+	# This smoke scene isn't the house, so dinner was missed.
+	_check(GameState.skipped_family_dinner, "missing dinner outside the house sets skipped_family_dinner")
+	GameClock.advance(30)                                        # -> 7:00 PM
+	_check(_anchors == [&"dinner"], "dinner fires exactly once, got %s" % [_anchors])
+	GameClock.advance(150)                                       # -> 9:30 PM
+	_check(_anchors == [&"dinner", &"night"], "crossing 9 PM fires night, got %s" % [_anchors])
+
+	# One long action that jumps past both still fires each, in order.
+	GameClock.end_day(false)
+	_anchors.clear()
+	GameClock.advance((22 - GameClock.START_HOUR) * 60)          # 7 AM -> 10 PM
+	_check(_anchors == [&"dinner", &"night"], "a jump past both fires both in order, got %s" % [_anchors])

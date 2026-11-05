@@ -21,6 +21,10 @@ extends Resource
 ## Optional story gate: only offered while this GameState flag is set.
 @export var requires_flag: StringName = &""
 
+## Mom's family dinner: gone once you've missed her 6 PM call
+## (GameState.skipped_family_dinner) - you cook for yourself instead.
+@export var family_dinner := false
+
 @export_group("Effect")
 ## Marks this activity done for the day (see GameState.meals_today) so it can't
 ## be repeated until tomorrow. Empty = the activity is always repeatable.
@@ -50,6 +54,8 @@ func is_available() -> bool:
 	if hour < from_hour or hour >= to_hour:
 		return false
 	if requires_flag != &"" and not GameState.has_flag(requires_flag):
+		return false
+	if family_dinner and GameState.skipped_family_dinner:
 		return false
 	if id != &"" and GameState.meals_today.has(String(id)):
 		return false

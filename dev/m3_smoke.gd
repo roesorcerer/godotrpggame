@@ -53,7 +53,7 @@ func _run() -> void:
 	GameState.doris["mood"] = 33
 	GameState.quests[&"go_to_town"] = "active"
 	GameState.chores_done = ["dishes"]
-	GameState.skipped_dinner = true
+	GameState.skipped_family_dinner = true
 	Inventory.add(&"firewood", 5)
 	GameState.fridge = {&"eggs": 3}
 
@@ -78,7 +78,7 @@ func _run() -> void:
 	_check(Mom.mood() == 33, "Mom's mood survives")
 	_check(GameState.quests.get(&"go_to_town") == "active", "quests survive")
 	_check(GameState.chores_done.has("dishes"), "today's chores survive")
-	_check(GameState.skipped_dinner, "the dinner flag survives")
+	_check(GameState.skipped_family_dinner, "the dinner flag survives")
 	_check(Inventory.count_of(&"firewood") == 5, "inventory survives, got %d" % Inventory.count_of(&"firewood"))
 
 	_check(GameState.fridge == {&"eggs": 3}, "the fridge survives, got %s" % GameState.fridge)
