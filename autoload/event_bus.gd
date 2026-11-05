@@ -9,6 +9,7 @@ signal minute_ticked(day_minutes: int)
 signal hour_ticked(hour: int)
 signal day_started(day: int)
 signal day_ended(day: int, summary: Dictionary)
+signal time_advanced(minutes: int)                 # minutes just spent by GameClock.advance()
 
 # --- player resources ------------------------------------------------------
 signal gas_changed(current: int, max_value: int)

@@ -80,10 +80,10 @@ func _run() -> void:
 			"breakfast can't repeat; expected 'Sit', got '%s'" % (again.prompt if again != null else "<none>"))
 
 	# --- evening: dinner ---
-	GameClock.minutes = 60 * 12            # 6:00 PM
+	GameClock.minutes = 60 * 12            # 7:00 PM
 	var evening := seat.current_activity()
 	_check(evening != null and evening.prompt == "Eat dinner",
-			"6 PM offers dinner, got '%s'" % (evening.prompt if evening != null else "<none>"))
+			"7 PM offers dinner, got '%s'" % (evening.prompt if evening != null else "<none>"))
 
 	# --- food from the backpack, eaten sitting down ---
 	Inventory.add(&"mac_and_cheese", 1)

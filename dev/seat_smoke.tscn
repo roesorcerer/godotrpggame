@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://dltdxugjrrmdu"]
 
-[ext_resource type="Script" path="res://dev/seat_smoke.gd" id="1_smoke"]
+[ext_resource type="Script" uid="uid://doml2vjtbumjn" path="res://dev/seat_smoke.gd" id="1_smoke"]
 
-[node name="SeatSmokeBoot" type="Node"]
+[node name="SeatSmokeBoot" type="Node" unique_id=1015694586]
 
-[node name="Runner" type="Node" parent="."]
+[node name="Runner" type="Node" parent="." unique_id=464952184]
 script = ExtResource("1_smoke")

@@ -10,17 +10,19 @@ var _finished := false            ## set by the last line of _run(); a script er
 var _seen_day_started := 0
 var _seen_day_ended := 0
 var _seen_hours := 0
+var _advanced: Array[int] = []    ## time_advanced payloads
 
 
 func _ready() -> void:
 	EventBus.day_started.connect(func(_d): _seen_day_started += 1)
 	EventBus.day_ended.connect(func(_d, _s): _seen_day_ended += 1)
 	EventBus.hour_ticked.connect(func(_h): _seen_hours += 1)
+	EventBus.time_advanced.connect(func(m): _advanced.append(m))
 
 	await get_tree().process_frame
 	await get_tree().process_frame
 
-	_run()
+	await _run()
 	if not _finished:
 		_failures.append("_run() did not finish - see the script error above")
 
@@ -49,21 +51,27 @@ func _check(condition: bool, label: String) -> void:
 func _run() -> void:
 	# --- clock reads correctly at the start of a day ---
 	_check(GameClock.day == 1, "day starts at 1")
-	_check(GameClock.clock_hour() == 6, "starts at 6 AM, got %d" % GameClock.clock_hour())
-	_check(GameClock.time_string() == "6:00 AM", "time_string, got %s" % GameClock.time_string())
+	_check(GameClock.clock_hour() == 7, "starts at 7 AM, got %d" % GameClock.clock_hour())
+	_check(GameClock.time_string() == "7:00 AM", "time_string, got %s" % GameClock.time_string())
 	_check(GameClock.weekday_name() == "Mon", "day 1 is Monday")
 	_check(_seen_day_started == 1, "day_started fired once at boot, got %d" % _seen_day_started)
 
+	# --- the clock never ticks on its own ---
+	for i in 30:
+		await get_tree().process_frame
+	_check(GameClock.minutes == 0, "standing still keeps the clock at 7 AM, got %s" % GameClock.time_string())
+
 	# --- advancing time ---
-	GameClock.advance(60 * 9)                      # 6 AM -> 3 PM
-	_check(GameClock.time_string() == "3:00 PM", "after +9h, got %s" % GameClock.time_string())
+	GameClock.advance(60 * 9)                      # 7 AM -> 4 PM
+	_check(GameClock.time_string() == "4:00 PM", "after +9h, got %s" % GameClock.time_string())
 	_check(_seen_hours == 9, "9 hour ticks, got %d" % _seen_hours)
 
 	GameClock.advance(40)
-	_check(GameClock.time_string() == "3:40 PM", "after +40m, got %s" % GameClock.time_string())
+	_check(GameClock.time_string() == "4:40 PM", "after +40m, got %s" % GameClock.time_string())
+	_check(_advanced == [540, 40], "time_advanced sends the minutes spent, got %s" % [_advanced])
 
 	# --- the quiet hours window (7-9 AM) ---
-	_check(not GameClock.is_quiet_hours(), "3:40 PM is not quiet hours")
+	_check(not GameClock.is_quiet_hours(), "4:40 PM is not quiet hours")
 
 	# --- Gas spending ---
 	GameState.gas = 50

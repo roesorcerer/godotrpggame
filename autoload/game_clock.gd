@@ -2,19 +2,18 @@ extends Node
 
 ## The beating heart. Day length, the minute tick, and the day boundary.
 ## Everything in Part One of the design is a function of this node.
+## Time never passes on its own: advance() is the only thing that moves it.
 
-const MINUTES_PER_DAY := 1080          ## 6:00 AM -> midnight (18 hours)
-const START_HOUR := 6
-const REAL_SECONDS_PER_GAME_MINUTE := 0.7   ## ~12.6 real minutes per day
+const MINUTES_PER_DAY := 17 * 60       ## 7:00 AM -> midnight (17 hours)
+const START_HOUR := 7
 const BEDTIME_HOUR := 23               ## in bed before this = full rest
 const SUMMER_LENGTH := 28              ## the end-of-summer deadline
 
 const DAY_NAMES := ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
 var day := 1
-var minutes := 0                       ## minutes elapsed since 6:00 AM
+var minutes := 0                       ## minutes elapsed since START_HOUR
 
-var _accum := 0.0
 var _pause_requests := 0               ## stacking pauses: menus, dialogue, cutscenes
 
 ## --- pausing ---------------------------------------------------------------
@@ -38,22 +37,6 @@ func _ready() -> void:
 	# Let the other autoloads finish _ready before anyone hears day_started.
 	await get_tree().process_frame
 	EventBus.day_started.emit(day)
-
-
-func _process(delta: float) -> void:
-	if is_paused():
-		return
-	_accum += delta
-	while _accum >= REAL_SECONDS_PER_GAME_MINUTE:
-		_accum -= REAL_SECONDS_PER_GAME_MINUTE
-		minutes += 1
-		EventBus.minute_ticked.emit(minutes)
-		if minutes % 60 == 0:
-			EventBus.hour_ticked.emit(clock_hour())
-		if minutes >= MINUTES_PER_DAY:
-			# Stayed up past midnight: you don't choose to sleep, you stop.
-			end_day(true)
-			return
 
 
 ## --- reading the clock -----------------------------------------------------
@@ -88,7 +71,8 @@ func days_remaining() -> int:
 func is_quiet_hours() -> bool:
 	return clock_hour() >= 7 and clock_hour() < 9
 
-## Advance the clock directly. Chores call this.
+## The only way time moves: every action spends minutes (chores, meals,
+## seat activities, cooking). Past midnight ends the day as passed out.
 func advance(mins: int) -> void:
 	if mins <= 0:
 		return
@@ -97,6 +81,7 @@ func advance(mins: int) -> void:
 	for h in range(START_HOUR + int(floor(before / 60.0 + 1)), clock_hour() + 1):
 		EventBus.hour_ticked.emit(h)
 	EventBus.minute_ticked.emit(minutes)
+	EventBus.time_advanced.emit(minutes - before)
 	if minutes >= MINUTES_PER_DAY:
 		end_day(true)
 
@@ -119,7 +104,6 @@ func end_day(passed_out := false) -> void:
 
 	day += 1
 	minutes = 0
-	_accum = 0.0
 	GameState.begin_new_day(summary["slept_at"], passed_out)
 
 	EventBus.day_started.emit(day)

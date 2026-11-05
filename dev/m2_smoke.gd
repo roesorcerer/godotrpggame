@@ -65,7 +65,7 @@ func _run() -> void:
 	# --- doing a chore: Gas, clock, mood, log, signal ---
 	GameState.gas = 100
 	GameState.doris["mood"] = 50
-	GameClock.minutes = 60 * 4                             # 10:00 AM
+	GameClock.minutes = 60 * 4                             # 11:00 AM
 	var mins_before := GameClock.minutes
 	_check(ChoreSystem.is_needed(dishes), "dishes is needed this morning")
 	_check(ChoreSystem.perform(dishes), "dishes performed")

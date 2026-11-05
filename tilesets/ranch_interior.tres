@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://w4ef6x0x8e0s" path="res://tilesets/atlases/interior/room_builder_baseboards_16x16.png" id="6_8sq7p"]
 [ext_resource type="Texture2D" uid="uid://c7joumq033ptr" path="res://tilesets/atlases/interior/room_builder_borders_16x16.png" id="7_co3m4"]
 [ext_resource type="Texture2D" uid="uid://bhvio4x4e7o5u" path="res://tilesets/atlases/collision_brush.png" id="8_collbrush"]
-[ext_resource type="Texture2D" uid="uid://cvuef4p4yxwhh" path="res://tilesets/atlases/interior/interiors_16x16_2.png" id="10_interiors2"]
 [ext_resource type="Texture2D" uid="uid://dv0ls3nr8ch07" path="res://tilesets/atlases/godot_autotiles_16x16.png" id="9_8sq7p"]
+[ext_resource type="Texture2D" uid="uid://cvuef4p4yxwhh" path="res://tilesets/atlases/interior/interiors_16x16_2.png" id="10_interiors2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wjoo1"]
 texture = ExtResource("1_h24ue")
