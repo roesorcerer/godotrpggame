@@ -1,7 +1,8 @@
 extends Node
 
 ## Dev-only smoke test for the M1 interaction layer: sensor targeting, the
-## door, the scene swap, the spawn marker, and the bed ending the day.
+## door, the scene swap, the spawn marker, the stairs, and the bed upstairs
+## ending the day.
 ##   godot --headless --path . res://dev/m1_smoke.tscn
 
 var _failures: Array[String] = []
@@ -115,22 +116,54 @@ func _run() -> void:
 	_check(cam != null and cam.limit_right > 0 and cam.limit_right < 100000,
 		"camera clamped to the room, limit_right=%d" % [cam.limit_right if cam else -1])
 
-	# --- the bed ends the day ---
+	# --- up the stairs to the second floor ---
+	var stairs := scene.find_child("Stairs", true, false) as Stairs
+	_check(stairs != null, "interior has Stairs")
+	if stairs == null:
+		return
+	_check(stairs.target_scene == "res://world/ranch_interior/secondfloor/ranch_second_floor_interior.tscn",
+		"stairs point at the second floor, got %s" % stairs.target_scene)
+	stairs.interact(inside_player)
+	await _await_travel()
+	await _settle(2)
+	scene = get_tree().current_scene
+	_check(scene != null and scene.name == "RanchSecondFloorInterior", "we are upstairs")
+	var up_player := SceneRouter.get_player()
+	var up_spawn := scene.find_child("Spawn_Upstairs", true, false) as Node2D
+	_check(up_player != null and up_spawn != null
+		and up_player.global_position.distance_to(up_spawn.global_position) < 1.0,
+		"player landed on Spawn_Upstairs")
+	_check(Mom._player_in_house(), "upstairs still counts as in the house (family dinner)")
+	var down := scene.find_child("StairsDown", true, false) as Stairs
+	_check(down != null and down.target_scene == "res://world/ranch_interior/ranch_interior.tscn"
+		and down.target_spawn == &"Spawn_Downstairs", "StairsDown leads back to Spawn_Downstairs")
+
+	# --- the bed in your room ends the day ---
 	var bed := scene.find_child("Bed", true, false) as Bed
-	if bed == null:
-		# The interior is mid-rebuild; the bed moves upstairs later.
-		print("M1 SMOKE SKIP: no Bed in the interior yet - bed checks skipped")
-		_finished = true
+	_check(bed != null, "the second floor has the Bed")
+	if bed == null or up_player == null:
 		return
 	GameClock.minutes = (bed.too_early_hour - GameClock.START_HOUR) * 60 - 1    # 7:59 PM
-	_check(bed.get_prompt(inside_player) == "Too early to sleep", "bed refuses at 7:59 PM")
+	_check(bed.get_prompt(up_player) == "Too early to sleep", "bed refuses at 7:59 PM")
 	GameClock.minutes += 1                                                        # 8:00 PM
-	_check(bed.get_prompt(inside_player) == "Go to sleep", "bed prompts at 8 PM")
-	bed.interact(inside_player)
+	_check(bed.get_prompt(up_player) == "Go to sleep", "bed prompts at 8 PM")
+	bed.interact(up_player)
 	await _settle(2)
 	_check(GameClock.day == before_day + 1, "bed advanced the day")
 
 	# --- and it is too early to sleep at 7 AM ---
 	GameClock.minutes = 0
-	_check(bed.get_prompt(inside_player) == "Too early to sleep", "bed refuses at 7 AM")
+	_check(bed.get_prompt(up_player) == "Too early to sleep", "bed refuses at 7 AM")
+
+	# --- and back down ---
+	down.interact(up_player)
+	await _await_travel()
+	await _settle(2)
+	scene = get_tree().current_scene
+	_check(scene != null and scene.name == "RanchInterior", "the stairs lead back down")
+	var down_spawn := scene.find_child("Spawn_Downstairs", true, false) as Node2D
+	var back_player := SceneRouter.get_player()
+	_check(down_spawn != null and back_player != null
+		and back_player.global_position.distance_to(down_spawn.global_position) < 1.0,
+		"player landed on Spawn_Downstairs")
 	_finished = true

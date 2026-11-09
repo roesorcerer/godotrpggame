@@ -1,20 +1,28 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://0rk65t264gwr"]
 
-[ext_resource type="Script" path="res://props/ranchinside/bed/bed.gd" id="1_bed"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bed"]
-size = Vector2(32, 24)
+[ext_resource type="Script" uid="uid://ctcustv8hicjv" path="res://props/ranchinside/bed/bed.gd" id="1_bed"]
+[ext_resource type="Texture2D" uid="uid://chg6l07nhj23k" path="res://props/ranchinside/bed/bed.png" id="2_78s44"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bed"]
 
-[node name="Bed" type="Area2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bed"]
+size = Vector2(14, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7y3yr"]
+
+[node name="Bed" type="Area2D" unique_id=1361101508]
 material = SubResource("CanvasItemMaterial_bed")
 script = ExtResource("1_bed")
 prompt = "Go to sleep"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1122794308]
+texture = ExtResource("2_78s44")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=360821545]
+position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_bed")
 
-[node name="Placeholder" type="Polygon2D" parent="."]
-color = Color(0.462745, 0.352941, 0.278431, 1)
-polygon = PackedVector2Array(-16, -12, 16, -12, 16, 12, -16, 12)
+[node name="Body" type="StaticBody2D" parent="." unique_id=268478943]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=172206162]
+shape = SubResource("RectangleShape2D_7y3yr")

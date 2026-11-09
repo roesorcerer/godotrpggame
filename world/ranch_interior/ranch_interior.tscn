@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://7jwaog6me7g4"]
 
 [ext_resource type="TileSet" uid="uid://cdt2pb1xqdq3c" path="res://tilesets/ranch_interior.tres" id="1_8ni1r"]
+[ext_resource type="PackedScene" uid="uid://c2tioaoan4v7m" path="res://props/ranchinside/stairs/stairs.tscn" id="3_hh2kb"]
 [ext_resource type="PackedScene" uid="uid://cus2x3blqkdwf" path="res://props/ranchinside/chair/chair.tscn" id="5_6agby"]
 [ext_resource type="PackedScene" uid="uid://cqhs3r8d6xhjb" path="res://props/ranchinside/fridge/fridge.tscn" id="6_1ow8s"]
 [ext_resource type="PackedScene" uid="uid://ird1vp3cqmda" path="res://props/door/door.tscn" id="7_0eyl2"]
@@ -20,7 +21,6 @@ tile_map_data = PackedByteArray("AAAHAP//AQAOABsAAAAHAP7/AQAOABsAAAAHAP3/AQAOABo
 tile_set = ExtResource("1_8ni1r")
 
 [node name="Rugs" type="TileMapLayer" parent="." unique_id=2065266930]
-visible = false
 tile_set = ExtResource("1_8ni1r")
 
 [node name="CameraBounds" type="ReferenceRect" parent="." unique_id=811116754 groups=["camera_bounds"]]
@@ -34,12 +34,12 @@ y_sort_enabled = true
 
 [node name="Walls" type="TileMapLayer" parent="World" unique_id=1862107486]
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAIAPf/AwAGAAMAAAAIAPj/AwAGAAUAAAAIAPn/AwAFAAIAAAAIAPr/AwAFAAIAAAAIAPv/AwAFAAIAAAAIAPz/AwAFAAIAAAAIAP3/AwAFAAIAAAAIAP7/AwAFAAIAAAAIAPb/AwAGAAAAAAAHAPb/AwAEAAIAAAAGAPb/AwADAAIAAAAFAPb/AwADAAIAAAAHAPf/AwAEAAMAAAAGAPf/AwAEAAMAAAAFAPf/AwAEAAMAAAAEAPf/AwAEAAMAAAADAPf/AwAEAAMAAAACAPf/AwAEAAMAAAABAPf/AwAEAAMAAAAAAPf/AwAEAAMAAAD///f/AwAEAAMAAAD+//f/AwAEAAMAAAD9//f/AwAEAAMAAAD8//f/AwAEAAMAAAD7//f/AwAEAAMAAAD6//f/AwAEAAMAAAD5//f/AwAEAAMAAAD4//f/AwAEAAMAAAAEAPb/AwAEAAIAAAADAPb/AwAEAAIAAAACAPb/AwAEAAIAAAABAPb/AwAEAAIAAAAAAPb/AwAEAAIAAAD///b/AwAEAAIAAAD+//b/AwAEAAIAAAD9//b/AwAEAAIAAAD8//b/AwAEAAIAAAD7//b/AwAEAAIAAAD6//b/AwAEAAIAAAD5//b/AwAEAAIAAAD4//b/AwAEAAIAAAD3//b/AwABAAAAAAD3//f/AwABAAMAAAD3//j/AwABAAUAAAD3//n/AwABAAUAAAD3//r/AwABAAUAAAD3//v/AwABAAUAAAD3//z/AwABAAUAAAD3//3/AwABAAUAAAD3//7/AwABAAUAAAD3////AwABAAUAAAD3/wAAAwACAAUAAAD4/wAAAwADAAUAAAD5/wAAAwADAAUAAAD6/wAAAwADAAUAAAD7/wAAAwADAAUAAAD8/wAABQACAAMAADD+/wAABQAAAAMAADD//wAAAwADAAUAAAAAAAAAAwADAAUAAAABAAAAAwADAAUAAAACAAAAAwADAAUAAAADAAAAAwADAAUAAAAEAAAAAwADAAUAAAAFAAAAAwADAAUAAAAGAAAAAwADAAUAAAAHAAAAAwADAAUAAAAIAP//AwAGAAUAAAAIAAAAAwAFAAUAAAD4//z/AAAPAHkBABD6//3/AAANAHoBABD5//3/AAAOAHoBABD4//3/AAAPAHoBABA=")
+tile_map_data = PackedByteArray("AAAIAPf/AwAGAAMAAAAIAPj/AwAGAAUAAAAIAPn/AwAFAAIAAAAIAPr/AwAFAAIAAAAIAPv/AwAFAAIAAAAIAPz/AwAFAAIAAAAIAP3/AwAFAAIAAAAIAP7/AwAFAAIAAAAIAPb/AwAGAAAAAAAHAPb/AwAEAAIAAAAGAPb/AwADAAIAAAAFAPb/AwADAAIAAAAHAPf/AwAEAAMAAAAGAPf/AwAEAAMAAAAFAPf/AwAEAAMAAAAEAPf/AwAEAAMAAAADAPf/AwAEAAMAAAACAPf/AwAEAAMAAAABAPf/AwAEAAMAAAAAAPf/AwAEAAMAAAD///f/AwAEAAMAAAD+//f/AwAEAAMAAAD9//f/AwAEAAMAAAD8//f/AwAEAAMAAAD7//f/AwAEAAMAAAD6//f/AwAEAAMAAAD5//f/AwAEAAMAAAD4//f/AwAEAAMAAAAEAPb/AwAEAAIAAAADAPb/AwAEAAIAAAACAPb/AwAEAAIAAAABAPb/AwAEAAIAAAAAAPb/AwAEAAIAAAD///b/AwAEAAIAAAD+//b/AwAEAAIAAAD9//b/AwAEAAIAAAD8//b/AwAEAAIAAAD7//b/AwAEAAIAAAD6//b/AwAEAAIAAAD5//b/AwAEAAIAAAD4//b/AwAEAAIAAAD3//b/AwABAAAAAAD3//f/AwABAAMAAAD3//j/AwABAAUAAAD3//n/AwABAAUAAAD3//r/AwABAAUAAAD3//v/AwABAAUAAAD3//z/AwABAAUAAAD3//3/AwABAAUAAAD3//7/AwABAAUAAAD3////AwABAAUAAAD3/wAAAwACAAUAAAD4/wAAAwADAAUAAAD5/wAAAwADAAUAAAD6/wAAAwADAAUAAAD7/wAAAwADAAUAAAD8/wAABQACAAMAADD+/wAABQAAAAMAADD//wAAAwADAAUAAAAAAAAAAwADAAUAAAABAAAAAwADAAUAAAACAAAAAwADAAUAAAADAAAAAwADAAUAAAAEAAAAAwADAAUAAAAFAAAAAwADAAUAAAAGAAAAAwADAAUAAAAHAAAAAwADAAUAAAAIAP//AwAGAAUAAAAIAAAAAwAFAAUAAAA=")
 tile_set = ExtResource("1_8ni1r")
 
 [node name="WallDecor" type="TileMapLayer" parent="World" unique_id=1617437664]
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAD5//b/AAAAAOQAAAD5//f/AAAAAOUAAAD6//b/AAABAOQAAAD6//f/AAABAOUAAAD7//b/AAACAOQAAAD7//f/AAACAOUAAAD+//b/AAALAN0AAAD+//f/AAALAN4AAAD///b/AAAMAN0AAAD///f/AAAMAN4AAAADAPb/AAALAN0AAAADAPf/AAALAN4AAAAEAPb/AAAMAN0AAAAEAPf/AAAMAN4AAAAGAPb/AAABANkAAAAGAPf/AAABANoAAAD4//z/AAAMAHoBABD5//3/AAALAHsBABD4//3/AAAMAHsBABD6//7/AAAKAHwBABD5//7/AAALAHwBABD4//7/AAAMAHwBABD6////AAAKAH0BABD5////AAALAH0BABA=")
+tile_map_data = PackedByteArray("AAD5//b/AAAAAOQAAAD5//f/AAAAAOUAAAD6//b/AAABAOQAAAD6//f/AAABAOUAAAD7//b/AAACAOQAAAD7//f/AAACAOUAAAD+//b/AAALAN0AAAD+//f/AAALAN4AAAD///b/AAAMAN0AAAD///f/AAAMAN4AAAADAPb/AAALAN0AAAADAPf/AAALAN4AAAAEAPb/AAAMAN0AAAAEAPf/AAAMAN4AAAAGAPb/AAABANkAAAAGAPf/AAABANoAAAA=")
 tile_set = ExtResource("1_8ni1r")
 
 [node name="Furniture" type="TileMapLayer" parent="World" unique_id=1986979995]
@@ -60,6 +60,12 @@ scale = Vector2(1.1477278, 1.396074)
 target_scene = "res://world/ranch/ranch.tscn"
 target_spawn = &"Spawn_RanchDoor"
 prompt = "Go outside"
+
+[node name="Stairs" parent="World" unique_id=1575786327 instance=ExtResource("3_hh2kb")]
+position = Vector2(-111, -28)
+target_scene = "res://world/ranch_interior/secondfloor/ranch_second_floor_interior.tscn"
+target_spawn = &"Spawn_Upstairs"
+prompt = "Go upstairs"
 
 [node name="Kitchen" type="Node2D" parent="World" unique_id=2075179404]
 y_sort_enabled = true
@@ -114,3 +120,6 @@ tile_set = ExtResource("1_8ni1r")
 
 [node name="Spawn_Interior" type="Marker2D" parent="." unique_id=2114319381]
 position = Vector2(-40, -33)
+
+[node name="Spawn_Downstairs" type="Marker2D" parent="." unique_id=1847261190]
+position = Vector2(-98, -8)

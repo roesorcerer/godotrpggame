@@ -79,7 +79,11 @@ func _serve_dinner() -> void:
 		GameState.skipped_family_dinner = true
 
 
-## The house scene is loaded (ranch_interior.tscn -> "ranch_interior").
+## Every floor of the house, by scene file name (ranch_interior.tscn ->
+## "ranch_interior"). Add a scene here when the house grows a room.
+const HOUSE_SCENES := [&"ranch_interior", &"ranch_second_floor_interior"]
+
+## The player is on any floor of the house.
 func _player_in_house() -> bool:
 	var scene := get_tree().current_scene
-	return scene != null and scene.scene_file_path.get_file().get_basename() == "ranch_interior"
+	return scene != null and StringName(scene.scene_file_path.get_file().get_basename()) in HOUSE_SCENES

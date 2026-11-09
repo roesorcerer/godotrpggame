@@ -45,6 +45,7 @@ const NPC_NAMES = {
 const PLACE_NAMES = {
 	&"ranch": "The Ranch",
 	&"ranch_interior": "The House",
+	&"ranch_second_floor_interior": "Upstairs",
 	&"alder_grove": "Alder Grove",
 	&"cobble_mountain": "Cobble Mountain",
 }

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c2tioaoan4v7m"]
+
+[ext_resource type="Script" uid="uid://khfb2xgjjuvk" path="res://props/ranchinside/stairs/stairs.gd" id="1_stairs"]
+[ext_resource type="Texture2D" uid="uid://2vuw67xgoo82" path="res://tilesets/atlases/interior/14_Basement_Shadowless.png" id="1_xk0kl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y3yr"]
+atlas = ExtResource("1_xk0kl")
+region = Rect2(173, 601, 35, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7y3yr"]
+size = Vector2(20, 32)
+
+[node name="Stairs" type="Area2D" unique_id=1575786327]
+script = ExtResource("1_stairs")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=546399852]
+texture = SubResource("AtlasTexture_7y3yr")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1043228565]
+position = Vector2(13, 6)
+shape = SubResource("RectangleShape2D_7y3yr")
