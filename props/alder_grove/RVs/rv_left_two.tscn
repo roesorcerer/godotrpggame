@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://3yuxsxfpav4p"]
+
+[ext_resource type="Texture2D" uid="uid://djox6vyoyif7s" path="res://props/alder_grove/RVs/RV_Left_Two.png" id="1_1hx8y"]
+
+[node name="RVLeftTwo" type="StaticBody2D" unique_id=1268937]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=112357716]
+texture = ExtResource("1_1hx8y")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=534054648]
+polygon = PackedVector2Array(44, 23, 29, 24, 24, 29, 17, 29, 11, 24, -18, 24, -23, 28, -31, 29, -35, 25, -36, 22, -44, 22, -45, 6, 45, 6)

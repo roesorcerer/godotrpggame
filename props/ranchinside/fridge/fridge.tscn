@@ -201,6 +201,8 @@ polygon = PackedVector2Array(-5, -8, 6, -8, 6, 0, -8, 0)
 libraries/ = SubResource("AnimationLibrary_tej3q")
 
 [node name="Body" type="StaticBody2D" parent="." unique_id=1837280573]
+collision_layer = 5
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=249016091]
 position = Vector2(0, 1)

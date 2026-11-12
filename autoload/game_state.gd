@@ -29,6 +29,7 @@ var fridge: Dictionary = Data.STARTING_FRIDGE.duplicate()
 var doris := {
 	"mood": 60,
 	"mood_at_dawn": 60,
+	"can_care": true,     ## a good day; false = hungover/passed out (Mom.can_care)
 }
 
 var campaign := {
@@ -117,7 +118,7 @@ func begin_new_day(slept_at_minutes: int, passed_out: bool) -> void:
 
 func to_dict() -> Dictionary:
 	return {
-		"version": 5,
+		"version": 6,
 		"day": GameClock.day,
 		"minutes": GameClock.minutes,
 		"money": money,

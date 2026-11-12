@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" path="res://props/item_pickup/item_pickup.tscn" id="23_pickup"]
 [ext_resource type="Resource" uid="uid://djx4ck54uxsrn" path="res://data/items/chicken_leg.tres" id="25_chicken"]
 [ext_resource type="Resource" uid="uid://bbpmkuksu825p" path="res://data/items/gear.tres" id="26_gear"]
+[ext_resource type="Script" path="res://world/npc_navigation.gd" id="27_npcnav"]
+[ext_resource type="PackedScene" uid="uid://fhvwwxne2wlg" path="res://actors/npcs/mom/mom.tscn" id="28_mom"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
 size = Vector2(24, 48)
@@ -170,9 +172,10 @@ position = Vector2(296, 280)
 position = Vector2(72, -120)
 
 [node name="Bruce" parent="World" unique_id=2019238660 instance=ExtResource("20_bruce")]
-position = Vector2(120, -112)
-collision_layer = 8
-collision_mask = 15
+position = Vector2(240, -92)
+
+[node name="Mom" parent="World" unique_id=1873305031 instance=ExtResource("28_mom")]
+position = Vector2(24, -150)
 
 [node name="ToAlderGrove" type="Area2D" parent="World" unique_id=150863179]
 position = Vector2(688, -136)
@@ -215,6 +218,52 @@ position = Vector2(88, -171)
 
 [node name="Crate" parent="World" unique_id=533187141 instance=ExtResource("17_ux5qa")]
 position = Vector2(280, -176)
+
+[node name="NpcNavigation" type="NavigationRegion2D" parent="." unique_id=1873304411]
+script = ExtResource("27_npcnav")
+
+[node name="NpcPoints" type="Node2D" parent="." unique_id=1873304412]
+
+[node name="Exit_barn" type="Marker2D" parent="NpcPoints" unique_id=1873304413]
+position = Vector2(-64, 52)
+
+[node name="Exit_ranch_interior" type="Marker2D" parent="NpcPoints" unique_id=1873304414]
+position = Vector2(88, -176)
+
+[node name="MomWoodpile" type="Marker2D" parent="NpcPoints" unique_id=1873305032]
+position = Vector2(24, -150)
+
+[node name="BruceFence" type="Node2D" parent="NpcPoints" unique_id=1873304415]
+
+[node name="Fence1" type="Marker2D" parent="NpcPoints/BruceFence" unique_id=1873304420]
+position = Vector2(240, -92)
+
+[node name="Fence2" type="Marker2D" parent="NpcPoints/BruceFence" unique_id=1873304421]
+position = Vector2(240, -56)
+
+[node name="Fence3" type="Marker2D" parent="NpcPoints/BruceFence" unique_id=1873304422]
+position = Vector2(240, 40)
+
+[node name="Fence4" type="Marker2D" parent="NpcPoints/BruceFence" unique_id=1873304423]
+position = Vector2(240, 100)
+
+[node name="Fence5" type="Marker2D" parent="NpcPoints/BruceFence" unique_id=1873304424]
+position = Vector2(360, 100)
+
+[node name="Fence6" type="Marker2D" parent="NpcPoints/BruceFence" unique_id=1873304425]
+position = Vector2(500, 100)
+
+[node name="Fence7" type="Marker2D" parent="NpcPoints/BruceFence" unique_id=1873304426]
+position = Vector2(636, 100)
+
+[node name="Fence8" type="Marker2D" parent="NpcPoints/BruceFence" unique_id=1873304427]
+position = Vector2(636, 0)
+
+[node name="Fence9" type="Marker2D" parent="NpcPoints/BruceFence" unique_id=1873304428]
+position = Vector2(636, -92)
+
+[node name="Fence10" type="Marker2D" parent="NpcPoints/BruceFence" unique_id=1873304429]
+position = Vector2(440, -92)
 
 [connection signal="tool_use" from="World/CharacterBody2D" to="." method="_on_player_tool_use"]
 [connection signal="tool_use" from="World/CharacterBody2D" to="World/CharacterBody2D" method="_on_player_tool_use"]

@@ -47,3 +47,11 @@ menu_title = "On the couch"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Seat" unique_id=1707380893]
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_interact")
+
+[node name="CouchLieDown" type="Marker2D" parent="." unique_id=1873305001]
+position = Vector2(-17, -2)
+
+[node name="Covers" type="Polygon2D" parent="CouchLieDown" unique_id=1873305002]
+visible = false
+color = Color(0.47, 0.27, 0.27, 1)
+polygon = PackedVector2Array(5, -13, 39, -13, 39, -3, 5, -3)

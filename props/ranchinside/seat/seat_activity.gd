@@ -55,7 +55,7 @@ func is_available() -> bool:
 		return false
 	if requires_flag != &"" and not GameState.has_flag(requires_flag):
 		return false
-	if family_dinner and GameState.skipped_family_dinner:
+	if family_dinner and (GameState.skipped_family_dinner or not Mom.can_care()):
 		return false
 	if id != &"" and GameState.meals_today.has(String(id)):
 		return false

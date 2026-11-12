@@ -21,6 +21,7 @@ signal room_entered(room_id: StringName)      # player walked into a RoomZone
 signal chore_completed(chore_id: StringName)
 signal chores_changed()                       # today's list moved: done, new day, load
 signal mom_mood_changed(mood: int)
+signal mom_can_care_changed(can_care: bool)   # good day / bad day flipped (Mom.can_care)
 
 # --- family / condition (M5) -----------------------------------------------
 signal condition_rolled(state: StringName)   # &"steady" / &"slow" / &"under"

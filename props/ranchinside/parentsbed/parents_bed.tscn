@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dtlnya46j17k2"]
+
+[ext_resource type="Texture2D" uid="uid://qdjfvls8a338" path="res://props/ranchinside/parentsbed/parentbed.png" id="1_f17o0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7y3yr"]
+size = Vector2(37, 26)
+
+[node name="ParentsBed" type="Area2D" unique_id=1354221582]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1371987018]
+polygon = PackedVector2Array(-16, -8, 16, -8, 16, 11, -16, 11)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1418494289]
+texture = ExtResource("1_f17o0")
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=945895798]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1732417234]
+position = Vector2(0.5, 3)
+shape = SubResource("RectangleShape2D_7y3yr")
+
+[node name="momside" type="Marker2D" parent="." unique_id=1814343332]
+position = Vector2(8, -4)
+
+[node name="bruceside" type="Marker2D" parent="." unique_id=1754499487]
+position = Vector2(-8, -4)

@@ -2,6 +2,8 @@
 
 [ext_resource type="SpriteFrames" uid="uid://b7j4jo2sku1dp" path="res://actors/npcs/mom/mom_frames.tres" id="1_xueka"]
 [ext_resource type="Script" uid="uid://fgej6jx8n1kx" path="res://actors/npcs/npc_talk.gd" id="9_talk"]
+[ext_resource type="Script" path="res://actors/npcs/npc.gd" id="10_npc"]
+[ext_resource type="Script" path="res://actors/npcs/schedule_block.gd" id="11_block"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_204wl"]
 radius = 8.0
@@ -400,8 +402,121 @@ node_connections = [&"output", 0, &"MoveStateMachine"]
 [sub_resource type="CircleShape2D" id="CircleShape2D_talk"]
 radius = 14.0
 
+[sub_resource type="Resource" id="SB_cook_am"]
+script = ExtResource("11_block")
+start_hour = 7
+place = &"ranch_interior"
+spot = &"MomStove"
+pose = &"cook"
+small_talk = Array[String](["Eggs or nothing. Those are the options.", "Go get your brother up."])
+
+[sub_resource type="Resource" id="SB_tv_am"]
+script = ExtResource("11_block")
+start_hour = 9
+days = 1
+place = &"ranch_interior"
+spot = &"couch"
+pose = &"sit_legsout"
+small_talk = Array[String](["Shh. My show.", "Sit with me a minute. You never sit with me."])
+
+[sub_resource type="Resource" id="SB_couch_out"]
+script = ExtResource("11_block")
+start_hour = 9
+days = 2
+place = &"ranch_interior"
+spot = &"CouchLieDown"
+pose = &"sleep"
+can_talk = false
+
+[sub_resource type="Resource" id="SB_wood"]
+script = ExtResource("11_block")
+start_hour = 13
+days = 1
+place = &"ranch"
+spot = &"MomWoodpile"
+pose = &"chop_right"
+small_talk = Array[String](["Stand back. This thing's dull as hell.", "Somebody in this family has to keep us warm."])
+
+[sub_resource type="Resource" id="SB_bed_tv"]
+script = ExtResource("11_block")
+start_hour = 13
+days = 2
+place = &"ranch_second_floor_interior"
+spot = &"momside"
+pose = &"lie"
+small_talk = Array[String](["Close the door, baby. The light hurts.", "Not now. Tell Oscar I'll make it up to him."])
+
+[sub_resource type="Resource" id="SB_stack"]
+script = ExtResource("11_block")
+start_hour = 16
+days = 1
+place = &"ranch_interior"
+spot = &"MomFireplace"
+pose = &"idle_up"
+small_talk = Array[String](["By the hearth. No, the other way."])
+
+[sub_resource type="Resource" id="SB_cook_pm"]
+script = ExtResource("11_block")
+start_hour = 17
+days = 1
+place = &"ranch_interior"
+spot = &"MomStove"
+pose = &"cook"
+small_talk = Array[String](["Dinner's at six. Wash your hands.", "Don't hover, you're making me nervous."])
+
+[sub_resource type="Resource" id="SB_dinner"]
+script = ExtResource("11_block")
+start_hour = 18
+days = 1
+place = &"ranch_interior"
+spot = &"MomChair"
+pose = &"sit_legsout"
+small_talk = Array[String](["Eat. You're all bones.", "Oscar, elbows."])
+
+[sub_resource type="Resource" id="SB_dishes"]
+script = ExtResource("11_block")
+start_hour = 19
+days = 1
+place = &"ranch_interior"
+spot = &"MomSink"
+pose = &"cook"
+small_talk = Array[String](["Leave it, I've got it. ...Actually, dry."])
+
+[sub_resource type="Resource" id="SB_tv_pm"]
+script = ExtResource("11_block")
+start_hour = 20
+days = 1
+place = &"ranch_interior"
+spot = &"couch"
+pose = &"sit_legsout"
+small_talk = Array[String](["Come watch with me. Just one episode."])
+
+[sub_resource type="Resource" id="SB_couch_night"]
+script = ExtResource("11_block")
+start_hour = 22
+days = 1
+place = &"ranch_interior"
+spot = &"CouchLieDown"
+pose = &"sleep"
+can_talk = false
+
+[sub_resource type="Resource" id="SB_bed_night"]
+script = ExtResource("11_block")
+start_hour = 22
+days = 2
+place = &"ranch_second_floor_interior"
+spot = &"momside"
+pose = &"sleep"
+can_talk = false
+
 [node name="mom" type="CharacterBody2D" unique_id=523549965]
 collision_layer = 8
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("10_npc")
+schedule = Array[ExtResource("11_block")]([SubResource("SB_cook_am"), SubResource("SB_tv_am"), SubResource("SB_couch_out"), SubResource("SB_wood"), SubResource("SB_bed_tv"), SubResource("SB_stack"), SubResource("SB_cook_pm"), SubResource("SB_dinner"), SubResource("SB_dishes"), SubResource("SB_tv_pm"), SubResource("SB_couch_night"), SubResource("SB_bed_night")])
+awake_head_rows = Vector2i(10, 15)
+awake_head_offset = Vector2(0, -7)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=546713676]
 sprite_frames = ExtResource("1_xueka")

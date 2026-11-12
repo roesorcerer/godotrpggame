@@ -65,6 +65,10 @@ folder_colors={
 "res://world/": "blue"
 }
 
+[global_group]
+
+npc_usable=""
+
 [input]
 
 move_left={

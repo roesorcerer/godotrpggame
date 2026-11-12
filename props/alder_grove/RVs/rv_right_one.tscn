@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://s314crypdeoy"]
+
+[ext_resource type="Texture2D" uid="uid://csqqp07bjtbbb" path="res://props/alder_grove/RVs/RV_Right_One.png" id="1_6oq1d"]
+
+[node name="RVRightOne" type="StaticBody2D" unique_id=1602019994]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=615621344]
+texture = ExtResource("1_6oq1d")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1177834394]
+polygon = PackedVector2Array(44, 22, 36, 22, 33, 27, 26, 29, 21, 27, 18, 23, -11, 23, -15, 27, -19, 29, -23, 29, -26, 26, -29, 24, -40, 24, -43, 23, -44, 5, 44, 2)

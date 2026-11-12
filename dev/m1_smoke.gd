@@ -135,7 +135,11 @@ func _run() -> void:
 		"player landed on Spawn_Upstairs")
 	_check(Mom._player_in_house(), "upstairs still counts as in the house (family dinner)")
 	var down := scene.find_child("StairsDown", true, false) as Stairs
-	_check(down != null and down.target_scene == "res://world/ranch_interior/ranch_interior.tscn"
+	# The editor's file picker stores a uid://; compare the file it points to.
+	var down_target := down.target_scene if down != null else ""
+	if down_target.begins_with("uid://"):
+		down_target = ResourceUID.get_id_path(ResourceUID.text_to_id(down_target))
+	_check(down != null and down_target == "res://world/ranch_interior/ranch_interior.tscn"
 		and down.target_spawn == &"Spawn_Downstairs", "StairsDown leads back to Spawn_Downstairs")
 
 	# --- the bed in your room ends the day ---

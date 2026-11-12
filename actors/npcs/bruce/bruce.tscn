@@ -2,6 +2,8 @@
 
 [ext_resource type="SpriteFrames" uid="uid://dwndhxpkry6wc" path="res://actors/npcs/bruce/bruce_frames.tres" id="1_i75gm"]
 [ext_resource type="Script" uid="uid://fgej6jx8n1kx" path="res://actors/npcs/npc_talk.gd" id="9_talk"]
+[ext_resource type="Script" path="res://actors/npcs/npc.gd" id="10_npc"]
+[ext_resource type="Script" path="res://actors/npcs/schedule_block.gd" id="11_block"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_204wl"]
 radius = 8.0
@@ -400,7 +402,61 @@ node_connections = [&"output", 0, &"MoveStateMachine"]
 [sub_resource type="CircleShape2D" id="CircleShape2D_talk"]
 radius = 14.0
 
+[sub_resource type="Resource" id="ScheduleBlock_fence"]
+script = ExtResource("11_block")
+start_hour = 7
+place = &"ranch"
+spot = &"BruceFence"
+small_talk = Array[String](["Hold this post straight. No, straight.", "Coyotes got through again last night.", "Hand me that wrench."])
+
+[sub_resource type="Resource" id="ScheduleBlock_barn"]
+script = ExtResource("11_block")
+start_hour = 9
+place = &"barn"
+spot = &"BruceWorkbench"
+small_talk = Array[String](["Don't touch my stuff in the barn."])
+
+[sub_resource type="Resource" id="ScheduleBlock_couch"]
+script = ExtResource("11_block")
+start_hour = 13
+place = &"ranch_interior"
+spot = &"couch"
+pose = &"sit_legsout"
+small_talk = Array[String](["Move, you're blocking the TV.", "Your mom seen my lighter?", "Shh. This is the good part."])
+
+[sub_resource type="Resource" id="ScheduleBlock_bed"]
+script = ExtResource("11_block")
+start_hour = 20
+place = &"ranch_second_floor_interior"
+spot = &"bruceside"
+pose = &"sleep"
+can_talk = false
+small_talk = Array[String](["Lights out. Go on.", "Some of us get up early."])
+
+[sub_resource type="Resource" id="ScheduleBlock_dinner"]
+script = ExtResource("11_block")
+start_hour = 18
+days = 1
+place = &"ranch_interior"
+spot = &"BruceChair"
+pose = &"sit_legsout"
+small_talk = Array[String](["Pass the salt.", "Eat your dinner and quit staring."])
+
+[sub_resource type="Resource" id="ScheduleBlock_couch2"]
+script = ExtResource("11_block")
+start_hour = 19
+days = 1
+place = &"ranch_interior"
+spot = &"couch"
+pose = &"sit_legsout"
+small_talk = Array[String](["Move, you're blocking the TV.", "Shh. This is the good part."])
+
 [node name="bruce" type="CharacterBody2D" unique_id=1290715056]
+collision_layer = 8
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("10_npc")
+schedule = Array[ExtResource("11_block")]([SubResource("ScheduleBlock_fence"), SubResource("ScheduleBlock_barn"), SubResource("ScheduleBlock_couch"), SubResource("ScheduleBlock_dinner"), SubResource("ScheduleBlock_couch2"), SubResource("ScheduleBlock_bed")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=285398975]
 sprite_frames = ExtResource("1_i75gm")

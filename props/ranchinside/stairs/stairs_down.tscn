@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://byyb5conavilj"]
+
+[ext_resource type="PackedScene" uid="uid://c2tioaoan4v7m" path="res://props/ranchinside/stairs/stairs.tscn" id="1_ae1tq"]
+
+[sub_resource type="Gradient" id="Gradient_ae1tq"]
+offsets = PackedFloat32Array(0.26877472, 0.52964425, 0.71146244, 0.82608694, 0.98418975)
+colors = PackedColorArray(0, 0, 0, 0.88235295, 0, 0, 0, 0.6, 0, 0, 0, 0.41960785, 0, 0, 0, 0.32156864, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7y3yr"]
+gradient = SubResource("Gradient_ae1tq")
+
+[node name="StairsDown" unique_id=1575786327 instance=ExtResource("1_ae1tq")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=546399852]
+flip_h = false
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1043228565]
+position = Vector2(13, -9)
+
+[node name="Shadow" type="Sprite2D" parent="." index="2" unique_id=881955882]
+position = Vector2(0.5000005, 1.66893e-06)
+scale = Vector2(0.546875, 0.68750006)
+texture = SubResource("GradientTexture2D_7y3yr")

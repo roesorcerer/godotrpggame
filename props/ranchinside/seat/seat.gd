@@ -74,7 +74,7 @@ func _on_interact(by: Node2D) -> void:
 
 ## Mom's sleeping on it, so it isn't free.
 func is_taken_by_mom() -> bool:
-	return mom_sleeps_here and Mom.is_asleep()
+	return mom_sleeps_here and Mom.sleeps_on_couch()
 
 
 ## What the player can do from this seat right now, as ChoiceMenu options.

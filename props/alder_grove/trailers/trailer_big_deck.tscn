@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c048hcfs06sis"]
+
+[ext_resource type="Texture2D" uid="uid://bbucpwg5sgdri" path="res://props/alder_grove/RVs/ME_Singles_Camping_16x16_Mobile_House_Big_7.png" id="1_1g4ol"]
+
+[node name="TrailerBigDeck" type="StaticBody2D" unique_id=1009831027]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1692134270]
+texture = ExtResource("1_1g4ol")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1527375051]
+polygon = PackedVector2Array(62, -11, 62, -1, 74, -1, 75, 7, 73, 12, 68, 15, 63, 13, 62, 20, 60, 27, 55, 29, 50, 27, 47, 21, 0, 21, -3, 28, -9, 28, -14, 23, -25, 22, -26, 28, -17, 31, -17, 51, -26, 51, -27, 57, -54, 57, -55, 21, -65, 23, -66, 28, -72, 28, -78, 24, -77, 17, -78, -9)

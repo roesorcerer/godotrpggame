@@ -13,6 +13,8 @@
 [ext_resource type="Resource" uid="uid://qc43b87m3c40" path="res://data/items/firewood.tres" id="10_firewood"]
 [ext_resource type="PackedScene" uid="uid://dcf5t6ry03b1c" path="res://props/ranchinside/couch/couch.tscn" id="12_nor6o"]
 [ext_resource type="PackedScene" uid="uid://fhvwwxne2wlg" path="res://actors/npcs/mom/mom.tscn" id="20_mom"]
+[ext_resource type="PackedScene" uid="uid://cr1gmixfmgafc" path="res://actors/npcs/bruce/bruce.tscn" id="30_bruce"]
+[ext_resource type="Script" uid="uid://btdi05554oaqj" path="res://world/npc_navigation.gd" id="31_npcnav"]
 
 [node name="RanchInterior" type="Node2D" unique_id=1967310553]
 
@@ -76,13 +78,21 @@ tile_map_data = PackedByteArray("AAD5//f/AAAKACEBAAA=")
 tile_set = ExtResource("1_8ni1r")
 
 [node name="chair" parent="World/Kitchen" unique_id=1039023930 instance=ExtResource("5_6agby")]
-position = Vector2(-116, -74)
+position = Vector2(-116, -66)
+
+[node name="MomChair" parent="World/Kitchen" unique_id=1873305011 instance=ExtResource("5_6agby")]
+position = Vector2(-116, -88)
 
 [node name="chair2" parent="World/Kitchen" unique_id=1450938311 instance=ExtResource("5_6agby")]
-position = Vector2(-46, -73)
+position = Vector2(-46, -66)
 rotation = 3.1415927
 scale = Vector2(1, -1)
 collision_layer = 5
+
+[node name="BruceChair" parent="World/Kitchen" unique_id=1873305012 instance=ExtResource("5_6agby")]
+position = Vector2(-46, -88)
+rotation = 3.1415927
+scale = Vector2(1, -1)
 
 [node name="KitchenTable" parent="World/Kitchen" unique_id=1358227924 instance=ExtResource("7_ucdjw")]
 position = Vector2(-89, -66)
@@ -94,7 +104,11 @@ position = Vector2(-120, -136)
 position = Vector2(-72, -126)
 
 [node name="Mom" parent="World" unique_id=983217895 instance=ExtResource("20_mom")]
+z_index = 1
 position = Vector2(48, -56)
+collision_mask = 1
+motion_mode = 0
+script = null
 
 [node name="player" parent="World" unique_id=1473192666 instance=ExtResource("8_6kar7")]
 position = Vector2(8, -24)
@@ -111,7 +125,10 @@ item = ExtResource("10_firewood")
 count = 5
 
 [node name="couch" parent="World/LivingRoom2" unique_id=1561380039 instance=ExtResource("12_nor6o")]
+y_sort_enabled = true
 position = Vector2(69, -45)
+
+[node name="Bruce" parent="World" unique_id=1873304501 instance=ExtResource("30_bruce")]
 
 [node name="Collision" type="TileMapLayer" parent="." unique_id=1669865238]
 visible = false
@@ -122,4 +139,27 @@ tile_set = ExtResource("1_8ni1r")
 position = Vector2(-40, -33)
 
 [node name="Spawn_Downstairs" type="Marker2D" parent="." unique_id=1847261190]
-position = Vector2(-98, -8)
+position = Vector2(-90, -24)
+
+[node name="NpcNavigation" type="NavigationRegion2D" parent="." unique_id=1873304502]
+script = ExtResource("31_npcnav")
+
+[node name="NpcPoints" type="Node2D" parent="." unique_id=1873304503]
+
+[node name="Exit_ranch" type="Marker2D" parent="NpcPoints" unique_id=1873304510]
+position = Vector2(-40, -30)
+
+[node name="Exit_barn" type="Marker2D" parent="NpcPoints" unique_id=1873304511]
+position = Vector2(-40, -30)
+
+[node name="Exit_ranch_second_floor_interior" type="Marker2D" parent="NpcPoints" unique_id=1873304512]
+position = Vector2(-100, -20)
+
+[node name="MomStove" type="Marker2D" parent="NpcPoints" unique_id=1873305021]
+position = Vector2(-72, -118)
+
+[node name="MomSink" type="Marker2D" parent="NpcPoints" unique_id=1873305022]
+position = Vector2(-104, -118)
+
+[node name="MomFireplace" type="Marker2D" parent="NpcPoints" unique_id=1873305023]
+position = Vector2(72, -98)
